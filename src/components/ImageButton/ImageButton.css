@@ -1,0 +1,32 @@
+.image-button {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background-color: rgb(49, 49, 49);
+  /* border-radius: 25px; */
+
+  cursor: pointer;
+  margin: 4px;
+
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0px 4px 0 rgb(0, 0, 0, 0.85);
+  -webkit-user-select: none;
+
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.image-button.selected {
+  color: rgb(17, 17, 17);
+  border: solid rgb(16, 122, 183) 1px;
+  box-sizing: border-box;
+}
+
+.image-button .img {
+  height: 25px;
+}

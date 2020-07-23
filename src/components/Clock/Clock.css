@@ -1,0 +1,9 @@
+.clock {
+  margin: 5px;
+  padding: 0 5px;
+  /* background-color: rgb(48, 48, 48); */
+  border-radius: 5px;
+  font-size: 1.3em;
+  display: flex;
+  align-self: center;
+}

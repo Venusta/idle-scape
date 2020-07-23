@@ -1,0 +1,7 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  /* border: solid pink 1px; */
+  min-height: 100vh;
+}

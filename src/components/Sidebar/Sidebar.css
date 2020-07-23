@@ -1,0 +1,23 @@
+.sidebar {
+  box-sizing: border-box;
+  /* border: solid rgb(145, 33, 51) 1px; */
+  background-color: rgb(39, 39, 39);
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  /* border-right: solid black 1px; */
+  /* box-shadow: 2px 0px rgba(0, 0, 0, 0.5); */
+  box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
+  
+}
+
+.titleBar {
+  font-size: large;
+  font-weight: bold;
+  background-color: rgb(33, 33, 33);
+  box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4);
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
