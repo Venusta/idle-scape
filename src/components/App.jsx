@@ -10,7 +10,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import Cards from "./Cards/Cards";
 import DropTable from "../Model/DropTable";
 import HerbDropTable from "../constants/subtables/HerbDropTable";
-import TestMonster, { TestMonsterTable } from "../constants/monsters/TestMonster";
+import TestMonster from "../constants/monsters/TestMonster";
 import { randomInt } from "../utils";
 
 const items = {
@@ -292,9 +292,9 @@ const App = () => {
 
   const herp = TestMonster;
   // console.log(herp);
-  console.log(herp.id);
-  console.log(herp.name);
-  console.table(herp.kill(100));
+
+  console.log(herp.getLoot(20));
+  // console.log(herp.kill(100));
 
   return (
     <div className="app">

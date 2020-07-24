@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { addToLootTable } from "../utils";
 
 export default class Loot {
@@ -10,7 +11,9 @@ export default class Loot {
       });
       return;
     }
-    addToLootTable(this.loot, itemData);
+    console.error("This happened, not sure why.");
+    console.error(itemData);
+    this.loot = addToLootTable(this.loot, itemData);
   };
 
   getLoot = () => this.loot;

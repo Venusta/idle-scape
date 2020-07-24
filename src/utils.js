@@ -18,6 +18,10 @@ export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (tmax - tmin)) + tmin;
 }
 
+/**
+ * Rolls a 1 in X chance, returning a boolean on successfull rolls.
+ * @param upperLimit The upper limit of the roll.
+ */
 export function rollForOneIn(upperLimit) {
   return getRandomInt(1, upperLimit) === 1;
 }

@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable arrow-body-style */
-/* eslint-disable max-classes-per-file */
 /* eslint-disable no-unused-vars */
 
 import Loot from "./Loot";
@@ -14,12 +12,17 @@ export default class Monster {
     // this.data = monsterData[this.id];
   }
 
-  kill = (amount = 1, options) => {
+  getLoot = (amount = 1, options) => {
+    console.log(`Loot from ${amount}x ${this.name}`);
     const loot = new Loot();
 
     for (let index = 0; index < amount; index += 1) {
       loot.add(this.dropTable.generateDrop());
     }
     return loot.getLoot();
+  }
+
+  kill = (amount = 1, options) => {
+
   }
 }

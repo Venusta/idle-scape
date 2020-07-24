@@ -8,7 +8,7 @@ const TestMonsterHerbTable = new DropTable()
   .add(HerbDropTable, 3, 4);
 
 // eslint-disable-next-line import/prefer-default-export
-export const TestMonsterTable = new DropTable(({ limit: 6 }))
+const TestMonsterTable = new DropTable(({ limit: 6 }))
   .always(526, [1, 11])
   .always(2138, 1)
 
