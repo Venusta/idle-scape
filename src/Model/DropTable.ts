@@ -1,11 +1,22 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-// @ts-nocheck
-import { getRandomInt, rollForOneIn } from "../utils";
+
+import { rollForOneIn, getRandomInt } from "../util";
+
+import {
+  DropTableOptions, DropTableItemData, SecondaryDropTableItems, OneInXDropTableItems, Drop,
+} from "../types/types";
 
 export default class DropTable {
-  constructor(options = {}) {
+  alwaysItems: DropTableItemData[];
+  secondaryItems: SecondaryDropTableItems[];
+  tertiaryItems: OneInXDropTableItems[];
+  oneInXItems: OneInXDropTableItems[];
+  totalWeight: number;
+  limit?: number;
+
+  constructor(options: DropTableOptions = {}) {
     this.alwaysItems = [];
     this.secondaryItems = [];
     this.tertiaryItems = [];
@@ -14,16 +25,23 @@ export default class DropTable {
     this.limit = options.limit;
   }
 
-  always = (item, amount = 1) => {
+  always = (
+    item: number | DropTable,
+    amount: number | number[] = 1,
+  ) => {
     this.alwaysItems.push({ item, amount });
     return this;
   };
 
-  add = (item, amount, weight) => {
+  add = (
+    item: number | DropTable | number[][],
+    amount: number,
+    weight: number,
+  ) => {
     if (Array.isArray(item)) {
-      const multipleItems = item.map(([i, a]) => ({ item: i, amount: a }));
+      const itemData = item.map(([i, a]) => ({ item: i, amount: a }));
 
-      this.secondaryItems.push({ item: multipleItems, amount, weight });
+      this.secondaryItems.push({ item: itemData, amount, weight });
     } else {
       this.secondaryItems.push({ item, amount, weight });
     }
@@ -33,20 +51,28 @@ export default class DropTable {
     return this;
   };
 
-  tertiary = (item, amount, chance) => { // put chance at end
+  tertiary = (
+    item: number,
+    amount: number | number[],
+    chance: number,
+  ) => {
     this.tertiaryItems.push({ item, amount, chance });
     return this;
   };
 
-  oneInX = (item, amount, chance) => {
+  oneInX = (
+    item: number,
+    amount: number | number[],
+    chance: number,
+  ) => {
     this.oneInXItems.push({ item, amount, chance });
     return this;
   };
 
-  generateDrop = () => {
+  generateDrop = (): Drop[] => {
     const roll = getRandomInt(1, this.limit || this.totalWeight);
 
-    let randomIndex;
+    let randomIndex = 0;
     let weightTally = 0;
 
     for (let index = 0; index < this.secondaryItems.length; index += 1) {
@@ -61,7 +87,7 @@ export default class DropTable {
     }
     const randomItem = this.secondaryItems[randomIndex];
 
-    let drop = [];
+    let drop: Drop[] = [];
     // 100% drops
     this.alwaysItems.forEach((item) => {
       drop = drop.concat(this.generateResultItem(item));
@@ -90,13 +116,12 @@ export default class DropTable {
     return drop;
   };
 
-  generateResultItem = (itemData) => {
+  generateResultItem = (itemData: DropTableItemData): Drop[] => {
     const { item, amount: a } = itemData;
     const amount = this.determineAmount(a);
 
     if (item instanceof DropTable) {
-      let items = [];
-
+      let items: Drop[] = [];
       for (let index = 0; index < amount; index += 1) {
         items = items.concat(
           item
@@ -110,20 +135,19 @@ export default class DropTable {
     }
 
     if (Array.isArray(item)) {
-      const items = [];
-
+      const items: Drop[] = [];
       item.forEach((singleItem) => {
-        items.push(singleItem);
+        items.push(this.generateResultItem(singleItem)[0]);
       });
 
       return items;
     }
 
-    // return [{ item, amount }];
-    return { item, amount };
+    return [{ item, amount }];
+    // return { item, amount };
   };
 
-  determineAmount = (amount) => {
+  determineAmount = (amount: number | number[]): number => {
     if (Array.isArray(amount)) {
       const [min, max] = amount;
       return getRandomInt(min, max);

@@ -8,7 +8,7 @@ import "./Cards.css";
 import { filterJob, sortNodes } from "../../redux-stuff";
 import {
   localToEorzea, getTranslation, formatTimes, eMinsTillNextSpawn, asset,
-} from "../../utils";
+} from "../../utils.ts.old";
 
 const Icon = ({ icon, name = "", className = "" }) => <img key={`Icon-${uuid()}`} src={asset(icon)} className={className} alt={name} title={name} />;
 

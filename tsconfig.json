@@ -8,13 +8,13 @@
     "module": "esnext",
     "target": "esnext",
     "jsx": "react",
-    // "strict": true,
+    "strict": true,
     "outDir": "build",
     "allowJs": true,
     "noEmit": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "lib": ["es6", "dom"],
+    "lib": ["dom", "es2019"],
   },
   "exclude": ["build", "node_modules"]
 }

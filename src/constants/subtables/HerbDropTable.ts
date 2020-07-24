@@ -1,4 +1,4 @@
-import DropTable from "../../Model/DropTable";
+import DropTable from "../../model/DropTable";
 
 export default new DropTable()
   .add(199, 1, 32)

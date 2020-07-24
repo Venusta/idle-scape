@@ -12,8 +12,8 @@ import "./App.css";
 // import Cards from "./Cards/Cards";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
+import { getRandomInt } from "../util";
 import TestMonster from "../constants/monsters/TestMonster";
-import { randomInt } from "../utils";
 
 const items = {
   "-2": {
@@ -242,7 +242,7 @@ const getLootIndexes = (lootTable) => lootTable.reduce((accum, element, index) =
 
 const getRandomDrop = (lootTable) => {
   const totalWeight = lootTable.reduce((weightTally, item) => weightTally + item[2], 0);
-  const roll = randomInt(totalWeight);
+  const roll = getRandomInt(1, totalWeight);
 
   const lootIndexes = getLootIndexes(lootTable);
 

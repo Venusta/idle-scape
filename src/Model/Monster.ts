@@ -1,29 +1,17 @@
+/* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-// @ts-nocheck
-import Loot from "./Loot";
+import { MonsterOptions } from "../types/types";
 
-export default class Monster {
-  constructor({ id, name, dropTable }) {
+export default abstract class Monster {
+  public id: number;
+  public name: string;
+
+  constructor({ id, name }: MonsterOptions) {
     this.id = id;
     this.name = name;
-    this.dropTable = dropTable;
     // this.aliases = options.aliases ?? [];
     // this.data = monsterData[this.id];
   }
-
-  getLoot = (amount = 1, options) => {
-    console.log(`Loot from ${amount}x ${this.name}`);
-    const loot = new Loot();
-
-    for (let index = 0; index < amount; index += 1) {
-      loot.add(this.dropTable.generateDrop());
-    }
-    return loot.getLoot();
-  };
-
-  kill = (amount = 1, options) => {
-
-  };
 }

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-// @ts-nocheck
-import { addToLootTable } from "../utils";
+import { addToLootTable } from "../util";
+import { Drop, DropCollection } from "../types/types";
 
 export default class Loot {
-  loot = {};
+  loot:DropCollection = {};
 
-  add = (itemData) => {
+  add = (itemData: Drop | Drop[]) => {
     if (Array.isArray(itemData)) {
       itemData.forEach((singleItem) => {
         addToLootTable(this.loot, singleItem);

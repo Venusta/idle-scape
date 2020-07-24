@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Clock.css";
 
-import { localToEorzea, formatTime } from "../../utils";
+import { localToEorzea, formatTime } from "../../utils.ts.old";
 
 const Clock = () => {
   const [time, setTime] = useState(new Date());

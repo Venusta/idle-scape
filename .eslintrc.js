@@ -33,6 +33,7 @@ module.exports = {
     },
   },
   rules: {
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/quotes": [
       "error",
       "double"
@@ -48,5 +49,7 @@ module.exports = {
     "react/state-in-constructor": ["error", "never"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "lines-between-class-members": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
   },
 };
