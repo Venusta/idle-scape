@@ -1,27 +1,31 @@
 module.exports = {
-  "parser": "babel-eslint",
-  env: {
-    browser: true,
-    es6: true,
-  },
+  // "parser": "babel-eslint",
+  parser: '@typescript-eslint/parser',
+  // env: {
+  //   browser: true,
+  //   es6: true,
+  // },
   extends: [
     "plugin:react/recommended",
-    "airbnb",
+    // "airbnb",
+    "airbnb-typescript",
   ],
-  globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
-  },
+  // globals: {
+  //   Atomics: "readonly",
+  //   SharedArrayBuffer: "readonly",
+  // },
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2018,
-    sourceType: "module",
+    // ecmaFeatures: {
+    //   jsx: true,
+    // },
+    // ecmaVersion: 2018,
+    // sourceType: "module",
+    project: './tsconfig.json',
   },
   plugins: [
     "react",
     "react-hooks",
+      '@typescript-eslint',
   ],
   settings: {
     react: {
@@ -29,6 +33,10 @@ module.exports = {
     },
   },
   rules: {
+    "@typescript-eslint/quotes": [
+      "error",
+      "double"
+    ],
     "quotes": [
       "error",
       "double",

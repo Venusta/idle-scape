@@ -1,6 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+// @ts-nocheck
 import { getRandomInt, rollForOneIn } from "../utils";
 
 export default class DropTable {
@@ -16,7 +17,7 @@ export default class DropTable {
   always = (item, amount = 1) => {
     this.alwaysItems.push({ item, amount });
     return this;
-  }
+  };
 
   add = (item, amount, weight) => {
     if (Array.isArray(item)) {
@@ -30,17 +31,17 @@ export default class DropTable {
     this.totalWeight += weight;
 
     return this;
-  }
+  };
 
   tertiary = (item, amount, chance) => { // put chance at end
     this.tertiaryItems.push({ item, amount, chance });
     return this;
-  }
+  };
 
   oneInX = (item, amount, chance) => {
     this.oneInXItems.push({ item, amount, chance });
     return this;
-  }
+  };
 
   generateDrop = () => {
     const roll = getRandomInt(1, this.limit || this.totalWeight);
@@ -87,7 +88,7 @@ export default class DropTable {
       drop = drop.concat(this.generateResultItem(randomItem));
     }
     return drop;
-  }
+  };
 
   generateResultItem = (itemData) => {
     const { item, amount: a } = itemData;
@@ -120,7 +121,7 @@ export default class DropTable {
 
     // return [{ item, amount }];
     return { item, amount };
-  }
+  };
 
   determineAmount = (amount) => {
     if (Array.isArray(amount)) {
@@ -128,5 +129,5 @@ export default class DropTable {
       return getRandomInt(min, max);
     }
     return amount;
-  }
+  };
 }

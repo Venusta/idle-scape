@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-
+// @ts-nocheck
 import Loot from "./Loot";
 
 export default class Monster {
@@ -20,9 +21,9 @@ export default class Monster {
       loot.add(this.dropTable.generateDrop());
     }
     return loot.getLoot();
-  }
+  };
 
   kill = (amount = 1, options) => {
 
-  }
+  };
 }

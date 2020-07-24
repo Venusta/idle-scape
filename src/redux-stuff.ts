@@ -8,7 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import nodeData from "./constants/data";
-import { eMinsTillNextSpawn } from "./utils";
+// import { eMinsTillNextSpawn } from "./utils";
 
 const nodesInitialState = nodeData.map((node) => node);
 
@@ -18,7 +18,7 @@ const cardsSlice = createSlice({
   reducers: {
     filterJob: (state, { payload }) => state.filter((node) => node.job === payload), // TODO store which filters are active and fix this
 
-    sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
+    // sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
   },
 });
 
@@ -38,7 +38,7 @@ const uiSlice = createSlice({
 
 export const {
   filterJob,
-  sort: sortNodes,
+  // sort: sortNodes,
 } = cardsSlice.actions;
 
 export const { toggleInfobox } = uiSlice.actions;

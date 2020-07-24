@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-empty */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+// @ts-nocheck
 
 import React from "react";
 import "./App.css";
 
-import Sidebar from "./Sidebar/Sidebar";
-import Cards from "./Cards/Cards";
-import DropTable from "../Model/DropTable";
-import HerbDropTable from "../constants/subtables/HerbDropTable";
+// import Sidebar from "./Sidebar/Sidebar";
+// import Cards from "./Cards/Cards";
+// import DropTable from "../Model/DropTable";
+// import HerbDropTable from "../constants/subtables/HerbDropTable";
 import TestMonster from "../constants/monsters/TestMonster";
 import { randomInt } from "../utils";
 

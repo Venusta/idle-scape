@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// @ts-nocheck
 import { addToLootTable } from "../utils";
 
 export default class Loot {

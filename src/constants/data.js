@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { v1 as uuid } from "uuid";
 
 /* eslint-disable no-unused-vars */
