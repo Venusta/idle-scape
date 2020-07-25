@@ -153,9 +153,7 @@ export default class DropTable {
 
       return items;
     }
-
     return [{ item, amount }];
-    // return { item, amount };
   };
 
   determineAmount = (amount: number | number[]): number => {

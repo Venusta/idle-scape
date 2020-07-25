@@ -1,5 +1,5 @@
 import { ItemData, ItemBank } from "../types/types";
-import { addToItemBank } from "./Bank";
+import { addToItemBank } from "../util";
 
 export default class Loot {
   loot:ItemBank = {};

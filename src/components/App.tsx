@@ -306,7 +306,12 @@ const App = () => {
   console.log(player.getBank());
 
   player.addBankToBank(loot1);
-  player.addToBank({ item: 2048, amount: 1065764500 });
+  // player.addBankToBank(loot1);
+  player.removeBankFromBank(loot1);
+  player.addToItemBank({ item: 2048, amount: 1065764500 });
+  player.removeFromItemBank({ item: 4151, amount: 1 });
+  player.removeFromItemBank({ item: 4151, amount: 1 });
+  player.removeFromItemBank({ item: 41531, amount: 1 });
   console.log(player.getBank());
 
   return (
