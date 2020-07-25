@@ -3,7 +3,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-// @ts-nocheck
 
 import React from "react";
 import "./App.css";
@@ -12,7 +11,7 @@ import "./App.css";
 // import Cards from "./Cards/Cards";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
-import { getRandomInt } from "../util";
+import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
 
 const items = {
@@ -233,55 +232,55 @@ const herbLootTable = [
   [217, 1, 3],
 ];
 
-const getLootIndexes = (lootTable) => lootTable.reduce((accum, element, index) => {
-  let weight = parseInt([element[2]], 10);
-  if (index > 0) weight += parseInt(accum[index - 1], 10);
-  accum.push(weight);
-  return accum;
-}, []);
+// const getLootIndexes = (lootTable) => lootTable.reduce((accum, element, index) => {
+//   let weight = parseInt([element[2]], 10);
+//   if (index > 0) weight += parseInt(accum[index - 1], 10);
+//   accum.push(weight);
+//   return accum;
+// }, []);
 
-const getRandomDrop = (lootTable) => {
-  const totalWeight = lootTable.reduce((weightTally, item) => weightTally + item[2], 0);
-  const roll = getRandomInt(1, totalWeight);
+// const getRandomDrop = (lootTable) => {
+//   const totalWeight = lootTable.reduce((weightTally, item) => weightTally + item[2], 0);
+//   const roll = getRandomInt(1, totalWeight);
 
-  const lootIndexes = getLootIndexes(lootTable);
+//   const lootIndexes = getLootIndexes(lootTable);
 
-  const drop = [];
+//   const drop = [];
 
-  for (let index = 0; index < lootIndexes.length; index += 1) {
-    if (roll <= lootIndexes[index]) {
-      const [itemID, amount] = lootTable[index];
-      drop.push(itemID, amount);
-      break;
-    }
-  }
+//   for (let index = 0; index < lootIndexes.length; index += 1) {
+//     if (roll <= lootIndexes[index]) {
+//       const [itemID, amount] = lootTable[index];
+//       drop.push(itemID, amount);
+//       break;
+//     }
+//   }
 
-  return drop;
-};
+//   return drop;
+// };
 
-const getLoot = (lootTable) => {
-  const loot = [];
+// const getLoot = (lootTable) => {
+//   const loot = [];
 
-  loot.push(...lootTable.always.map((value) => value));
+//   loot.push(...lootTable.always.map((value) => value));
 
-  const [itemID, amount] = getRandomDrop(lootTable.items);
+//   const [itemID, amount] = getRandomDrop(lootTable.items);
 
-  if (itemID === special.herb.id) {
-    for (let index = 0; index < amount; index += 1) {
-      const [herbID, herbAmount] = getRandomDrop(herbLootTable);
-      loot.push([herbID, herbAmount]);
-    }
-  } else {
-    loot.push([itemID, amount]);
-  }
+//   if (itemID === special.herb.id) {
+//     for (let index = 0; index < amount; index += 1) {
+//       const [herbID, herbAmount] = getRandomDrop(herbLootTable);
+//       loot.push([herbID, herbAmount]);
+//     }
+//   } else {
+//     loot.push([itemID, amount]);
+//   }
 
-  return loot.flat();
-};
+//   return loot.flat();
+// };
 
-const formatDrop = (drop) => drop.map((value) => {
-  const [id, amount] = value;
-  return [items[id].name, amount];
-});
+// const formatDrop = (drop) => drop.map((value) => {
+//   const [id, amount] = value;
+//   return [items[id].name, amount];
+// });
 
 const App = () => {
   // importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
@@ -295,8 +294,20 @@ const App = () => {
   const herp = TestMonster;
   // console.log(herp);
 
-  console.log(herp.getLoot(20));
-  // console.log(herp.kill(100));
+  const loot1 = herp.getLoot(10);
+  // console.log(loot1);
+  // const loot2 = herp.getLoot(100);
+  // console.log(loot2);
+
+  // const y = addLootToBank(loot2);
+
+  const player = new Player({ id: 1, name: "yeetus" });
+  // player.bank = addBankToBank(loot1);
+  console.log(player.getBank());
+
+  player.addBankToBank(loot1);
+  player.addToBank({ item: 2048, amount: 1065764500 });
+  console.log(player.getBank());
 
   return (
     <div className="app">

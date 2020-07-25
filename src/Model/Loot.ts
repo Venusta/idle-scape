@@ -1,21 +1,20 @@
-/* eslint-disable no-console */
-import { addToLootTable } from "../util";
-import { Drop, DropCollection } from "../types/types";
+import { ItemData, ItemBank } from "../types/types";
+import { addToItemBank } from "./Bank";
 
 export default class Loot {
-  loot:DropCollection = {};
+  loot:ItemBank = {};
 
-  add = (itemData: Drop | Drop[]) => {
+  add = (itemData: ItemData | ItemData[]): void => {
     if (Array.isArray(itemData)) {
       itemData.forEach((singleItem) => {
-        addToLootTable(this.loot, singleItem);
+        this.loot = addToItemBank(this.loot, singleItem);
       });
       return;
     }
     console.error("This happened, not sure why.");
     console.error(itemData);
-    this.loot = addToLootTable(this.loot, itemData);
+    this.loot = addToItemBank(this.loot, itemData);
   };
 
-  getLoot = () => this.loot;
+  getLoot = (): ItemBank => this.loot;
 }

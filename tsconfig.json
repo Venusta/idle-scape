@@ -5,8 +5,8 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "sourceMap": true,
-    "module": "esnext",
-    "target": "esnext",
+    "module": "ES6",
+    "target": "ES6",
     "jsx": "react",
     "strict": true,
     "outDir": "build",
@@ -14,7 +14,7 @@
     "noEmit": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "lib": ["dom", "es2019"],
+    "lib": ["dom", "es2019", "ES6"],
   },
   "exclude": ["build", "node_modules"]
 }

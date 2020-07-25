@@ -7,8 +7,10 @@ module.exports = {
   // },
   extends: [
     "plugin:react/recommended",
-    // "airbnb",
     "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   // globals: {
   //   Atomics: "readonly",
@@ -25,7 +27,7 @@ module.exports = {
   plugins: [
     "react",
     "react-hooks",
-      '@typescript-eslint',
+    '@typescript-eslint',
   ],
   settings: {
     react: {
@@ -33,7 +35,9 @@ module.exports = {
     },
   },
   rules: {
-    "@typescript-eslint/no-explicit-any": "off",
+   "@typescript-eslint/explicit-module-boundary-types": "off", // turn on
+    "@typescript-eslint/no-explicit-any": "off", // turn on
+    "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/quotes": [
       "error",
       "double"
@@ -46,10 +50,11 @@ module.exports = {
       "error",
       "windows",
     ],
+    "arrow-body-style": "warn",
     "react/state-in-constructor": ["error", "never"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "lines-between-class-members": "off",
-    "@typescript-eslint/lines-between-class-members": "off",
+    "no-console": "off",
   },
 };
