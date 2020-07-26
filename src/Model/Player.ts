@@ -1,41 +1,21 @@
-import { PlayerOptions, ItemBank, ItemData } from "../types/types";
+import {
+  PlayerOptions, ItemBank, ItemData, Skills,
+} from "../types/types";
 import {
   addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank,
 } from "../util";
+import Skill from "./Skill";
 
 export default class Player {
-  public id: number;
-  public name: string;
-  public skills = {
-    attack: 0,
-    defence: 0,
-    strength: 0,
-    hitpoints: 0,
-    ranged: 0,
-    prayer: 0,
-    magic: 0,
-    cooking: 0,
-    woodcutting: 0,
-    fletching: 0,
-    fishing: 0,
-    firemaking: 0,
-    crafting: 0,
-    smithing: 0,
-    mining: 0,
-    herblore: 0,
-    agility: 0,
-    thieving: 0,
-    slayer: 0,
-    farming: 0,
-    runecrafting: 0,
-    hunter: 0,
-    construction: 0,
-  };
-  public bank: ItemBank = {
+  private id: number;
+  private name: string;
+  private skills: Skills;
+  // private skills: {[name: string]: Skill};
+  private bank: ItemBank = {
     995: 100,
     4151: 1,
   };
-  public inventory: ItemBank = {
+  private inventory: ItemBank = {
     1024: 1,
   };
 
@@ -43,6 +23,10 @@ export default class Player {
     this.id = id;
     this.name = name;
     this.skills = skills;
+    // this.skills = {
+    //   agility: new Skill("Agility", 1),
+    //   hitpoints: new Skill("Hitpoints", 10),
+    // };
   }
 
   addToItemBank = (item: ItemData): void => {

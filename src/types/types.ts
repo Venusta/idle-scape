@@ -6,6 +6,7 @@ export interface MonsterOptions {
 export interface PlayerOptions {
   id: number;
   name: string;
+  skills: Skills;
 }
 
 export type ItemData = {
@@ -22,4 +23,35 @@ export type Item = [number, number];
 
 export interface ItemBank {
   [key: number]: number;
+}
+
+export interface Skill {
+  // level: number;
+  xp: number;
+}
+
+export interface Skills {
+  attack: Skill;
+  defence: Skill;
+  strength: Skill;
+  hitpoints: Skill;
+  ranged: Skill;
+  prayer: Skill;
+  magic: Skill;
+  cooking: Skill;
+  woodcutting: Skill;
+  fletching: Skill;
+  fishing: Skill;
+  firemaking: Skill;
+  crafting: Skill;
+  smithing: Skill;
+  mining: Skill;
+  herblore: Skill;
+  agility: Skill;
+  thieving: Skill;
+  slayer: Skill;
+  farming: Skill;
+  runecrafting: Skill;
+  hunter: Skill;
+  construction: Skill;
 }

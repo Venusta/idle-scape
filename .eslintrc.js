@@ -35,8 +35,8 @@ module.exports = {
     },
   },
   rules: {
-   "@typescript-eslint/explicit-module-boundary-types": "off", // turn on
-    "@typescript-eslint/no-explicit-any": "off", // turn on
+  //  "@typescript-eslint/explicit-module-boundary-types": "off", // turn on
+    // "@typescript-eslint/no-explicit-any": "on",
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/quotes": [
       "error",

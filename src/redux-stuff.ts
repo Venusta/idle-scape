@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable max-len */
-
 import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import nodeData from "./constants/data";
+// import nodeData from "./constants/data";
 // import { eMinsTillNextSpawn } from "./utils";
+
+const nodeData: any[] = [];
 
 const nodesInitialState = nodeData.map((node) => node);
 
