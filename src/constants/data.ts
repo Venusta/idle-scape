@@ -1,9 +1,9 @@
+/* eslint-disable no-restricted-properties */
 /* eslint-disable no-return-assign */
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-param-reassign */
 import { getRandomInt } from "../util";
 import { Skills, Skill } from "../types/types";
-import Player from "../model/Player";
 
 const skillNames = [
   "attack",
@@ -30,77 +30,6 @@ const skillNames = [
   "hunter",
   "construction",
 ];
-
-// export const skillData = (): Partial<Skills> => {
-// export const skillDataFUCK = ():Partial<Skills> => {
-// eslint-disable-next-line max-len
-// const fuck: Partial<Skills> = skillNames.reduce((accum: Record<string, Skill>, skill: string) => {
-//     accum[skill] = {
-//       xp: 0,
-//       level: 0,
-//     };
-//     return accum;
-//   }, {});
-//   return fuck;
-// };
-
-// export const skillData2 = () => {
-//   const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
-//     accum[skill as keyof Skills] = getRandomInt(0, 200000);
-//     return accum;
-//   }, {});
-//   return new Player({
-//     id: 1,
-//     name: "yeetus",
-//     skills: KUT,
-//   });
-// };
-
-export const derp = () => { // diff file
-  const ahhhh:{[skill: string]: number} = {};
-  const herp = skillNames.forEach((skill) => {
-    ahhhh[skill] = 0;
-  }, {});
-  return ahhhh;
-};
-
-export const skillData = () : Skills => { // diff file
-  const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
-    accum[skill] = getRandomInt(0, 200000);
-    return accum;
-  }, {});
-  return KUT as unknown as Skills;
-};
-
-export const testFuck = {
-  agility: 0,
-  attack: 0,
-  construction: 0,
-  cooking: 0,
-  crafting: 0,
-  defence: 0,
-  farming: 0,
-  firemaking: 0,
-  fishing: 0,
-  fletching: 0,
-  herblore: 0,
-  hitpoints: 0,
-  hunter: 0,
-  magic: 0,
-  mining: 0,
-  prayer: 0,
-  ranged: 0,
-  runecrafting: 0,
-  slayer: 0,
-  smithing: 0,
-  strength: 0,
-  thieving: 0,
-  woodcutting: 0,
-};
-
-// export const skillData2 = (derp: Skills): Skills => {
-//   return derp;
-// };
 
 export const expTable = [
   0,
@@ -203,5 +132,149 @@ export const expTable = [
   11805606,
   13034431,
 ];
+
+const sk = {
+  exp: 200,
+};
+
+export const saveObject = {
+  agility: sk,
+  attack: sk,
+  construction: sk,
+  cooking: sk,
+  crafting: sk,
+  defence: sk,
+  farming: sk,
+  firemaking: sk,
+  fishing: sk,
+  fletching: sk,
+  herblore: sk,
+  hitpoints: sk,
+  hunter: sk,
+  magic: sk,
+  mining: sk,
+  prayer: sk,
+  ranged: sk,
+  runecrafting: sk,
+  slayer: sk,
+  smithing: sk,
+  strength: sk,
+  thieving: sk,
+  woodcutting: sk,
+};
+
+// export const skillData = (): Partial<Skills> => {
+// export const skillDataFUCK = ():Partial<Skills> => {
+// eslint-disable-next-line max-len
+// const fuck: Partial<Skills> = skillNames.reduce((accum: Record<string, Skill>, skill: string) => {
+//     accum[skill] = {
+//       xp: 0,
+//       level: 0,
+//     };
+//     return accum;
+//   }, {});
+//   return fuck;
+// };
+
+// export const skillData2 = () => {
+//   const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
+//     accum[skill as keyof Skills] = getRandomInt(0, 200000);
+//     return accum;
+//   }, {});
+//   return new Player({
+//     id: 1,
+//     name: "yeetus",
+//     skills: KUT,
+//   });
+// };
+
+const levelToExp = (lvl: number): number => {
+  let exp = 0;
+
+  for (let index = 1; index < lvl; index += 1) {
+    exp += Math.floor(index + 300 * (2 ** (index / 7)));
+  }
+  return Math.floor(exp / 4);
+};
+
+const expToLevel = (exp: number): number => {
+  for (let lvl = 1; lvl <= 99; lvl += 1) {
+    if (levelToExp(lvl) > exp) { return lvl - 1; }
+  }
+  return 99;
+};
+// console.log(`Level: ${getLevel(2000)}`);
+
+console.log(expToLevel(0) === 1);
+console.log(expToLevel(1) === 1);
+console.log(expToLevel(82) === 1);
+console.log(expToLevel(83) === 2);
+console.log(expToLevel(84) === 2);
+console.log(expToLevel(13034430) === 98);
+console.log(expToLevel(13034431) === 99);
+console.log(expToLevel(13034432) === 99);
+
+console.log(`levelToXp: ${levelToExp(2)}`);
+console.log(`levelToXp: ${levelToExp(20)}`);
+console.log(`levelToXp: ${levelToExp(99)}`);
+console.log(`levelToXp: ${levelToExp(126)}`);
+
+export const derp = () => { // diff file
+  const ahhhh:{[skill: string]: number} = {};
+  const herp = skillNames.forEach((skill) => {
+    ahhhh[skill] = 0;
+  }, {});
+  return ahhhh;
+};
+
+export const skillData = () : Skills => { // diff file
+  const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
+    accum[skill] = getRandomInt(0, 200000);
+    return accum;
+  }, {});
+  return KUT as unknown as Skills;
+};
+
+// Greenchill's magical example
+
+// Give them string values so they don't default to the stupid numerical ones
+// This is important when iterating an enum cause if you iterate keys that have numerical values
+// you will get both named keys and numerical keys
+enum MySkills {
+  woodcutting = "woodcutting",
+  gathering = "gathering",
+  eating = "eating",
+}
+
+// type SkillMap = Map<MySkills, Skill>;
+
+// export const getSkillMap = (): SkillMap => {
+//   const myStuff = new Map<MySkills, Skill>();
+
+//   Object.entries(MySkills).forEach((entry) => {
+//     const [a, b] = entry;
+//     myStuff.set(b, getRandomInt(0, 200000));
+//   });
+
+//   return myStuff;
+// };
+
+type SkillObject = { [key in MySkills]: number };
+
+export const getSkillObject = (): SkillObject => {
+  const stuff = Object.keys(MySkills)
+    .map((key) => {
+      return {
+        [key]: 0,
+      };
+    })
+    .reduce((prev, next) => ({ ...prev, ...next }));
+
+  return stuff as SkillObject;
+};
+
+// export const skillData2 = (derp: Skills): Skills => {
+//   return derp;
+// };
 
 export default skillData;

@@ -25,12 +25,13 @@ export interface ItemBank {
   [key: number]: number;
 }
 
-// export interface Skill {
-//   // level: number;
-//   // xp: number;
-// }
+export interface Skill {
+  level: number;
+  exp: number;
+  boost?: number
+}
 
-export type Skill = number;
+// export type Skill = number;
 
 export interface Skills {
   attack: Skill;

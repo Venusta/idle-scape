@@ -4,7 +4,6 @@ import {
 import {
   addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank,
 } from "../util";
-import Skill from "./Skill";
 
 export default class Player {
   private id: number;
