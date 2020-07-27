@@ -1,5 +1,5 @@
 import {
-  PlayerOptions, ItemBank, ItemData, Skills,
+  PlayerOptions, ItemBank, ItemData, Skill,
 } from "../types/types";
 import {
   addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank,
@@ -8,8 +8,8 @@ import {
 export default class Player {
   private id: number;
   private name: string;
-  private skills: Skills;
-  // private skills: {[name: string]: Skill};
+  // private skills: Skills;
+  public skills: {[name: string]: Skill};
   private bank: ItemBank = {
     995: 100,
     4151: 1,

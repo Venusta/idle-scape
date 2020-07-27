@@ -97,12 +97,26 @@ module.exports = {
       //   },
       // },
       {
+
         test: /\.tsx?$/,
         use: [
           !isProduction && {
             loader: "babel-loader",
             options: {
-              plugins: ["@babel/plugin-proposal-class-properties"],
+              plugins: ["@babel/plugin-proposal-class-properties",
+                ["@babel/plugin-transform-modules-commonjs", {
+                  allowTopLevelThis: true,
+                }]],
+              // presets: [
+              //   ["@babel/preset-env",
+              //     {
+              //       targets:
+              //       {
+              //         node: "current",
+              //       },
+              //     }],
+              //   "@babel/preset-typescript",
+              // ],
             },
           },
           "ts-loader",

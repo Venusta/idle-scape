@@ -13,7 +13,9 @@ import "./App.css";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
-import { skillData, derp, getSkillObject } from "../constants/data";
+import {
+  skillData, derp, getSkillObject, skillsObject,
+ } from "../constants/data";
 
 const items = {
   "-2": {
@@ -303,16 +305,19 @@ const App = () => {
   // const y = addLootToBank(loot2);
 
   console.log(derp());
-  console.log(getSkillObject());
+  // console.log(getSkillObject());
   
+console.log(skillsObject);
+
+
 
   // const skillShit = skillData();
-  // const player = new Player({
-  //   id: 1,
-  //   name: "yeetus",
-  //   skills: skillShit,
-  // });
-  // console.log(player);
+  const player = new Player({
+    id: 1,
+    name: "yeetus",
+    skills: skillsObject,
+  });
+  console.log(player);
 
   // console.log(player.getBank());
 

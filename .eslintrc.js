@@ -1,16 +1,18 @@
 module.exports = {
   // "parser": "babel-eslint",
   parser: '@typescript-eslint/parser',
-  // env: {
-  //   browser: true,
-  //   es6: true,
-  // },
+  env: {
+    browser: true,
+    es6: true,
+    "jest/globals": true,
+  },
   extends: [
     "plugin:react/recommended",
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:jest/recommended",
   ],
   // globals: {
   //   Atomics: "readonly",
@@ -28,6 +30,7 @@ module.exports = {
     "react",
     "react-hooks",
     '@typescript-eslint',
+    "jest"
   ],
   settings: {
     react: {

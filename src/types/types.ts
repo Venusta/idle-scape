@@ -6,7 +6,7 @@ export interface MonsterOptions {
 export interface PlayerOptions {
   id: number;
   name: string;
-  skills: Skills;
+  skills: {[name: string]: Skill};
 }
 
 export type ItemData = {
