@@ -14,7 +14,7 @@ import "./App.css";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
 import {
-  skillData, derp, getSkillObject, skillObject,
+  skillData, derp, getSkillObject, createFirstStats,
 } from "../constants/data";
 
 const items = {
@@ -310,7 +310,7 @@ const App = () => {
   const player = new Player({
     id: 1,
     name: "yeetus",
-    skills: skillObject,
+    skills: createFirstStats(),
   });
   // console.log(skillObject);
 
