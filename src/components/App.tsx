@@ -16,6 +16,7 @@ import TestMonster from "../constants/monsters/TestMonster";
 import {
   skillData, derp, getSkillObject, createFirstStats,
 } from "../constants/data";
+import Laps from "../constants/player/laps";
 
 const items = {
   "-2": {
@@ -312,9 +313,19 @@ const App = () => {
     name: "yeetus",
     skills: createFirstStats(),
   });
+  // const players = [];
+  // players.push(player);
+  // console.log(players);
+
   // console.log(skillObject);
 
   console.log(player);
+
+  const task = new Laps({ player, name: "a", amount: 5 });
+  task.start();
+  const task2 = new Laps({ player, name: "b", amount: 5 });
+  task2.start();
+
   // console.log(getSkillObject());
 
   // console.log(player.getBank());

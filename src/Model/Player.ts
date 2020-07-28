@@ -1,20 +1,20 @@
 import {
-  PlayerOptions, ItemBank, ItemData, Skills,
+  PlayerOptions, ItemBank, ItemData, SkillsStats,
 } from "../types/types";
 import {
   addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank, levelToExp, expToLevel,
 } from "../util";
 
 export default class Player {
-  private id: number;
-  private name: string;
-  private skills: Skills;
-  // private skills: {[name: string]: Skill};
-  private bank: ItemBank = {
+  public id: number;
+  public name: string;
+  public skills: SkillsStats;
+  // public skills: {[name: string]: Skill};
+  public bank: ItemBank = {
     995: 100,
     4151: 1,
   };
-  private inventory: ItemBank = {
+  public inventory: ItemBank = {
     1024: 1,
   };
 
@@ -23,7 +23,7 @@ export default class Player {
     this.name = name;
     // extract method when cba
     const formatedSkillData = Object.keys(skills).reduce((accum, skill) => {
-      const { exp } = skills[skill as keyof Skills];
+      const { exp } = skills[skill as keyof SkillsStats];
       return {
         ...accum,
         [skill]: {
@@ -31,7 +31,7 @@ export default class Player {
           level: expToLevel(exp),
         },
       };
-    }, {}) as Skills;
+    }, {}) as SkillsStats;
 
     this.skills = formatedSkillData;
   }

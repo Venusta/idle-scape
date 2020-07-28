@@ -1,3 +1,5 @@
+import Player from "src/model/Player";
+
 export interface MonsterOptions {
   id: number;
   name: string;
@@ -6,7 +8,13 @@ export interface MonsterOptions {
 export interface PlayerOptions {
   id: number;
   name: string;
-  skills: Skills;
+  skills: SkillsStats;
+}
+
+export interface LapOptions {
+  player: Player;
+  name: string;
+  amount: number
 }
 
 export type ItemData = {
@@ -25,36 +33,36 @@ export interface ItemBank {
   [key: number]: number;
 }
 
-export interface Skill {
-  level?: number;
+export interface SkillStats {
+  level: number;
   exp: number;
   boost?: number
 }
 
 // export type Skill = number;
 
-export interface Skills {
-  attack: Skill;
-  defence: Skill;
-  strength: Skill;
-  hitpoints: Skill;
-  ranged: Skill;
-  prayer: Skill;
-  magic: Skill;
-  cooking: Skill;
-  woodcutting: Skill;
-  fletching: Skill;
-  fishing: Skill;
-  firemaking: Skill;
-  crafting: Skill;
-  smithing: Skill;
-  mining: Skill;
-  herblore: Skill;
-  agility: Skill;
-  thieving: Skill;
-  slayer: Skill;
-  farming: Skill;
-  runecrafting: Skill;
-  hunter: Skill;
-  construction: Skill;
+export interface SkillsStats {
+  attack: SkillStats;
+  defence: SkillStats;
+  strength: SkillStats;
+  hitpoints: SkillStats;
+  ranged: SkillStats;
+  prayer: SkillStats;
+  magic: SkillStats;
+  cooking: SkillStats;
+  woodcutting: SkillStats;
+  fletching: SkillStats;
+  fishing: SkillStats;
+  firemaking: SkillStats;
+  crafting: SkillStats;
+  smithing: SkillStats;
+  mining: SkillStats;
+  herblore: SkillStats;
+  agility: SkillStats;
+  thieving: SkillStats;
+  slayer: SkillStats;
+  farming: SkillStats;
+  runecrafting: SkillStats;
+  hunter: SkillStats;
+  construction: SkillStats;
 }

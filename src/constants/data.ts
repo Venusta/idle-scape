@@ -1,5 +1,5 @@
 import { getRandomInt, levelToExp, expToLevel } from "../util";
-import { Skills, Skill } from "../types/types";
+import { SkillsStats, SkillStats } from "../types/types";
 
 const skillNames = [
   "attack",
@@ -28,12 +28,13 @@ const skillNames = [
 ];
 
 // Lazy
-enum SkillNames {
+export enum SkillNames {
   Attack = "attack",
+  Agility = "agility",
   Hitpoints = "hitpoints",
 }
 
-export const createFirstStats = (): Skills => skillNames.reduce((accum, skill) => {
+export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, skill) => {
   let exp = 0;
   if (skill === SkillNames.Hitpoints) {
     exp = levelToExp(10);
@@ -44,7 +45,7 @@ export const createFirstStats = (): Skills => skillNames.reduce((accum, skill) =
       exp,
     },
   };
-}, {}) as Skills;
+}, {}) as SkillsStats;
 
 // export const skillData = (): Partial<Skills> => {
 // export const skillDataFUCK = ():Partial<Skills> => {
@@ -78,12 +79,12 @@ export const derp = () => { // diff file
   return ahhhh;
 };
 
-export const skillData = () : Skills => { // diff file
+export const skillData = () : SkillsStats => { // diff file
   const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
     accum[skill] = getRandomInt(0, 200000);
     return accum;
   }, {});
-  return KUT as unknown as Skills;
+  return KUT as unknown as SkillsStats;
 };
 
 // Greenchill's magical example
@@ -110,7 +111,7 @@ enum MySkills {
 //   return myStuff;
 // };
 
-type SkillObject = { [key in MySkills]: Skill };
+type SkillObject = { [key in MySkills]: SkillStats };
 
 export const getSkillObject = (): SkillObject => {
   const stuff = Object.keys(MySkills)
