@@ -1,4 +1,5 @@
 export * from "./rollForOneIn";
 export * from "./getRandomInt";
 export * from "./Bank";
-// export * from "./addToLootTable";
+export * from "./levelToExp";
+export * from "./expToLevel";

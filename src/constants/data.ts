@@ -175,7 +175,6 @@ export const saveObject = {
 //   }, {});
 //   return fuck;
 // };
-
 // export const skillData2 = () => {
 //   const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
 //     accum[skill as keyof Skills] = getRandomInt(0, 200000);
@@ -187,37 +186,6 @@ export const saveObject = {
 //     skills: KUT,
 //   });
 // };
-
-const levelToExp = (lvl: number): number => {
-  let exp = 0;
-
-  for (let index = 1; index < lvl; index += 1) {
-    exp += Math.floor(index + 300 * (2 ** (index / 7)));
-  }
-  return Math.floor(exp / 4);
-};
-
-const expToLevel = (exp: number): number => {
-  for (let lvl = 1; lvl <= 99; lvl += 1) {
-    if (levelToExp(lvl) > exp) { return lvl - 1; }
-  }
-  return 99;
-};
-// console.log(`Level: ${getLevel(2000)}`);
-
-console.log(expToLevel(0) === 1);
-console.log(expToLevel(1) === 1);
-console.log(expToLevel(82) === 1);
-console.log(expToLevel(83) === 2);
-console.log(expToLevel(84) === 2);
-console.log(expToLevel(13034430) === 98);
-console.log(expToLevel(13034431) === 99);
-console.log(expToLevel(13034432) === 99);
-
-console.log(`levelToXp: ${levelToExp(2)}`);
-console.log(`levelToXp: ${levelToExp(20)}`);
-console.log(`levelToXp: ${levelToExp(99)}`);
-console.log(`levelToXp: ${levelToExp(126)}`);
 
 export const derp = () => { // diff file
   const ahhhh:{[skill: string]: number} = {};
