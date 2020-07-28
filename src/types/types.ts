@@ -26,7 +26,7 @@ export interface ItemBank {
 }
 
 export interface Skill {
-  level: number;
+  level?: number;
   exp: number;
   boost?: number
 }

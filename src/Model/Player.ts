@@ -2,7 +2,7 @@ import {
   PlayerOptions, ItemBank, ItemData, Skills,
 } from "../types/types";
 import {
-  addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank,
+  addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank, levelToExp, expToLevel,
 } from "../util";
 
 export default class Player {
@@ -21,11 +21,19 @@ export default class Player {
   constructor({ id, name, skills }: PlayerOptions) {
     this.id = id;
     this.name = name;
-    this.skills = skills;
-    // this.skills = {
-    //   agility: new Skill("Agility", 1),
-    //   hitpoints: new Skill("Hitpoints", 10),
-    // };
+    // extract method when cba
+    const formatedSkillData = Object.keys(skills).reduce((accum, skill) => {
+      const { exp } = skills[skill as keyof Skills];
+      return {
+        ...accum,
+        [skill]: {
+          exp,
+          level: expToLevel(exp),
+        },
+      };
+    }, {}) as Skills;
+
+    this.skills = formatedSkillData;
   }
 
   addToItemBank = (item: ItemData): void => {

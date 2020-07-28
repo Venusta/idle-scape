@@ -134,11 +134,17 @@ export const expTable = [
 ];
 
 const sk = {
-  exp: 200,
+  exp: 20000,
 };
 
-export const saveObject = {
-  agility: sk,
+enum SkillNames {
+
+}
+
+export const skillObject = {
+  agility: {
+    exp: 200,
+  },
   attack: sk,
   construction: sk,
   cooking: sk,
@@ -209,9 +215,9 @@ export const skillData = () : Skills => { // diff file
 // This is important when iterating an enum cause if you iterate keys that have numerical values
 // you will get both named keys and numerical keys
 enum MySkills {
-  woodcutting = "woodcutting",
-  gathering = "gathering",
-  eating = "eating",
+  attack = "attack",
+  strength = "strength",
+  defence = "defence",
 }
 
 // type SkillMap = Map<MySkills, Skill>;
@@ -227,13 +233,15 @@ enum MySkills {
 //   return myStuff;
 // };
 
-type SkillObject = { [key in MySkills]: number };
+type SkillObject = { [key in MySkills]: Skill };
 
 export const getSkillObject = (): SkillObject => {
   const stuff = Object.keys(MySkills)
     .map((key) => {
       return {
-        [key]: 0,
+        [key]: {
+          // exp: skillObject[key].exp,
+        },
       };
     })
     .reduce((prev, next) => ({ ...prev, ...next }));
