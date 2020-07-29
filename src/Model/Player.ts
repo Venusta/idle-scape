@@ -2,14 +2,13 @@ import {
   PlayerOptions, ItemBank, ItemData, SkillsStats,
 } from "../types/types";
 import {
-  addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank, levelToExp, expToLevel,
+  addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank, expToLevel,
 } from "../util";
 
 export default class Player {
   public id: number;
   public name: string;
   public skills: SkillsStats;
-  // public skills: {[name: string]: Skill};
   public bank: ItemBank = {
     995: 100,
     4151: 1,

@@ -39,6 +39,25 @@ const uiSlice = createSlice({
   },
 });
 
+const taskInitialState: {busy: boolean, tasks: Array<string>} = {
+  busy: false,
+  tasks: [],
+};
+
+const taskSlice = createSlice({
+  name: "tasks",
+  initialState: taskInitialState,
+  reducers: {
+    pushTask: (state, { payload }) => {
+      state.tasks.push(payload);
+    },
+  },
+});
+
+export const {
+  pushTask,
+} = taskSlice.actions;
+
 export const {
   filterJob,
   // sort: sortNodes,
@@ -47,6 +66,7 @@ export const {
 export const { toggleInfobox } = uiSlice.actions;
 
 const reducer = combineReducers({
+  tasks: taskSlice.reducer,
   cards: cardsSlice.reducer,
   ui: uiSlice.reducer,
 });

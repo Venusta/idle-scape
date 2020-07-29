@@ -5,12 +5,14 @@
 /* eslint-disable no-console */
 
 import React from "react";
+import { useDispatch } from "react-redux";
 import "./App.css";
 
 // import Sidebar from "./Sidebar/Sidebar";
 // import Cards from "./Cards/Cards";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
+import { pushTask } from "../redux-stuff";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
 import {
@@ -294,6 +296,10 @@ const App = () => {
   // const t = TestMonsterTable;
 
   // console.table(t.generateDrop());
+
+  const dispatch = useDispatch();
+  dispatch(pushTask("task one"));
+  dispatch(pushTask("task two"));
 
   const herp = TestMonster;
   // console.log(herp);
