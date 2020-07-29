@@ -35,22 +35,22 @@ export default class Player {
     this.skills = formatedSkillData;
   }
 
-  addToItemBank = (item: ItemData): void => {
-    console.log(item);
-    this.bank = addToItemBank(this.bank, item);
-  };
+  // addToItemBank = (item: ItemData): void => {
+  //   console.log(item);
+  //   this.bank = addToItemBank(this.bank, item);
+  // };
 
-  addBankToBank = (bank: ItemBank): void => {
-    this.bank = addBankToBank(this.bank, bank);
-  };
+  // addBankToBank = (bank: ItemBank): void => {
+  //   this.bank = addBankToBank(this.bank, bank);
+  // };
 
-  removeFromItemBank = (item: ItemData): void => {
-    this.bank = removeFromItemBank(this.bank, item);
-  };
+  // removeFromItemBank = (item: ItemData): void => {
+  //   this.bank = removeFromItemBank(this.bank, item);
+  // };
 
-  removeBankFromBank = (bank: ItemBank): void => {
-    this.bank = removeBankFromBank(this.bank, bank);
-  };
+  // removeBankFromBank = (bank: ItemBank): void => {
+  //   this.bank = removeBankFromBank(this.bank, bank);
+  // };
 
-  getBank = (): ItemBank => this.bank;
+  // getBank = (): ItemBank => this.bank;
 }

@@ -4,15 +4,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 
 // import Sidebar from "./Sidebar/Sidebar";
 // import Cards from "./Cards/Cards";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
-import { pushTask } from "../redux-stuff";
+import store, {
+  shiftTask, pushTask, RootState, addExp,
+} from "../redux-stuff";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
 import {
@@ -290,21 +293,60 @@ const herbLootTable = [
 
 const App = () => {
   // importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
-  console.log("Rendered");
-  // ID, amount, weight
-
-  // const t = TestMonsterTable;
-
-  // console.table(t.generateDrop());
 
   const dispatch = useDispatch();
-  dispatch(pushTask("task one"));
-  dispatch(pushTask("task two"));
+  const [time, setTime] = useState(new Date());
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const player = useSelector((state: RootState) => state.player);
 
-  const herp = TestMonster;
-  // console.log(herp);
+  useEffect(() => {
+    // check current time vs tasks.tasks[0]
+    // if complete, remove task [0]
+    // do reward
 
-  const loot1 = herp.getLoot(10);
+    if (tasks.tasks.length > 0) {
+      const { when } = tasks.tasks[0];
+
+      // console.log(when);
+      // console.log(time.valueOf());
+
+      if (time.valueOf() > when) {
+        console.log("Task finished.");
+        dispatch(shiftTask());
+      }
+    }
+
+    const timer = setTimeout(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  });
+
+  useEffect(() => {
+    console.log(tasks);
+    console.log(player);
+    console.log("Rendered");
+    dispatch(addExp({ skill: "agility", amount: 50 }));
+    new Laps({ player, name: "a", amount: 1 }).start();
+    new Laps({ player, name: "b", amount: 2 }).start();
+    // task.start();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // const task2 = new Laps({ player, name: "b", amount: 5 });
+  // task2.start();
+
+  // const dispatch = useDispatch();
+  // dispatch(pushTask("task one"));
+  // dispatch(pushTask("task two"));
+
+  // const herp = TestMonster;
+  // // console.log(herp);
+
+  // const loot1 = herp.getLoot(10);
   // console.log(loot1);
   // const loot2 = herp.getLoot(100);
   // console.log(loot2);
@@ -314,23 +356,9 @@ const App = () => {
   // console.log(derp());
   // console.log(getSkillObject());
 
-  const player = new Player({
-    id: 1,
-    name: "yeetus",
-    skills: createFirstStats(),
-  });
-  // const players = [];
-  // players.push(player);
-  // console.log(players);
-
   // console.log(skillObject);
 
-  console.log(player);
-
-  const task = new Laps({ player, name: "a", amount: 5 });
-  task.start();
-  const task2 = new Laps({ player, name: "b", amount: 5 });
-  task2.start();
+  // console.log(player);
 
   // console.log(getSkillObject());
 

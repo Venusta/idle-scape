@@ -2,7 +2,7 @@ import { SkillNames } from "../data";
 import { LapOptions } from "../../types/types";
 import Agility from "../skills/agility";
 import Player from "../../model/Player";
-import TimedTask from "../../model/TimedTask";
+import store, { pushTask } from "../../redux-stuff";
 
 export default class Laps {
   private player: Player;
@@ -33,7 +33,10 @@ export default class Laps {
     console.log(`It will take ${lapTime * this.amount} seconds`);
     console.log(`The reward will be ${exp * this.amount} ${SkillNames.Agility} exp`);
 
-    // here
+    const duration = this.amount * lapTime * 100; // 1000
+    // console.log(`${duration}`);
+
+    store.dispatch(pushTask({ duration }));
 
     // new TimedTask().startTimer(5000, this.finishTask);
     // new TimedTask().startTimer(2000, this.finishTask);
