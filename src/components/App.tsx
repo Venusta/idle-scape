@@ -14,7 +14,7 @@ import "./App.css";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
 import store, {
-  shiftTask, pushTask, RootState, addExp,
+  shiftTask, agilityTask, RootState, addExp,
 } from "../redux-stuff";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
@@ -329,7 +329,7 @@ const App = () => {
     console.log(tasks);
     console.log(player);
     console.log("Rendered");
-    dispatch(addExp({ skill: "agility", amount: 50 }));
+    // dispatch(addExp({ skill: "agility", amount: 50 }));
     new Laps({ player, name: "a", amount: 1 }).start();
     new Laps({ player, name: "b", amount: 2 }).start();
     // task.start();

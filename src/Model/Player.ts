@@ -1,9 +1,7 @@
 import {
-  PlayerOptions, ItemBank, ItemData, SkillsStats,
+  PlayerOptions, ItemBank, SkillsStats,
 } from "../types/types";
-import {
-  addToItemBank, addBankToBank, removeBankFromBank, removeFromItemBank, expToLevel,
-} from "../util";
+import { expToLevel } from "../util";
 
 export default class Player {
   public id: number;

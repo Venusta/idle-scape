@@ -2,6 +2,10 @@
 import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware,
 } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import {
+  takeEvery, all, call, put,
+} from "redux-saga/effects";
 import logger from "redux-logger";
 import { createFirstStats } from "./constants/data";
 import Player from "./model/Player";
@@ -10,36 +14,36 @@ import { SkillsStats } from "./types/types";
 // import nodeData from "./constants/data";
 // import { eMinsTillNextSpawn } from "./utils";
 
-const nodeData: any[] = [];
+// const nodeData: any[] = [];
 
-const nodesInitialState = nodeData.map((node) => node);
+// const nodesInitialState = nodeData.map((node) => node);
 
-const cardsSlice = createSlice({
-  name: "cards",
-  initialState: nodesInitialState,
-  reducers: {
-    filterJob: (state, { payload }) => state.filter((node) => node.job === payload), // TODO store which filters are active and fix this
+// const cardsSlice = createSlice({
+//   name: "cards",
+//   initialState: nodesInitialState,
+//   reducers: {
+//     filterJob: (state, { payload }) => state.filter((node) => node.job === payload), // TODO store which filters are active and fix this
 
-    // sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
-  },
-});
+//     // sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
+//   },
+// });
 
-const uiInitialState = {
-  infobox: true,
-};
+// const uiInitialState = {
+//   infobox: true,
+// };
 
-const uiSlice = createSlice({
-  name: "ui",
-  initialState: uiInitialState,
-  reducers: {
-    toggleInfobox: (state) => {
-      state.infobox = !state.infobox;
-    },
-  },
-});
+// const uiSlice = createSlice({
+//   name: "ui",
+//   initialState: uiInitialState,
+//   reducers: {
+//     toggleInfobox: (state) => {
+//       state.infobox = !state.infobox;
+//     },
+//   },
+// });
 
 const playerInitialState = {
-  ...new Player({
+  ...new Player({ // unspread if multi character support
     id: 1,
     name: "yeetus",
     skills: createFirstStats(), // load from local storage
@@ -74,7 +78,7 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState: taskInitialState,
   reducers: {
-    pushTask: ({ tasks, busy }, { payload: { duration } }: TaskPayload) => {
+    agilityTask: ({ tasks, busy }, { payload: { duration } }: TaskPayload) => {
       const now = Date.now();
       let when;
       if (tasks.length === 0) {
@@ -97,7 +101,7 @@ const taskSlice = createSlice({
 });
 
 export const {
-  pushTask,
+  agilityTask,
   shiftTask,
 } = taskSlice.actions;
 
@@ -105,27 +109,44 @@ export const {
   addExp,
 } = playerSlice.actions;
 
-export const {
-  filterJob,
-  // sort: sortNodes,
-} = cardsSlice.actions;
+export function* shiftTaskRequest(action: any) {
+  yield put(addExp({ skill: "agility", amount: 500 }));
+}
 
-export const { toggleInfobox } = uiSlice.actions;
+export function* taskSagas() {
+  yield all([
+    takeEvery(shiftTask, shiftTaskRequest),
+  ]);
+}
+
+// SAGA SHIT
+export function* rootSaga() {
+  yield all([taskSagas()]);
+}
+
+// export const {
+//   filterJob,
+//   // sort: sortNodes,
+// } = cardsSlice.actions;
+
+// export const { toggleInfobox } = uiSlice.actions;
 
 const reducer = combineReducers({
   tasks: taskSlice.reducer,
-  cards: cardsSlice.reducer,
-  ui: uiSlice.reducer,
+  // cards: cardsSlice.reducer,
+  // ui: uiSlice.reducer,
   player: playerSlice.reducer,
 });
 
 // const middleware = [...getDefaultMiddleware()];
-const middleware = [...getDefaultMiddleware(), logger];
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [...getDefaultMiddleware(), sagaMiddleware, logger];
 const store = configureStore({
   reducer,
   middleware,
 });
 
+sagaMiddleware.run(rootSaga);
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -2,7 +2,7 @@ import { SkillNames } from "../data";
 import { LapOptions } from "../../types/types";
 import Agility from "../skills/agility";
 import Player from "../../model/Player";
-import store, { pushTask } from "../../redux-stuff";
+import store, { agilityTask } from "../../redux-stuff";
 
 export default class Laps {
   private player: Player;
@@ -10,7 +10,6 @@ export default class Laps {
   private amount: number;
 
   constructor({ player, name, amount }: LapOptions) {
-    // super();
     this.player = player;
     this.name = name;
     this.amount = amount;
@@ -36,7 +35,8 @@ export default class Laps {
     const duration = this.amount * lapTime * 100; // 1000
     // console.log(`${duration}`);
 
-    store.dispatch(pushTask({ duration }));
+    store.dispatch(agilityTask({ duration }));
+    console.log(store.getState().player);
 
     // new TimedTask().startTimer(5000, this.finishTask);
     // new TimedTask().startTimer(2000, this.finishTask);
