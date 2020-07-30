@@ -21,7 +21,7 @@ const playerInitialState = [
   },
   {
     ...new Player({
-      id: 0,
+      id: 1,
       name: "deletus",
       skills: createFirstStats(), // load from local storage
     }),

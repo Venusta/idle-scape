@@ -8,11 +8,15 @@ export default class Player {
   public name: string;
   public skills: SkillsStats;
   public bank: ItemBank = {
-    995: 100,
+    995: 100000,
     4151: 1,
   };
   public inventory: ItemBank = {
     1024: 1,
+  };
+
+  public equipment: ItemBank = {
+
   };
 
   constructor({ id, name, skills }: PlayerOptions) {
