@@ -4,44 +4,11 @@ import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import {
-  takeEvery, all, call, put, select,
-} from "redux-saga/effects";
+import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { createFirstStats } from "./constants/data";
 import Player from "./model/Player";
 import { SkillsStats } from "./types/types";
-
-// import nodeData from "./constants/data";
-// import { eMinsTillNextSpawn } from "./utils";
-
-// const nodeData: any[] = [];
-
-// const nodesInitialState = nodeData.map((node) => node);
-
-// const cardsSlice = createSlice({
-//   name: "cards",
-//   initialState: nodesInitialState,
-//   reducers: {
-//     filterJob: (state, { payload }) => state.filter((node) => node.job === payload), // TODO store which filters are active and fix this
-
-//     // sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
-//   },
-// });
-
-// const uiInitialState = {
-//   infobox: true,
-// };
-
-// const uiSlice = createSlice({
-//   name: "ui",
-//   initialState: uiInitialState,
-//   reducers: {
-//     toggleInfobox: (state) => {
-//       state.infobox = !state.infobox;
-//     },
-//   },
-// });
 
 const playerInitialState = [
   {
@@ -79,6 +46,7 @@ const playerSlice = createSlice({
       skills[skill as keyof SkillsStats].exp += expReward;
       console.log(`${name} gained ${expReward} ${skill} exp`);
       // TODO level up if needed
+      // TODO support multiple skills
     },
   },
 });
@@ -120,8 +88,9 @@ const taskSlice = createSlice({
       });
       busy = true;
     },
-    handleReward: ({ tasks, busy }, payload) => {
-      console.log("Task finished.");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    handleReward: ({ tasks, busy }, { payload }: TaskPayload) => {
+      console.log(`${payload.skill} task finished.`);
       tasks.shift();
       if (tasks.length === 0) {
         busy = false;
@@ -155,29 +124,19 @@ export function* rootSaga() {
   yield all([taskSagas()]);
 }
 
-// export const {
-//   filterJob,
-//   // sort: sortNodes,
-// } = cardsSlice.actions;
-
-// export const { toggleInfobox } = uiSlice.actions;
-
 const reducer = combineReducers({
   tasks: taskSlice.reducer,
-  // cards: cardsSlice.reducer,
-  // ui: uiSlice.reducer,
   players: playerSlice.reducer,
 });
 
-// const middleware = [...getDefaultMiddleware()];
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [...getDefaultMiddleware(), sagaMiddleware, logger];
 const store = configureStore({
   reducer,
   middleware,
 });
-
 sagaMiddleware.run(rootSaga);
+
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>;
