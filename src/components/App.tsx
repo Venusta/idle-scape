@@ -14,7 +14,7 @@ import "./App.css";
 // import DropTable from "../Model/DropTable";
 // import HerbDropTable from "../constants/subtables/HerbDropTable";
 import store, {
-  shiftTask, agilityTask, RootState, addExp,
+  handleReward, agilityTask, RootState, addExp,
 } from "../redux-stuff";
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
@@ -305,14 +305,14 @@ const App = () => {
     // do reward
 
     if (tasks.tasks.length > 0) {
-      const { when } = tasks.tasks[0];
+      const task = tasks.tasks[0];
+      const { duration } = task;
 
-      // console.log(when);
+      // console.log(duration);
       // console.log(time.valueOf());
 
-      if (time.valueOf() > when) {
-        console.log("Task finished.");
-        dispatch(shiftTask());
+      if (time.valueOf() > duration) {
+        dispatch(handleReward(task));
       }
     }
 

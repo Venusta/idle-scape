@@ -26,17 +26,19 @@ export default class Laps {
       console.log(`Level too low for course: ${selectedCourse.name}`);
       return;
     }
-    const { name, exp, lapTime } = selectedCourse;
+    const { name, exp: courseExp, lapTime } = selectedCourse;
     console.log(selectedCourse);
     console.log(`${this.player.name} wants to do ${this.amount}x laps of course: ${name}`);
     console.log(`It will take ${lapTime * this.amount} seconds`);
-    console.log(`The reward will be ${exp * this.amount} ${SkillNames.Agility} exp`);
+    console.log(`The reward will be ${courseExp * this.amount} ${SkillNames.Agility} exp`);
 
     const duration = this.amount * lapTime * 100; // 1000
+    const exp = courseExp * this.amount;
+    const skill = SkillNames.Agility;
     // console.log(`${duration}`);
 
-    store.dispatch(agilityTask({ duration }));
-    console.log(store.getState().player);
+    store.dispatch(agilityTask({ duration, skill, exp }));
+    // console.log(store.getState().player);
 
     // new TimedTask().startTimer(5000, this.finishTask);
     // new TimedTask().startTimer(2000, this.finishTask);
