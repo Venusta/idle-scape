@@ -11,8 +11,11 @@ export interface PlayerOptions {
   skills: SkillsStats;
 }
 
-export interface LapOptions {
+interface PlayerID {
   playerID: number;
+}
+
+export interface LapOptions extends PlayerID {
   name: string;
   amount: number
 }
