@@ -1,26 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-empty */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-
-// import Sidebar from "./Sidebar/Sidebar";
-// import Cards from "./Cards/Cards";
-// import DropTable from "../Model/DropTable";
-// import HerbDropTable from "../constants/subtables/HerbDropTable";
-import store, {
-  handleReward, agilityTask, RootState, addExp,
-} from "../redux-stuff";
-import Player from "../model/Player";
-import TestMonster from "../constants/monsters/TestMonster";
-import {
-  skillData, derp, getSkillObject, createFirstStats, SkillNames,
-} from "../constants/data";
+import { handleReward, RootState, addExp } from "../redux-stuff";
+import { SkillNames } from "../constants/data";
 import Laps from "../constants/player/laps";
 
 const items = {

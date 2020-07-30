@@ -2,7 +2,7 @@ import { SkillNames } from "../data";
 import { LapOptions } from "../../types/types";
 import Agility from "../skills/agility";
 import Player from "../../model/Player";
-import store, { agilityTask } from "../../redux-stuff";
+import store, { task } from "../../redux-stuff";
 
 export default class Laps {
   private playerID: number;
@@ -43,7 +43,7 @@ export default class Laps {
     const expReward = courseExp * amount;
     const skill = SkillNames.Agility;
 
-    store.dispatch(agilityTask({
+    store.dispatch(task({
       playerID, duration, skill, expReward,
     }));
   };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import {
@@ -72,7 +73,7 @@ const taskSlice = createSlice({
   initialState: taskInitialState,
   reducers: {
     // eslint-disable-next-line object-curly-newline
-    agilityTask: ({ tasks, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
+    task: ({ tasks, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
       // if busy halt maybe
       const now = Date.now();
       let when;
@@ -88,7 +89,6 @@ const taskSlice = createSlice({
       });
       busy = true;
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleReward: ({ tasks, busy }, { payload }: TaskPayload) => {
       console.log(`${payload.skill} task finished.`);
       tasks.shift();
@@ -100,7 +100,7 @@ const taskSlice = createSlice({
 });
 
 export const {
-  agilityTask,
+  task,
   handleReward,
 } = taskSlice.actions;
 
