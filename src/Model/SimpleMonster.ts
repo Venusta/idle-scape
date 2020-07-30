@@ -25,9 +25,4 @@ export default class SimpleMonster extends Monster {
     }
     return loot.getLoot();
   };
-
-  // eslint-disable-next-line arrow-body-style
-  kill = (amount = 1, options: MonsterOptions) => {
-    return "";
-  };
 }

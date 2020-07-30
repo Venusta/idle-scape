@@ -1,4 +1,4 @@
-import { getRandomInt, levelToExp, expToLevel } from "../util";
+import { levelToExp } from "../util";
 import { SkillsStats, SkillStats } from "../types/types";
 
 const skillNames = [
@@ -71,21 +71,21 @@ export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, ski
 //   });
 // };
 
-export const derp = () => { // diff file
-  const ahhhh:{[skill: string]: number} = {};
-  const herp = skillNames.forEach((skill) => {
-    ahhhh[skill] = 0;
-  }, {});
-  return ahhhh;
-};
+// export const derp = () => { // diff file
+//   const ahhhh:{[skill: string]: number} = {};
+//   const herp = skillNames.forEach((skill) => {
+//     ahhhh[skill] = 0;
+//   }, {});
+//   return ahhhh;
+// };
 
-export const skillData = () : SkillsStats => { // diff file
-  const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
-    accum[skill] = getRandomInt(0, 200000);
-    return accum;
-  }, {});
-  return KUT as unknown as SkillsStats;
-};
+// export const skillData = () : SkillsStats => { // diff file
+//   const KUT = skillNames.reduce((accum: {[skill: string]: number}, skill: string) => {
+//     accum[skill] = getRandomInt(0, 200000);
+//     return accum;
+//   }, {});
+//   return KUT as unknown as SkillsStats;
+// };
 
 // Greenchill's magical example
 
@@ -128,5 +128,3 @@ export const getSkillObject = (): SkillObject => {
 // export const skillData2 = (derp: Skills): Skills => {
 //   return derp;
 // };
-
-export default skillData;
