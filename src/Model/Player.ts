@@ -30,6 +30,7 @@ export default class Player {
         [skill]: {
           exp,
           level: expToLevel(exp),
+          boost: 0,
         },
       };
     }, {}) as SkillsStats;

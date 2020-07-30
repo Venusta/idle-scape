@@ -39,7 +39,7 @@ export interface ItemBank {
 export interface SkillStats {
   level: number;
   exp: number;
-  boost?: number
+  boost: number
 }
 
 // export type Skill = number;
