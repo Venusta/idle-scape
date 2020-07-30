@@ -35,7 +35,7 @@ export enum SkillNames {
 }
 
 export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, skill) => {
-  let exp = 90;
+  let exp = 0;
   if (skill === SkillNames.Hitpoints) {
     exp = levelToExp(10);
   }

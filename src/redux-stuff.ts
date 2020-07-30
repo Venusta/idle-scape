@@ -78,7 +78,7 @@ const playerSlice = createSlice({
       const { skills, name } = state[playerID];
       skills[skill as keyof SkillsStats].exp += expReward;
       console.log(`${name} gained ${expReward} ${skill} exp`);
-      // TODO saga to check for addExp and level up if needed
+      // TODO level up if needed
     },
   },
 });

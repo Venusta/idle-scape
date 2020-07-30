@@ -19,7 +19,7 @@ import store, {
 import Player from "../model/Player";
 import TestMonster from "../constants/monsters/TestMonster";
 import {
-  skillData, derp, getSkillObject, createFirstStats,
+  skillData, derp, getSkillObject, createFirstStats, SkillNames,
 } from "../constants/data";
 import Laps from "../constants/player/laps";
 
@@ -318,7 +318,7 @@ const App = () => {
 
     const timer = setTimeout(() => {
       setTime(new Date());
-    }, 10000);
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
@@ -328,8 +328,9 @@ const App = () => {
   useEffect(() => {
     console.log(players);
     console.log("Rendered");
-    dispatch(addExp({ playerID: 0, skill: "agility", expReward: 50 }));
+    dispatch(addExp({ playerID: 0, skill: SkillNames.Agility, expReward: 50 }));
     new Laps({ playerID: 0, name: "a", amount: 1 }).start();
+    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // task.start();
   // eslint-disable-next-line react-hooks/exhaustive-deps

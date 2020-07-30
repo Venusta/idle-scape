@@ -31,7 +31,7 @@ export default class Laps {
     const { level, boost = 0 } = player.skills[SkillNames.Agility];
 
     if (level + boost < courseLevel) {
-      console.log(`Level too low for course: ${courseName}`);
+      console.log(`${player.name}'s ${SkillNames.Agility} level too low for course: ${courseName}`);
       return;
     }
     console.log(selectedCourse);
