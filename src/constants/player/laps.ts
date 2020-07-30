@@ -5,50 +5,46 @@ import Player from "../../model/Player";
 import store, { agilityTask } from "../../redux-stuff";
 
 export default class Laps {
-  private player: Player;
+  private playerID: number;
   private name: string;
   private amount: number;
 
-  constructor({ player, name, amount }: LapOptions) {
-    this.player = player;
+  constructor({ playerID, name, amount }: LapOptions) {
+    this.playerID = playerID;
     this.name = name;
     this.amount = amount;
   }
 
   start = ():void => {
-    const selectedCourse = Agility.courses.find((course) => course.name === this.name);
+    const { playerID, name, amount } = this;
+    const player: Player = store.getState().players[playerID];
+
+    const selectedCourse = Agility.courses.find((course) => course.name === name);
     if (!selectedCourse) {
       console.log("Course not found");
       return;
     }
-    const { level, boost = 0 } = this.player.skills[SkillNames.Agility];
-    if (level + boost < selectedCourse.level) {
-      console.log(`Level too low for course: ${selectedCourse.name}`);
+    const {
+      name: courseName, exp: courseExp, lapTime, level: courseLevel,
+    } = selectedCourse;
+
+    const { level, boost = 0 } = player.skills[SkillNames.Agility];
+
+    if (level + boost < courseLevel) {
+      console.log(`Level too low for course: ${courseName}`);
       return;
     }
-    const { name, exp: courseExp, lapTime } = selectedCourse;
     console.log(selectedCourse);
-    console.log(`${this.player.name} wants to do ${this.amount}x laps of course: ${name}`);
-    console.log(`It will take ${lapTime * this.amount} seconds`);
-    console.log(`The reward will be ${courseExp * this.amount} ${SkillNames.Agility} exp`);
+    console.log(`${player.name} wants to do ${amount}x laps of course: ${courseName}`);
+    console.log(`It will take ${lapTime * amount} seconds`);
+    console.log(`The reward will be ${courseExp * amount} ${SkillNames.Agility} exp`);
 
-    const duration = this.amount * lapTime * 100; // 1000
-    const exp = courseExp * this.amount;
+    const duration = amount * lapTime * 100; // TODO should be 1000
+    const expReward = courseExp * amount;
     const skill = SkillNames.Agility;
-    // console.log(`${duration}`);
 
-    store.dispatch(agilityTask({ duration, skill, exp }));
-    // console.log(store.getState().player);
-
-    // new TimedTask().startTimer(5000, this.finishTask);
-    // new TimedTask().startTimer(2000, this.finishTask);
-    // this.finishTask();
-  };
-
-  finishTask = (): void => {
-    console.log("task finished");
-    console.log(this.player);
-
-    // give player xp and whatever else
+    store.dispatch(agilityTask({
+      playerID, duration, skill, expReward,
+    }));
   };
 }

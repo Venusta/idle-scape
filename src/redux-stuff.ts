@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware,
@@ -42,21 +43,41 @@ import { SkillsStats } from "./types/types";
 //   },
 // });
 
-const playerInitialState = {
-  ...new Player({ // unspread if multi character support
-    id: 1,
-    name: "yeetus",
-    skills: createFirstStats(), // load from local storage
-  }),
+const playerInitialState = [
+  {
+    ...new Player({
+      id: 0,
+      name: "yeetus",
+      skills: createFirstStats(), // load from local storage
+    }),
+  },
+  {
+    ...new Player({
+      id: 0,
+      name: "deletus",
+      skills: createFirstStats(), // load from local storage
+    }),
+  },
+];
+
+export interface AddExp { // TODO move later
+  payload: Herp
+}
+
+type Herp = {
+  playerID: number
+  skill: string
+  expReward: number
 };
 
 const playerSlice = createSlice({
-  name: "player",
+  name: "players",
   initialState: playerInitialState,
   reducers: {
-    addExp: ({ skills }, { payload: { skill, amount } }) => {
-      skills[skill as keyof SkillsStats].exp += amount;
-      console.log(`Gained ${amount} ${skill} exp`);
+    addExp: (state, { payload: { playerID, skill, expReward } }: AddExp) => {
+      const { skills, name } = state[playerID];
+      skills[skill as keyof SkillsStats].exp += expReward;
+      console.log(`${name} gained ${expReward} ${skill} exp`);
       // TODO saga to check for addExp and level up if needed
     },
   },
@@ -72,16 +93,18 @@ export interface TaskPayload { // TODO move later
 }
 
 type TheActualPayloads = {
+  playerID: number
   duration: number
   skill: string
-  exp: number
+  expReward: number
 };
 
 const taskSlice = createSlice({
   name: "tasks",
   initialState: taskInitialState,
   reducers: {
-    agilityTask: ({ tasks, busy }, { payload: { duration, skill, exp } }: TaskPayload) => {
+    // eslint-disable-next-line object-curly-newline
+    agilityTask: ({ tasks, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
       // if busy halt maybe
       const now = Date.now();
       let when;
@@ -92,7 +115,9 @@ const taskSlice = createSlice({
         when = wtf + duration;
       }
 
-      tasks.push({ duration: when, skill, exp });
+      tasks.push({
+        duration: when, skill, expReward, playerID,
+      });
       busy = true;
     },
     handleReward: ({ tasks, busy }, payload) => {
@@ -114,9 +139,9 @@ export const {
   addExp,
 } = playerSlice.actions;
 
-export function* shiftTaskRequest(action: any) {
-  const { skill, exp: amount } = action.payload;
-  yield put(addExp({ skill, amount }));
+export function* shiftTaskRequest(action: AddExp) {
+  const { skill, expReward, playerID } = action.payload;
+  yield put(addExp({ playerID, skill, expReward }));
 }
 
 export function* taskSagas() {
@@ -141,7 +166,7 @@ const reducer = combineReducers({
   tasks: taskSlice.reducer,
   // cards: cardsSlice.reducer,
   // ui: uiSlice.reducer,
-  player: playerSlice.reducer,
+  players: playerSlice.reducer,
 });
 
 // const middleware = [...getDefaultMiddleware()];

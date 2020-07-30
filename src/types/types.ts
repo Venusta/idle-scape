@@ -12,7 +12,7 @@ export interface PlayerOptions {
 }
 
 export interface LapOptions {
-  player: Player;
+  playerID: number;
   name: string;
   amount: number
 }

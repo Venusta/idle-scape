@@ -297,7 +297,7 @@ const App = () => {
   const dispatch = useDispatch();
   const [time, setTime] = useState(new Date());
   const tasks = useSelector((state: RootState) => state.tasks);
-  const player = useSelector((state: RootState) => state.player);
+  const players = useSelector((state: RootState) => state.players);
 
   useEffect(() => {
     // check current time vs tasks.tasks[0]
@@ -318,7 +318,7 @@ const App = () => {
 
     const timer = setTimeout(() => {
       setTime(new Date());
-    }, 1000);
+    }, 10000);
 
     return () => {
       clearTimeout(timer);
@@ -326,12 +326,11 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log(tasks);
-    console.log(player);
+    console.log(players);
     console.log("Rendered");
-    // dispatch(addExp({ skill: "agility", amount: 50 }));
-    new Laps({ player, name: "a", amount: 1 }).start();
-    new Laps({ player, name: "b", amount: 2 }).start();
+    dispatch(addExp({ playerID: 0, skill: "agility", expReward: 50 }));
+    new Laps({ playerID: 0, name: "a", amount: 1 }).start();
+    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // task.start();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
