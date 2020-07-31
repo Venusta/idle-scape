@@ -1,9 +1,9 @@
 import {
-  PlayerOptions, ItemBank, SkillsStats,
+  PlayerOptions, ItemBank, SkillsStats, EquipmentSlots
 } from "../types/types";
 import { expToLevel } from "../util";
 
-export default class Player {
+export default class Player { // TODO this entire class needs to be made into an object
   public id: number;
   public name: string;
   public skills: SkillsStats;
@@ -15,11 +15,9 @@ export default class Player {
     1024: 1,
   };
 
-  public equipment: ItemBank = {
+  public equipment: EquipmentSlots;
 
-  };
-
-  constructor({ id, name, skills }: PlayerOptions) {
+  constructor({ id, name, skills, equipment }: PlayerOptions) {
     this.id = id;
     this.name = name;
     // extract method when cba
@@ -36,6 +34,7 @@ export default class Player {
     }, {}) as SkillsStats;
 
     this.skills = formatedSkillData;
+    this.equipment = equipment;
   }
 
   // addToItemBank = (item: ItemData): void => {

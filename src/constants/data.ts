@@ -1,7 +1,7 @@
 import { levelToExp } from "../util";
-import { SkillsStats, SkillStats } from "../types/types";
+import { SkillsStats, SkillStats, EquipmentSlots } from "../types/types";
 
-const skillNames = [
+export const skillNames = [
   "attack",
   "defence",
   "strength",
@@ -35,9 +35,9 @@ export enum SkillNames {
 }
 
 export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, skill) => {
-  let exp = 0;
+  let exp = levelToExp(80);
   if (skill === SkillNames.Hitpoints) {
-    exp = levelToExp(10);
+    exp = levelToExp(80); // 10
   }
   return {
     ...accum,
@@ -45,7 +45,44 @@ export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, ski
       exp,
     },
   };
-}, {}) as SkillsStats;
+}, {} as SkillsStats);
+
+export const createFirstStats2 = (): SkillsStats => skillNames.reduce((accum, skill) => {
+  let exp = levelToExp(80);
+  if (skill === SkillNames.Hitpoints) {
+    exp = levelToExp(80); // 10
+  }
+  return {
+    ...accum,
+    [skill]: {
+      exp,
+      level: 1,
+      boost: 0,
+    },
+  };
+}, {} as SkillsStats);
+
+export enum EquipmentSlotNames {
+  Head = "head",
+  Body = "body",
+  Legs = "legs",
+  Feet = "feet",
+  Hands = "hands",
+  Cape = "cape",
+  Weapon = "weapon",
+  Shield = "shield",
+  Ammo = "ammo",
+  Ring = "ring",
+  Neck = "neck"
+}
+
+// Creates object consisting of item slots as described by enum EquipmentSlots
+// as key and item id as value
+export const createItemSlots = (): EquipmentSlots => Object.values(EquipmentSlotNames)
+  .reduce((accum, slot) => ({
+    ...accum,
+    [slot]: -2,
+  }), {} as EquipmentSlots);
 
 // export const skillData = (): Partial<Skills> => {
 // export const skillDataFUCK = ():Partial<Skills> => {

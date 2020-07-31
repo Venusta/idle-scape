@@ -40,7 +40,7 @@ export interface MonsterData {
   hitpoints: number;
   maxHit: number;
   attackType: MonsterAttackType[];
-  attackSpeed: number | null;
+  attackSpeed: number;
   aggressive: boolean;
   poisonous: boolean;
   immuneToPoison: boolean;
@@ -79,6 +79,7 @@ export interface PlayerOptions {
   id: number;
   name: string;
   skills: SkillsStats;
+  equipment: EquipmentSlots;
 }
 
 interface PlayerID {
@@ -138,4 +139,18 @@ export interface SkillsStats {
   runecrafting: SkillStats;
   hunter: SkillStats;
   construction: SkillStats;
+}
+
+export interface EquipmentSlots {
+  head: number;
+  body: number;
+  legs: number;
+  feet: number;
+  hands: number;
+  cape: number;
+  weapon: number;
+  shield: number;
+  ammo: number;
+  ring: number;
+  neck: number;
 }

@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { handleReward, RootState, addExp } from "../redux-stuff";
-import { SkillNames } from "../constants/data";
+import { SkillNames, createItemSlots, createFirstStats2, skillNames } from "../constants/data";
 import Laps from "../constants/player/laps";
+import CombatSimulator, { AttackStyle, CombatStats } from "../model/CombatSimulator";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,11 +43,42 @@ const App = () => {
   useEffect(() => {
     console.log(players);
     console.log("Rendered");
-    dispatch(addExp({ playerID: 0, skill: SkillNames.Agility, expReward: 50 }));
-    new Laps({ playerID: 0, name: "a", amount: 1 }).start();
-    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
-    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // dispatch(addExp({ playerID: 0, skill: SkillNames.Agility, expReward: 50 }));
+    // new Laps({ playerID: 0, name: "a", amount: 1 }).start();
+    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+
+    const simulator = new CombatSimulator(0, 0, 3600, AttackStyle.aggressive, {});
+    // const monsterCombatStats = {
+    //   attack: { level: TestMonster.data.attackLevel },
+    //   defence: { level: TestMonster.data.defenceLevel },
+    //   strength: { level: TestMonster.data.strengthLevel },
+    //   hitpoints: { level: TestMonster.data.hitpoints },
+    //   ranged: { level: TestMonster.data.rangedLevel },
+    //   magic: { level: TestMonster.data.magicLevel },
+    // };
+    const playerCombatStats = {
+      attack: { level: players[0].skills.attack.level, boost: 8 },
+      defence: { level: players[0].skills.defence.level },
+      strength: { level: players[0].skills.strength.level },
+      hitpoints: { level: players[0].skills.hitpoints.level },
+      ranged: { level: players[0].skills.ranged.level },
+      magic: { level: players[0].skills.magic.level, boost: 5 },
+    };
+
+    // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
+    simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
+    console.log(createFirstStats2());
+    
+    // simulator.simulate();
+    // simulator.simulate();
+    // simulator.simulate();
+    // simulator.simulate();
+
+    console.log("blabla");
+    console.log(createItemSlots());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const herp = TestMonster;
