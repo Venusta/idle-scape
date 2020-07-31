@@ -1,7 +1,8 @@
 import {
-  PlayerOptions, ItemBank, SkillsStats, EquipmentSlots
+  PlayerOptions, ItemBank, SkillsStats, EquipmentSlots,
 } from "../types/types";
 import { expToLevel } from "../util";
+import { skillsSaveObject } from "../constants/data";
 
 export default class Player { // TODO this entire class needs to be made into an object
   public id: number;
@@ -17,11 +18,13 @@ export default class Player { // TODO this entire class needs to be made into an
 
   public equipment: EquipmentSlots;
 
-  constructor({ id, name, skills, equipment }: PlayerOptions) {
+  constructor({
+    id, name, skills, equipment,
+  }: PlayerOptions) {
     this.id = id;
     this.name = name;
     // extract method when cba
-    const formatedSkillData = Object.keys(skills).reduce((accum, skill) => {
+    const formatedSkillData: SkillsStats = Object.keys(skills).reduce((accum, skill) => {
       const { exp } = skills[skill as keyof SkillsStats];
       return {
         ...accum,
@@ -31,7 +34,7 @@ export default class Player { // TODO this entire class needs to be made into an
           boost: 0,
         },
       };
-    }, {}) as SkillsStats;
+    }, { ...skillsSaveObject });
 
     this.skills = formatedSkillData;
     this.equipment = equipment;

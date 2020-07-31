@@ -15,7 +15,7 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "lib": ["dom", "es2019", "ES6"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
   "exclude": ["build", "node_modules"]
 }

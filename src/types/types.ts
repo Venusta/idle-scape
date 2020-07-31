@@ -154,3 +154,129 @@ export interface EquipmentSlots {
   ring: number;
   neck: number;
 }
+
+export enum EquipmentSlotNames {
+  Head = "head",
+  Body = "body",
+  Legs = "legs",
+  Feet = "feet",
+  Hands = "hands",
+  Cape = "cape",
+  Weapon = "weapon",
+  Shield = "shield",
+  Ammo = "ammo",
+  Ring = "ring",
+  Neck = "neck"
+}
+
+export interface CompleteItemData {
+  "id": number;
+  "name": string;
+  "incomplete": boolean;
+  "members": boolean;
+  "tradeable": boolean;
+  "tradeable_on_ge": boolean;
+  "stackable": boolean;
+  "stacked": null;
+  "noted": boolean;
+  "noteable": boolean;
+  "linked_id_item": number | null;
+  "linked_id_noted": number | null;
+  "linked_id_placeholder": number | null;
+  "placeholder": boolean;
+  "equipable": boolean;
+  "equipable_by_player": boolean;
+  "equipable_weapon": boolean;
+  "cost": number;
+  "lowalch": number | null;
+  "highalch": number | null;
+  "weight": number;
+  "buy_limit": number | null;
+  "quest_item": boolean;
+  "release_date": string;
+  "duplicate": boolean;
+  "examine": string;
+  "icon": string;
+  "wiki_name": string;
+  "wiki_url": string;
+  "wiki_exchange": string | null;
+  "equipment": EquipmentData | null;
+  "weapon": WeaponData | null;
+}
+
+export interface EquipmentData {
+  "attack_stab": number;
+  "attack_slash": number;
+  "attack_crush": number;
+  "attack_magic": number;
+  "attack_ranged": number;
+  "defence_stab": number;
+  "defence_slash": number;
+  "defence_crush": number;
+  "defence_magic": number;
+  "defence_ranged": number;
+  "melee_strength": number;
+  "ranged_strength": number;
+  "magic_damage": number;
+  "prayer": number;
+  "slot": EquipmentSlotNames;
+  "requirements": EquipableRequirements | null;
+}
+
+export interface EquipableRequirements {
+  attack?: number;
+  strength?: number;
+  defence?: number;
+  ranged?: number;
+  magic?: number;
+  prayer?: number;
+}
+
+export interface WeaponData {
+  "attack_speed": number;
+  "weapon_type": string;
+  "stances": WeaponStance[];
+}
+
+export interface WeaponStance {
+  "combat_style": string;
+  "attack_type": AttackType | null;
+  "attack_style": AttackStyle | null;
+  "experience": string;
+  "boosts": string | null;
+}
+
+export enum AttackStyle {
+  aggressive = "strength",
+  melee_accurate = "attack",
+  controlled = "controlled",
+  defensive = "defensive",
+  rapid = "rapid",
+  longRange = "longrange",
+  ranged_accurate = "ranged_accurate"
+}
+
+export enum AttackType {
+  Stab = "stab",
+  Slash = "slash",
+  Crash = "crush",
+  Magic = "magic",
+  Ranged = "ranged"
+}
+
+export interface EquipmentBonuses {
+  "attack_stab": number;
+  "attack_slash": number;
+  "attack_crush": number;
+  "attack_magic": number;
+  "attack_ranged": number;
+  "defence_stab": number;
+  "defence_slash": number;
+  "defence_crush": number;
+  "defence_magic": number;
+  "defence_ranged": number;
+  "melee_strength": number;
+  "ranged_strength": number;
+  "magic_damage": number;
+  "prayer": number;
+}

@@ -3,10 +3,15 @@ import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import Player from "../model/Player";
+import Equipment from "../model/Equipment";
+import { SkillsStats, AttackStyle, EquipmentBonuses } from "../types/types";
 import { handleReward, RootState, addExp } from "../redux-stuff";
-import { SkillNames, createItemSlots, createFirstStats2, skillNames } from "../constants/data";
+import {
+  SkillNames, createItemSlots, createFirstStats2, skillNames, save, loadSave,
+} from "../constants/data";
 import Laps from "../constants/player/laps";
-import CombatSimulator, { AttackStyle, CombatStats } from "../model/CombatSimulator";
+import CombatSimulator, { CombatStats } from "../model/CombatSimulator";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,7 +74,7 @@ const App = () => {
     // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
     simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
     console.log(createFirstStats2());
-    
+
     // simulator.simulate();
     // simulator.simulate();
     // simulator.simulate();
@@ -77,6 +82,20 @@ const App = () => {
 
     console.log("blabla");
     console.log(createItemSlots());
+    // save(players[0]);
+
+    const cunt: SkillsStats = loadSave();
+    save(cunt);
+
+    const y = new Player({
+      id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
+    });
+
+    console.log(y);
+
+    console.log(cunt);
+
+    const equipment = new Equipment(0);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

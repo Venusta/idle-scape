@@ -1,20 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import store from "../redux-stuff";
-import { PlayerOptions } from "../types/types";
+import { PlayerOptions, AttackStyle } from "../types/types";
 import SimpleMonster from "./SimpleMonster";
 import TestMonster from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
-
-export enum AttackStyle {
-  aggressive = "strength",
-  melee_accurate = "attack",
-  controlled = "controlled",
-  defensive = "defensive",
-  rapid = "rapid",
-  longRange = "longRange",
-  ranged_accurate = "ranged_accurate"
-}
 
 enum StyleValue {
   aggressive = 3,
