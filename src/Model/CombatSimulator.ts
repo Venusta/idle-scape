@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import store from "../redux-stuff";
 import { PlayerOptions } from "../types/types";
