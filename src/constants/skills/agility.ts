@@ -1,4 +1,4 @@
-import { SkillNames } from "../../model/Skills";
+import { SkillNames } from "../data";
 
 const courses = [
   {

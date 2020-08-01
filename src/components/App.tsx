@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Bank from "./Bank/Bank";
+// import Bank from "./Bank/Bank";
 
 import "./App.css";
 import { SkillsStats, AttackStyle, Player } from "../types/types";
@@ -10,7 +10,7 @@ import { createItemSlots } from "../constants/data";
 import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import { save, loadSave } from "../model/Save";
-import { Skills, SkillNames } from "../model/Skills";
+import Skills from "../model/Skills";
 import Equipment from "../model/Equipment";
 import rawIconData from "../assets/icons/icons-items-complete.json";
 
@@ -83,7 +83,7 @@ const App = () => {
     console.log("blabla");
     console.log(createItemSlots());
 
-    console.log(Skills());
+    console.log(new Skills());
 
     // const y = new Player({
     //   id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),

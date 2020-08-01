@@ -1,7 +1,7 @@
-import { SkillNames } from "../../model/Skills";
 import { LapOptions, Player } from "../../types/types";
 import Agility from "../skills/agility";
 import store, { task } from "../../redux-stuff";
+import { SkillNames } from "../data";
 
 export default class Laps {
   private playerID: number;

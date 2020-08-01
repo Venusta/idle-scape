@@ -1,5 +1,5 @@
 import { Player } from "../types/types";
-import { initialSkills } from "./Skills";
+import Skills from "./Skills";
 
 interface PlayerOptions {
   id: number;
@@ -8,7 +8,7 @@ interface PlayerOptions {
 
 const player = ({ id, name }: PlayerOptions): Player => {
   console.log("Player Remake!");
-  const skills = initialSkills;
+  const skills = new Skills();
   const bank = {
     995: 100,
     4151: 200,
