@@ -3,15 +3,13 @@ import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import Player from "../model/Player";
-import Equipment from "../model/Equipment";
-import { SkillsStats, AttackStyle, EquipmentBonuses } from "../types/types";
+import { SkillsStats, AttackStyle } from "../types/types";
 import { handleReward, RootState, addExp } from "../redux-stuff";
 import {
-  SkillNames, createItemSlots, createFirstStats2, skillNames, save, loadSave,
+  createItemSlots, save, loadSave, SkillNames,
 } from "../constants/data";
 import Laps from "../constants/player/laps";
-import CombatSimulator, { CombatStats } from "../model/CombatSimulator";
+import CombatSimulator from "../model/CombatSimulator";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,14 +52,7 @@ const App = () => {
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
     const simulator = new CombatSimulator(0, 0, 3600, AttackStyle.aggressive, {});
-    // const monsterCombatStats = {
-    //   attack: { level: TestMonster.data.attackLevel },
-    //   defence: { level: TestMonster.data.defenceLevel },
-    //   strength: { level: TestMonster.data.strengthLevel },
-    //   hitpoints: { level: TestMonster.data.hitpoints },
-    //   ranged: { level: TestMonster.data.rangedLevel },
-    //   magic: { level: TestMonster.data.magicLevel },
-    // };
+
     const playerCombatStats = {
       attack: { level: players[0].skills.attack.level, boost: 8 },
       defence: { level: players[0].skills.defence.level },
@@ -73,7 +64,6 @@ const App = () => {
 
     // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
     simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
-    console.log(createFirstStats2());
 
     // simulator.simulate();
     // simulator.simulate();
@@ -87,15 +77,15 @@ const App = () => {
     const cunt: SkillsStats = loadSave();
     save(cunt);
 
-    const y = new Player({
-      id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
-    });
+    // const y = new Player({
+    //   id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
+    // });
 
-    console.log(y);
+    // console.log(y);
 
     console.log(cunt);
 
-    const equipment = new Equipment(0);
+    // const equipment = new Equipment(0);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

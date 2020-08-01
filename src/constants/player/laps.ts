@@ -1,5 +1,5 @@
 import { SkillNames } from "../data";
-import { LapOptions, PlayerOptions } from "../../types/types";
+import { LapOptions, Player } from "../../types/types";
 import Agility from "../skills/agility";
 import store, { task } from "../../redux-stuff";
 
@@ -16,7 +16,7 @@ export default class Laps {
 
   start = ():void => {
     const { playerID, name, amount } = this;
-    const player: PlayerOptions = store.getState().players[playerID];
+    const player: Player = store.getState().players[playerID];
 
     const selectedCourse = Agility.courses.find((course) => course.name === name);
     if (!selectedCourse) {

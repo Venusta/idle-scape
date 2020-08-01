@@ -1,8 +1,7 @@
-import { levelToExp } from "../util";
+import { levelToExp, expToLevel } from "../util";
 import {
   SkillsStats, SkillStats, EquipmentSlots, EquipmentSlotNames,
 } from "../types/types";
-import Player from "../model/Player";
 
 export const skillNames = [
   "attack",
@@ -97,24 +96,11 @@ export const createFirstStats = (): SkillsStats => skillNames.reduce((accum, ski
     ...accum,
     [skill]: {
       exp,
-    },
-  };
-}, {} as SkillsStats);
-
-export const createFirstStats2 = (): SkillsStats => skillNames.reduce((accum, skill) => {
-  let exp = levelToExp(80);
-  if (skill === SkillNames.Hitpoints) {
-    exp = levelToExp(80); // 10
-  }
-  return {
-    ...accum,
-    [skill]: {
-      exp,
-      level: 1,
+      level: expToLevel(exp),
       boost: 0,
     },
   };
-}, {} as SkillsStats);
+}, { ...skillsSaveObject });
 
 // Creates object consisting of item slots as described by enum EquipmentSlots
 // as key and item id as value

@@ -7,27 +7,14 @@ import {
 import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
-import { createFirstStats, createItemSlots } from "./constants/data";
-import Player from "./model/Player";
 import { SkillsStats } from "./types/types";
+import player from "./model/Player";
 
 const playerInitialState = [
-  {
-    ...new Player({
-      id: 0,
-      name: "yeetus",
-      skills: createFirstStats(), // load from local storage
-      equipment: createItemSlots(),
-    }),
-  },
-  {
-    ...new Player({
-      id: 1,
-      name: "deletus",
-      skills: createFirstStats(), // load from local storage
-      equipment: createItemSlots(),
-    }),
-  },
+
+  player({ id: 0, name: "yeetus" }),
+  player({ id: 1, name: "deletus" }),
+
 ];
 
 export interface AddExp { // TODO move later

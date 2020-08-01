@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import store from "../redux-stuff";
-import { PlayerOptions, AttackStyle } from "../types/types";
+import { AttackStyle, Player } from "../types/types";
 import SimpleMonster from "./SimpleMonster";
 import TestMonster from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
 
 enum StyleValue {
   aggressive = 3,
-  melee_accurate =3,
+  melee_accurate = 3,
   controlled = 1,
   defensive = 3,
   longRange = 3,
@@ -114,7 +114,7 @@ export default class CombatSimulator {
   private monster: SimpleMonster;
   private timeLimit: number;
   private supplies: any;
-  private player: PlayerOptions;
+  private player: Player;
   private attackStyle: AttackStyle;
 
   constructor(

@@ -1,61 +1,40 @@
-import {
-  PlayerOptions, ItemBank, SkillsStats, EquipmentSlots,
-} from "../types/types";
-import { expToLevel } from "../util";
-import { skillsSaveObject } from "../constants/data";
+import { PlayerOptions, Player } from "../types/types";
+import { createFirstStats } from "../constants/data";
 
-export default class Player { // TODO this entire class needs to be made into an object
-  public id: number;
-  public name: string;
-  public skills: SkillsStats;
-  public bank: ItemBank = {
+const player = ({ id, name }: PlayerOptions): Player => {
+  console.log("Player Remake!");
+  const skills = createFirstStats();
+  const bank = {
     995: 100000,
     4151: 1,
   };
-  public inventory: ItemBank = {
+  const inventory = { // TODO needs to be array i think if we even use it
     1024: 1,
   };
 
-  public equipment: EquipmentSlots;
+  const equipment = {
+    head: 2619,
+    body: 2615,
+    legs: 2617,
+    feet: -2,
+    hands: -2,
+    cape: -2,
+    weapon: 4151,
+    shield: 8845,
+    ammo: -2,
+    ring: -2,
+    neck: -2,
 
-  constructor({
-    id, name, skills, equipment,
-  }: PlayerOptions) {
-    this.id = id;
-    this.name = name;
-    // extract method when cba
-    const formatedSkillData: SkillsStats = Object.keys(skills).reduce((accum, skill) => {
-      const { exp } = skills[skill as keyof SkillsStats];
-      return {
-        ...accum,
-        [skill]: {
-          exp,
-          level: expToLevel(exp),
-          boost: 0,
-        },
-      };
-    }, { ...skillsSaveObject });
+  };
 
-    this.skills = formatedSkillData;
-    this.equipment = equipment;
-  }
+  return {
+    id,
+    name,
+    skills,
+    bank,
+    inventory,
+    equipment,
+  };
+};
 
-  // addToItemBank = (item: ItemData): void => {
-  //   console.log(item);
-  //   this.bank = addToItemBank(this.bank, item);
-  // };
-
-  // addBankToBank = (bank: ItemBank): void => {
-  //   this.bank = addBankToBank(this.bank, bank);
-  // };
-
-  // removeFromItemBank = (item: ItemData): void => {
-  //   this.bank = removeFromItemBank(this.bank, item);
-  // };
-
-  // removeBankFromBank = (bank: ItemBank): void => {
-  //   this.bank = removeBankFromBank(this.bank, bank);
-  // };
-
-  // getBank = (): ItemBank => this.bank;
-}
+export default player;

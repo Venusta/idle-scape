@@ -78,8 +78,17 @@ export interface MonsterData {
 export interface PlayerOptions {
   id: number;
   name: string;
-  skills: SkillsStats;
-  equipment: EquipmentSlots;
+  // skills: SkillsStats; // TODO fix
+  // equipment: EquipmentSlots;
+}
+
+export interface Player {
+  id: number;
+  name: string;
+  skills: SkillsStats
+  bank: ItemBank;
+  inventory: ItemBank;
+  equipment: EquipmentSlots
 }
 
 interface PlayerID {
