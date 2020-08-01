@@ -26,7 +26,6 @@ export const testGear = {
 
 export const createItemSlots = (): EquipmentSlots => testGear as EquipmentSlots;
 
-
 export const skillList = [
   "attack",
   "defence",

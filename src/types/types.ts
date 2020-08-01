@@ -1,5 +1,3 @@
-import Skills from "../model/Skills";
-
 export interface MonsterOptions {
   id: number;
   name: string;
@@ -80,7 +78,7 @@ export interface MonsterData {
 export interface Player {
   id: number;
   name: string;
-  skills: Skills
+  skills: SkillsStats
   bank: ItemBank;
   inventory: ItemBank;
   equipment: EquipmentSlots
