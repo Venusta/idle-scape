@@ -12,6 +12,10 @@ import CombatSimulator from "../model/CombatSimulator";
 import { save, loadSave } from "../model/Save";
 import { Skills, SkillNames } from "../model/Skills";
 import Equipment from "../model/Equipment";
+import rawIconData from "../assets/icons/icons-items-complete.json";
+
+export const iconData = rawIconData as { [id: string]: any };
+console.log("FUCK");
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,6 +50,10 @@ const App = () => {
   });
 
   useEffect(() => {
+    interface Ahhh {
+      "id": string;
+    }
+
     console.log(players);
     console.log("Rendered");
     // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
@@ -120,7 +128,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Bank />
+      {/* <Bank /> */}
     </div>
   );
 };

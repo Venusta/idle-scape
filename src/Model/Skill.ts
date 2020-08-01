@@ -1,10 +1,13 @@
 import { expToLevel } from "../util";
-import { SkillStats } from "../types/types";
 
-const Skill = (exp: number): SkillStats => ({
-  exp,
-  level: expToLevel(exp),
-  boost: 0,
-});
+export default class Skill {
+  exp: number;
+  level: number;
+  boost: number;
 
-export default Skill;
+  constructor(exp: number) {
+    this.exp = exp;
+    this.level = expToLevel(exp);
+    this.boost = 0;
+  }
+}

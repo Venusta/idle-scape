@@ -72,29 +72,29 @@ export enum SkillNames {
 }
 
 export const initialSkills: SkillsStats = {
-  [SkillNames.attack]: Skill(0),
-  [SkillNames.defence]: Skill(0),
-  [SkillNames.strength]: Skill(0),
-  [SkillNames.hitpoints]: Skill(1154),
-  [SkillNames.ranged]: Skill(0),
-  [SkillNames.prayer]: Skill(0),
-  [SkillNames.magic]: Skill(0),
-  [SkillNames.cooking]: Skill(0),
-  [SkillNames.woodcutting]: Skill(0),
-  [SkillNames.fletching]: Skill(0),
-  [SkillNames.fishing]: Skill(0),
-  [SkillNames.firemaking]: Skill(0),
-  [SkillNames.crafting]: Skill(0),
-  [SkillNames.smithing]: Skill(0),
-  [SkillNames.mining]: Skill(0),
-  [SkillNames.herblore]: Skill(0),
-  [SkillNames.agility]: Skill(0),
-  [SkillNames.thieving]: Skill(0),
-  [SkillNames.slayer]: Skill(0),
-  [SkillNames.farming]: Skill(0),
-  [SkillNames.runecrafting]: Skill(0),
-  [SkillNames.hunter]: Skill(0),
-  [SkillNames.construction]: Skill(0),
+  [SkillNames.attack]: new Skill(0),
+  [SkillNames.defence]: new Skill(0),
+  [SkillNames.strength]: new Skill(0),
+  [SkillNames.hitpoints]: new Skill(1154),
+  [SkillNames.ranged]: new Skill(0),
+  [SkillNames.prayer]: new Skill(0),
+  [SkillNames.magic]: new Skill(0),
+  [SkillNames.cooking]: new Skill(0),
+  [SkillNames.woodcutting]: new Skill(0),
+  [SkillNames.fletching]: new Skill(0),
+  [SkillNames.fishing]: new Skill(0),
+  [SkillNames.firemaking]: new Skill(0),
+  [SkillNames.crafting]: new Skill(0),
+  [SkillNames.smithing]: new Skill(0),
+  [SkillNames.mining]: new Skill(0),
+  [SkillNames.herblore]: new Skill(0),
+  [SkillNames.agility]: new Skill(0),
+  [SkillNames.thieving]: new Skill(0),
+  [SkillNames.slayer]: new Skill(0),
+  [SkillNames.farming]: new Skill(0),
+  [SkillNames.runecrafting]: new Skill(0),
+  [SkillNames.hunter]: new Skill(0),
+  [SkillNames.construction]: new Skill(0),
 };
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const setLevels = (skills: SkillsStats, level = 99): SkillsStats => {
@@ -121,3 +121,19 @@ export const Skills = (): SkillsStats => {
   x = setExp(x);
   return x;
 };
+
+type MapOfSkills = Map<SkillNames, Skill>;
+
+export const getSkillMap = (): MapOfSkills => {
+  const x = new Map<SkillNames, Skill>();
+
+  Object.values(SkillNames).forEach((key: SkillNames) => {
+    x.set(key, new Skill(0));
+  });
+
+  x.set(SkillNames.hitpoints, new Skill(1154)); // 10 hp
+
+  return x;
+};
+
+console.log(getSkillMap());
