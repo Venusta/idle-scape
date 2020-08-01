@@ -4,7 +4,7 @@
   background-color: rgb(39, 39, 39);
   display: flex;
   flex-direction: column;
-  min-width: 100px;
+  min-width: 400px;
   /* border-right: solid black 1px; */
   /* box-shadow: 2px 0px rgba(0, 0, 0, 0.5); */
   box-shadow: 0 0px 8px 0 rgb(0, 0, 0);

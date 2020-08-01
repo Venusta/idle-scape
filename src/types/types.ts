@@ -75,13 +75,6 @@ export interface MonsterData {
   assignableSlayerMasters: MonsterSlayerMaster[];
 }
 
-export interface PlayerOptions {
-  id: number;
-  name: string;
-  // skills: SkillsStats; // TODO fix
-  // equipment: EquipmentSlots;
-}
-
 export interface Player {
   id: number;
   name: string;
@@ -256,19 +249,18 @@ export interface WeaponStance {
 }
 
 export enum AttackStyle {
-  aggressive = "strength",
-  melee_accurate = "attack",
+  aggressive = "aggressive",
+  accurate = "accurate",
   controlled = "controlled",
   defensive = "defensive",
   rapid = "rapid",
-  longRange = "longrange",
-  ranged_accurate = "ranged_accurate"
+  longrange = "longrange",
 }
 
 export enum AttackType {
   Stab = "stab",
   Slash = "slash",
-  Crash = "crush",
+  Crush = "crush",
   Magic = "magic",
   Ranged = "ranged"
 }

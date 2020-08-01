@@ -1,4 +1,4 @@
-import { SkillNames } from "../data";
+import { SkillNames } from "../../model/Skills";
 
 const courses = [
   {
@@ -23,7 +23,7 @@ const courses = [
 
 const Agility = {
   courses,
-  id: SkillNames.Agility,
+  id: SkillNames.agility,
 };
 
 export default Agility;

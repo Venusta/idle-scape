@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
+import Bank from "./Bank/Bank";
+
 import "./App.css";
-import { SkillsStats, AttackStyle } from "../types/types";
+import { SkillsStats, AttackStyle, Player } from "../types/types";
 import { handleReward, RootState, addExp } from "../redux-stuff";
-import {
-  createItemSlots, save, loadSave, SkillNames,
-} from "../constants/data";
+import { createItemSlots } from "../constants/data";
 import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
+import { save, loadSave } from "../model/Save";
+import { Skills, SkillNames } from "../model/Skills";
+import Equipment from "../model/Equipment";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,12 +48,12 @@ const App = () => {
   useEffect(() => {
     console.log(players);
     console.log("Rendered");
-    // dispatch(addExp({ playerID: 0, skill: SkillNames.Agility, expReward: 50 }));
+    // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
     // new Laps({ playerID: 0, name: "a", amount: 1 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
-    const simulator = new CombatSimulator(0, 0, 3600, AttackStyle.aggressive, {});
+    // const simulator = new CombatSimulator(0, 0, 600, AttackStyle.aggressive, {});
 
     const playerCombatStats = {
       attack: { level: players[0].skills.attack.level, boost: 8 },
@@ -63,7 +65,7 @@ const App = () => {
     };
 
     // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
-    simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
+    // simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
 
     // simulator.simulate();
     // simulator.simulate();
@@ -72,18 +74,14 @@ const App = () => {
 
     console.log("blabla");
     console.log(createItemSlots());
-    // save(players[0]);
 
-    const cunt: SkillsStats = loadSave();
-    save(cunt);
+    console.log(Skills());
 
     // const y = new Player({
     //   id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
     // });
 
     // console.log(y);
-
-    console.log(cunt);
 
     // const equipment = new Equipment(0);
 
@@ -121,7 +119,9 @@ const App = () => {
   // console.log(player.getBank());
 
   return (
-    <div className="app" />
+    <div className="app">
+      <Bank />
+    </div>
   );
 };
 

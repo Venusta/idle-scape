@@ -5,6 +5,7 @@ import { AttackStyle, Player } from "../types/types";
 import SimpleMonster from "./SimpleMonster";
 import TestMonster from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
+import Equipment from "./Equipment";
 
 enum StyleValue {
   aggressive = 3,
@@ -66,7 +67,7 @@ const addAttackStance = (attackStyle: AttackStyle, combatStats: EffectiveLevels2
     attack, strength, defence, ranged,
   } = combatStats;
   switch (attackStyle) {
-    case AttackStyle.melee_accurate:
+    case AttackStyle.accurate:
       attack += 3;
       break;
     case AttackStyle.controlled:
@@ -78,12 +79,12 @@ const addAttackStance = (attackStyle: AttackStyle, combatStats: EffectiveLevels2
       strength += 3;
       break;
     case AttackStyle.defensive:
-    case AttackStyle.longRange:
+    case AttackStyle.longrange:
       defence += 3;
       break;
-    case AttackStyle.ranged_accurate:
-      ranged += 3;
-      break;
+    // case AttackStyle.ranged_accurate:
+    //   ranged += 3;
+    //   break;
     default:
       break;
   }
@@ -194,7 +195,7 @@ export default class CombatSimulator {
 
     // Handle attack style bonuses
     switch (this.attackStyle) {
-      case AttackStyle.melee_accurate:
+      case AttackStyle.accurate:
         playerEffectiveLevels.attack += 3;
         break;
       case AttackStyle.controlled:
@@ -206,12 +207,12 @@ export default class CombatSimulator {
         playerEffectiveLevels.strength += 3;
         break;
       case AttackStyle.defensive:
-      case AttackStyle.longRange:
+      case AttackStyle.longrange:
         playerEffectiveLevels.defence += 3;
         break;
-      case AttackStyle.ranged_accurate:
-        playerEffectiveLevels.ranged += 3;
-        break;
+      // case AttackStyle.accurate:
+      //   playerEffectiveLevels.ranged += 3;
+      //   break;
       default:
         break;
     }
@@ -258,25 +259,27 @@ export default class CombatSimulator {
       monster: monsterEffectiveLevels,
     } = this.calculateEffectiveLevels();
 
-    let playerEffectiveDamageLevel = 1;
-    let playerEffectiveHitLevel = 1;
+    const playerEffectiveDamageLevel = 1;
+    const playerEffectiveHitLevel = 1;
 
-    switch (this.attackStyle) {
-      case AttackStyle.aggressive:
-      case AttackStyle.melee_accurate:
-      case AttackStyle.controlled:
-      case AttackStyle.defensive:
-        playerEffectiveDamageLevel = playerEffectiveLevels.strength;
-        playerEffectiveHitLevel = playerEffectiveLevels.attack;
-        break;
-      case AttackStyle.rapid:
-      case AttackStyle.ranged_accurate:
-      case AttackStyle.longRange:
-        playerEffectiveDamageLevel = playerEffectiveLevels.ranged;
-        playerEffectiveHitLevel = playerEffectiveLevels.ranged;
-        break;
-      default:
-    }
+    const playerEquipmentBonuses = new Equipment(this.player).equipmentBonuses;
+
+    // switch (this.attackStyle) {
+    //   case AttackStyle.aggressive:
+    //   case AttackStyle.accurate:
+    //   case AttackStyle.controlled:
+    //   case AttackStyle.defensive:
+    //     playerEffectiveDamageLevel = playerEffectiveLevels.strength;
+    //     playerEffectiveHitLevel = playerEffectiveLevels.attack;
+    //     break;
+    //   case AttackStyle.rapid:
+    //   case AttackStyle.accurate:
+    //   case AttackStyle.longrange:
+    //     playerEffectiveDamageLevel = playerEffectiveLevels.ranged;
+    //     playerEffectiveHitLevel = playerEffectiveLevels.ranged;
+    //     break;
+    //   default:
+    // }
 
     const playerEquipmentStrBonus = 103; // TODO: Get this from actual player data
     const playerEquipmentAttackBonus = 114; // TODO: Get this from player data too (needs to be bonus of weapon attack style used)

@@ -1,12 +1,18 @@
-import { PlayerOptions, Player } from "../types/types";
-import { createFirstStats } from "../constants/data";
+import { Player } from "../types/types";
+import { initialSkills } from "./Skills";
+
+interface PlayerOptions {
+  id: number;
+  name: string;
+}
 
 const player = ({ id, name }: PlayerOptions): Player => {
   console.log("Player Remake!");
-  const skills = createFirstStats();
+  const skills = initialSkills;
   const bank = {
-    995: 100000,
-    4151: 1,
+    995: 100,
+    4151: 200,
+    1024: 3,
   };
   const inventory = { // TODO needs to be array i think if we even use it
     1024: 1,
@@ -24,7 +30,6 @@ const player = ({ id, name }: PlayerOptions): Player => {
     ammo: -2,
     ring: -2,
     neck: -2,
-
   };
 
   return {

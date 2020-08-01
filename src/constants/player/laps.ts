@@ -1,4 +1,4 @@
-import { SkillNames } from "../data";
+import { SkillNames } from "../../model/Skills";
 import { LapOptions, Player } from "../../types/types";
 import Agility from "../skills/agility";
 import store, { task } from "../../redux-stuff";
@@ -27,20 +27,20 @@ export default class Laps {
       name: courseName, exp: courseExp, lapTime, level: courseLevel,
     } = selectedCourse;
 
-    const { level, boost = 0 } = player.skills[SkillNames.Agility];
+    const { level, boost = 0 } = player.skills[SkillNames.agility];
 
     if (level + boost < courseLevel) {
-      console.log(`${player.name}'s ${SkillNames.Agility} level too low for course: ${courseName}`);
+      console.log(`${player.name}'s ${SkillNames.agility} level too low for course: ${courseName}`);
       return;
     }
     console.log(selectedCourse);
     console.log(`${player.name} wants to do ${amount}x laps of course: ${courseName}`);
     console.log(`It will take ${lapTime * amount} seconds`);
-    console.log(`The reward will be ${courseExp * amount} ${SkillNames.Agility} exp`);
+    console.log(`The reward will be ${courseExp * amount} ${SkillNames.agility} exp`);
 
     const duration = amount * lapTime * 100; // TODO should be 1000
     const expReward = courseExp * amount;
-    const skill = SkillNames.Agility;
+    const skill = SkillNames.agility;
 
     store.dispatch(task({
       playerID, duration, skill, expReward,

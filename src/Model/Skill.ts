@@ -1,25 +1,10 @@
-// import { expTable } from "../constants/data";
+import { expToLevel } from "../util";
+import { SkillStats } from "../types/types";
 
-export default class Skill {
-  public name: string;
-  public exp: number;
-  // public xpToLevel: number;
-  public level: number;
+const Skill = (exp: number): SkillStats => ({
+  exp,
+  level: expToLevel(exp),
+  boost: 0,
+});
 
-  constructor(name: string, exp: number) {
-    this.name = name;
-    this.level = exp; // exp to lvl
-    this.exp = exp;
-    // this.xpToLevel = expTable[this.level + 2] - expTable[this.level + 1];
-  }
-
-  // gainXp(amount: number): void {
-  //   this.exp += amount;
-  //   if (amount > this.xpToLevel) {
-  //     this.xpToLevel -= amount;
-  //   } else {
-  //     this.level += 1;
-  //     this.xpToLevel = expTable[this.level + 2] - this.exp;
-  //   }
-  // }
-}
+export default Skill;

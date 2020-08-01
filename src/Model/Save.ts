@@ -1,4 +1,6 @@
-import { skillsSaveObject } from "../constants/data";
+import { Player } from "../types/types";
+import player from "./Player";
+import { initialSkills } from "./Skills";
 
 // eslint-disable-next-line object-curly-newline
 // const loadPlayer = ({ id, name, equipment }: PlayerOptions) => {
@@ -13,12 +15,30 @@ const InitialSave = () => {
     {
       id: 0,
       name: "",
-      skills: skillsSaveObject,
+      skills: initialSkills,
     },
   ];
 
   return [];
 };
 
-// eslint-disable-next-line object-curly-newline
-// eslint-disable-next-line import/prefer-default-export
+const playerSave = {
+  skills: initialSkills,
+};
+
+export const save = (thingToSave: Player[]): void => {
+  localStorage.setItem("testSave", JSON.stringify(thingToSave));
+};
+
+export const loadSave = (): Player[] => {
+  const test = localStorage.getItem("testSave");
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (test) { return JSON.parse(test); }
+  return [
+    player({ id: 0, name: "yeetus" }),
+  ];
+};
+
+export const wipeSave = () => {
+  localStorage.removeItem("testSave");
+};

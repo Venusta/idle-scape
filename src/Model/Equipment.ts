@@ -5,7 +5,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import store from "../redux-stuff";
 import {
-  CompleteItemData, EquipmentData, EquipableRequirements, WeaponData, EquipmentSlots, PlayerOptions, EquipmentBonuses, EquipmentSlotNames, Player,
+  CompleteItemData, EquipmentData, EquipableRequirements, WeaponData, EquipmentSlots, EquipmentBonuses,
+  EquipmentSlotNames, Player, AttackType, AttackStyle,
 } from "../types/types";
 import rawBodySlotData from "../assets/items-json-slot/items-body.json";
 import rawAmmoSlotData from "../assets/items-json-slot/items-ammo.json";
@@ -35,8 +36,7 @@ export default class Equipment {
   private playerEquipment: EquipmentSlots;
   public equipmentBonuses: EquipmentBonuses;
 
-  constructor(playerID: number) {
-    const player: Player = store.getState().players[playerID];
+  constructor(player: Player) {
     this.playerEquipment = player.equipment;
     this.equipmentBonuses = this.calculateEquipmentBonuses();
   }
@@ -59,37 +59,22 @@ export default class Equipment {
       prayer: 0,
     };
 
-    const test2: any = {}; // TODO type properly
-    // this loops over each slot of the player's equipment
     Object.entries(this.playerEquipment).forEach(([slot, itemID]: [string, number]) => {
-      // for each slot i get the item from that slot's data and grab the equipment bonuses
       const slotItemData = this.getItemDataForSlot(slot as EquipmentSlotNames);
       if (slotItemData[itemID] === undefined) return;
-      const slotEquipmentData = slotItemData[itemID].equipment; // <-
 
-      console.log("derp");
-      console.log(slotEquipmentData);
-
+      const slotEquipmentData = slotItemData[itemID].equipment;
       if (slotEquipmentData === null) return;
+
       Object.entries(slotEquipmentData).forEach(([key, value]) => {
-        // console.log(key, value);
-        if (key === "slot" || key === "requirements") {
-          return;
-        }
-        if (!(key in test2)) {
-          test2[key] = value;
-        } else {
-          test2[key] += value;
+        if (Object.prototype.hasOwnProperty.call(bonuses, key)) {
+          bonuses[key as keyof EquipmentBonuses] += value;
         }
       });
-
-      // these bonuses are also in an object just like bonuses above ^^^^
-      // so i need to add all of the numbers up, they all have the same structure as bonuses so should be simple kappa
-      // so in this i need to iterate over each property of slotEqiupmentBonuses and add them to the right property of bonuses
     });
-    console.log(test2);
+    console.log(bonuses);
 
-    return {} as EquipmentBonuses;
+    return bonuses;
   };
 
   private getItemDataForSlot = (slot: EquipmentSlotNames): { [id: string]: CompleteItemData } => {
@@ -120,5 +105,17 @@ export default class Equipment {
         console.error("wtf");
         return {} as { [id: string]: CompleteItemData };
     }
+  };
+
+  public getAttackType = (attackStyle: AttackStyle): AttackType => {
+    const weaponID = this.playerEquipment[EquipmentSlotNames.Weapon];
+    const weaponData = weaponSlotData[weaponID].weapon;
+    const stances = weaponData?.stances;
+    const attackType = stances?.find((stance) => stance.attack_style === attackStyle)?.attack_type;
+    if (attackType === null || attackType === undefined) {
+      console.error("No attack type could be determined.");
+      return AttackType.Crush;
+    }
+    return attackType;
   };
 }
