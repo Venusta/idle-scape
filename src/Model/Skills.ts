@@ -122,7 +122,7 @@ export const Skills = (): SkillsStats => {
   return x;
 };
 
-type MapOfSkills = Map<SkillNames, Skill>;
+type MapOfSkills = Map<SkillNames, Skill>; // this causes hella issues
 
 export const getSkillMap = (): MapOfSkills => {
   const x = new Map<SkillNames, Skill>();
@@ -135,5 +135,3 @@ export const getSkillMap = (): MapOfSkills => {
 
   return x;
 };
-
-console.log(getSkillMap());
