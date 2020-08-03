@@ -120,19 +120,19 @@ const setExp = (skills: SkillsStats, exp = 132000000): SkillsStats => {
   return skills;
 };
 
-type MapOfSkills = Map<SkillNames, Skill>; // this causes hella issues
+// type MapOfSkills = Map<SkillNames, Skill>; // this causes hella issues
 
-export const getSkillMap = (): MapOfSkills => {
-  const x = new Map<SkillNames, Skill>();
+// export const getSkillMap = (): MapOfSkills => {
+//   const x = new Map<SkillNames, Skill>();
 
-  Object.values(SkillNames).forEach((key: SkillNames) => {
-    x.set(key, new Skill(0));
-  });
+//   Object.values(SkillNames).forEach((key: SkillNames) => {
+//     x.set(key, new Skill(0));
+//   });
 
-  x.set(SkillNames.hitpoints, new Skill(1154)); // 10 hp
+//   x.set(SkillNames.hitpoints, new Skill(1154)); // 10 hp
 
-  return x;
-};
+//   return x;
+// };
 
 // export const createFirstStats = (): SkillsStats => skillList.reduce((accum, skill) => {
 //   let exp = levelToExp(80);

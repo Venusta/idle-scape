@@ -1,23 +1,79 @@
-.sidebar {
+.bank-window {
   box-sizing: border-box;
   /* border: solid rgb(145, 33, 51) 1px; */
   background-color: rgb(39, 39, 39);
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  /* min-width: 300px; */
+  /* min-height: 300px; */
+
   /* border-right: solid black 1px; */
   /* box-shadow: 2px 0px rgba(0, 0, 0, 0.5); */
   box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
-  
+  margin: 20px;
 }
 
-.titleBar {
+.bank-inner {
+  padding-left: 3px;
+  padding-right: 3px;
+  /* background-color: aqua; */
+  padding-bottom: 8px;
+  padding-top: 8px;
+  max-height: 200px;
+  min-width: 407px;
+  max-width: 407px;
+  /* background-color: bisque; */
+  overflow: hidden;
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}
+
+.bank-title {
   font-size: large;
   font-weight: bold;
   background-color: rgb(33, 33, 33);
   box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4);
-  padding: 10px 0px 10px 0px;
+  padding: 3px 0px 3px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* .bank-row {
+
+} */
+
+.bank-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.itemInBank {
+  /* background: #fff; */
+  /* border: 1px solid #999; */
+  float: left;
+  font-size: 12px;
+  /* font-weight: bold; */
+  /* line-height: 34px; */
+  height: 38px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-top: 0px;
+  /* margin-top: 2px; */
+  /* margin: 2px; */
+  padding: 0px;
+  /* text-align: center; */
+  width: 36px;
+  cursor: pointer;
+  /* background-color: rgb(145, 145, 33); */
+  position: relative;
+}
+
+.itemImage {
+  padding-top: 5px;
+}
+
+.itemAmount { /* TODO HOW TO MAKE THIS TEXT DISAPPEAR / POSITION PROPERLY*/
+  position: absolute;
 }

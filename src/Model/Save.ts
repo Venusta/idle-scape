@@ -1,6 +1,6 @@
 import { Player } from "../types/types";
 import player from "./Player";
-import Skills from "./Skills";
+import skills from "./Skills";
 
 // eslint-disable-next-line object-curly-newline
 // const loadPlayer = ({ id, name, equipment }: PlayerOptions) => {
@@ -15,7 +15,7 @@ const InitialSave = () => {
     {
       id: 0,
       name: "",
-      skills: new Skills(),
+      skills: skills(),
     },
   ];
 
@@ -23,7 +23,7 @@ const InitialSave = () => {
 };
 
 const playerSave = {
-  skills: new Skills(),
+  skills: skills(),
 };
 
 export const save = (thingToSave: Player[]): void => {

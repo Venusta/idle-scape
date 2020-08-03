@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { SkillsStats, AttackStyle, Player } from "../types/types";
 import { handleReward, RootState, addExp } from "../redux-stuff";
-import { createItemSlots } from "../constants/data";
+import { createItemSlots, SkillNames } from "../constants/data";
 import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import { save, loadSave } from "../model/Save";
-import Skills from "../model/Skills";
 import Equipment from "../model/Equipment";
 import rawIconData from "../assets/icons/icons-items-complete.json";
+import Bank from "./Bank/Bank";
 
-export const iconData = rawIconData as { [id: string]: any };
+export const iconData = rawIconData as { [id: string]: string };
 console.log("FUCK");
 
 const App = () => {
@@ -47,7 +47,7 @@ const App = () => {
     return () => {
       clearTimeout(timer);
     };
-  });
+  }, []); // todo fix why is this making bank render every time
 
   useEffect(() => {
     interface Ahhh {
@@ -57,9 +57,10 @@ const App = () => {
     console.log(players);
     console.log("Rendered");
     // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
-    // new Laps({ playerID: 0, name: "a", amount: 1 }).start();
-    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
-    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
+    new Laps({ playerID: 0, name: "a", amount: 1 }).start();
+    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
     // const simulator = new CombatSimulator(0, 0, 600, AttackStyle.aggressive, {});
 
@@ -82,8 +83,6 @@ const App = () => {
 
     console.log("blabla");
     console.log(createItemSlots());
-
-    console.log(new Skills());
 
     // const y = new Player({
     //   id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
@@ -128,7 +127,7 @@ const App = () => {
 
   return (
     <div className="app">
-      {/* <Bank /> */}
+      <Bank />
     </div>
   );
 };

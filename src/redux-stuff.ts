@@ -9,6 +9,7 @@ import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { SkillsStats } from "./types/types";
 import player from "./model/Player";
+import { decide } from "./model/Skill";
 
 const playerInitialState = [
 
