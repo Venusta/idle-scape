@@ -1,0 +1,27 @@
+.skill-window {
+  box-sizing: border-box;
+  background-color: rgb(39, 39, 39);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
+  margin: 20px;
+}
+
+.skill-title {
+  font-size: large;
+  font-weight: bold;
+  background-color: rgb(33, 33, 33);
+  box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4);
+  padding: 3px 10px 3px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.skill-inner{
+  padding: 5px;
+}
+
+.player-skill {
+  list-style: none;
+}

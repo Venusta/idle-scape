@@ -1,0 +1,168 @@
+{
+  "35": {
+    "id": 35,
+    "name": "Excalibur",
+    "equipable": true,
+    "equipment": {
+      "attack_stab": 20,
+      "attack_slash": 29,
+      "attack_crush": -2,
+      "attack_magic": 0,
+      "attack_ranged": 0,
+      "defence_stab": 0,
+      "defence_slash": 3,
+      "defence_crush": 2,
+      "defence_magic": 1,
+      "defence_ranged": 0,
+      "melee_strength": 25,
+      "ranged_strength": 0,
+      "magic_damage": 0,
+      "prayer": 0,
+      "slot": "weapon",
+      "requirements": {
+        "attack": 20
+      }
+    },
+    "weapon": {
+      "attack_speed": 5,
+      "weapon_type": "slashing_swords",
+      "stances": [
+        {
+          "combat_style": "chop",
+          "attack_type": "slash",
+          "attack_style": "accurate",
+          "experience": "attack",
+          "boosts": null
+        },
+        {
+          "combat_style": "slash",
+          "attack_type": "slash",
+          "attack_style": "aggressive",
+          "experience": "strength",
+          "boosts": null
+        },
+        {
+          "combat_style": "lunge",
+          "attack_type": "stab",
+          "attack_style": "controlled",
+          "experience": "shared",
+          "boosts": null
+        },
+        {
+          "combat_style": "block",
+          "attack_type": "slash",
+          "attack_style": "defensive",
+          "experience": "defence",
+          "boosts": null
+        }
+      ]
+    }
+  },
+  "278": {
+    "id": 278,
+    "name": "Cattleprod",
+    "equipable": true,
+    "equipment": {
+      "attack_stab": 4,
+      "attack_slash": 2,
+      "attack_crush": -4,
+      "attack_magic": 1,
+      "attack_ranged": 0,
+      "defence_stab": 0,
+      "defence_slash": 0,
+      "defence_crush": 0,
+      "defence_magic": 1,
+      "defence_ranged": 0,
+      "melee_strength": 3,
+      "ranged_strength": 0,
+      "magic_damage": 0,
+      "prayer": 0,
+      "slot": "weapon",
+      "requirements": null
+    },
+    "weapon": {
+      "attack_speed": 4,
+      "weapon_type": "stabbing_swords",
+      "stances": [
+        {
+          "combat_style": "stab",
+          "attack_type": "stab",
+          "attack_style": "accurate",
+          "experience": "attack",
+          "boosts": null
+        },
+        {
+          "combat_style": "lunge",
+          "attack_type": "stab",
+          "attack_style": "aggressive",
+          "experience": "strength",
+          "boosts": null
+        },
+        {
+          "combat_style": "slash",
+          "attack_type": "slash",
+          "attack_style": "aggressive",
+          "experience": "strength",
+          "boosts": null
+        },
+        {
+          "combat_style": "block",
+          "attack_type": "stab",
+          "attack_style": "defensive",
+          "experience": "defence",
+          "boosts": null
+        }
+      ]
+    }
+  },
+  "24792": {
+    "id": 24792,
+    "name": "Severed leg",
+    "equipable": true,
+    "equipment": {
+      "attack_stab": -100,
+      "attack_slash": -100,
+      "attack_crush": -50,
+      "attack_magic": 0,
+      "attack_ranged": 0,
+      "defence_stab": 0,
+      "defence_slash": 0,
+      "defence_crush": 0,
+      "defence_magic": 0,
+      "defence_ranged": 0,
+      "melee_strength": -10,
+      "ranged_strength": 0,
+      "magic_damage": 0,
+      "prayer": 0,
+      "slot": "weapon",
+      "requirements": null
+    },
+    "weapon": {
+      "attack_speed": 4,
+      "weapon_type": "blunt_weapons",
+      "stances": [
+        {
+          "combat_style": "pound",
+          "attack_type": "crush",
+          "attack_style": "accurate",
+          "experience": "attack",
+          "boosts": null
+        },
+        {
+          "combat_style": "pummel",
+          "attack_type": "crush",
+          "attack_style": "aggressive",
+          "experience": "strength",
+          "boosts": null
+        },
+        {
+          "combat_style": "block",
+          "attack_type": "crush",
+          "attack_style": "defensive",
+          "experience": "defence",
+          "boosts": null
+        }
+      ]
+    }
+  }
+}

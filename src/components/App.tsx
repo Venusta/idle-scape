@@ -11,10 +11,10 @@ import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import { save, loadSave } from "../model/Save";
 import Equipment from "../model/Equipment";
-import rawIconData from "../assets/icons/icons-items-complete.json";
-import Bank from "./Bank/Bank";
 
-export const iconData = rawIconData as { [id: string]: string };
+import Bank from "./Bank/Bank";
+import Skills from "./Skills/Skills";
+
 console.log("FUCK");
 
 const App = () => {
@@ -128,6 +128,7 @@ const App = () => {
   return (
     <div className="app">
       <Bank />
+      <Skills />
     </div>
   );
 };
