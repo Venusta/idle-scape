@@ -9,8 +9,7 @@ import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
 import { SkillsStats } from "./types/types";
-import player from "./model/Player";
-import playerInitialState from "./model/OhGodWhy";
+import charactersInitialState from "./model/OhGodWhy";
 
 export interface AddExp { // TODO move later
   payload: AddExpPayload
@@ -24,7 +23,7 @@ type AddExpPayload = {
 
 const characterSlice = createSlice({
   name: "characters",
-  initialState: playerInitialState({}),
+  initialState: charactersInitialState({}),
   reducers: {
     addExp: (state, { payload: { playerID, skill, expReward } }: AddExp) => {
       // const { skills, name } = state[playerID];
@@ -43,7 +42,18 @@ const characterSlice = createSlice({
   },
 });
 
-const taskInitialState: {busy: boolean, tasks: Array<TheActualPayloads>} = {
+type TasksThing = {
+  playerID: string
+  when: number
+  skill: string
+  expReward: number
+};
+
+export interface RewardPayload { // TODO move later
+  payload: TasksThing
+}
+
+const taskInitialState: {busy: boolean, tasks: Array<TasksThing >} = {
   busy: false,
   tasks: [],
 };
@@ -67,20 +77,20 @@ const taskSlice = createSlice({
     task: ({ tasks, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
       // if busy halt maybe
       const now = Date.now();
-      let when;
+      let when = 0;
       if (tasks.length === 0) {
         when = now + duration;
       } else {
-        const wtf = tasks[tasks.length - 1].duration;
+        const wtf = tasks[tasks.length - 1].when;
         when = wtf + duration;
       }
 
       tasks.push({
-        duration: when, skill, expReward, playerID,
+        when, skill, expReward, playerID,
       });
       busy = true;
     },
-    handleReward: ({ tasks, busy }, { payload }: TaskPayload) => {
+    handleReward: ({ tasks, busy }, { payload }: RewardPayload) => {
       console.log(`${payload.skill} task finished.`);
       tasks.shift();
       if (tasks.length === 0) {

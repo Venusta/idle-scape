@@ -12,9 +12,9 @@ const TaskTimer = (): JSX.Element => {
 
     if (tasks.tasks.length > 0) {
       const task = tasks.tasks[0];
-      const { duration } = task;
+      const { when } = task;
 
-      if (time.valueOf() > duration) {
+      if (time.valueOf() > when) {
         dispatch(handleReward(task));
       }
     }

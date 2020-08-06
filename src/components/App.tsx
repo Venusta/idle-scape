@@ -23,7 +23,7 @@ import Equipment from "../model/Equipment";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import playerInitialState, {
+import charactersInitialState, {
   ItemBankState, NameState, SkillsState, EquipmentState, IDsState,
 } from "../model/OhGodWhy";
 
@@ -63,7 +63,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     console.log("Rendered");
 
-    console.log(playerInitialState({}));
+    console.log(charactersInitialState({}));
 
     // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
