@@ -1,11 +1,19 @@
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
+/* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  shallowEqual, useDispatch, useSelector, connect, useStore,
+} from "react-redux";
 // import Bank from "./Bank/Bank";
 
 import "./App.css";
-import { SkillsStats, AttackStyle, Player } from "../types/types";
-import { handleReward, RootState, addExp } from "../redux-stuff";
+import { createSelector } from "@reduxjs/toolkit";
+import {
+  SkillsStats, AttackStyle, Player, ItemBank,
+} from "../types/types";
+import store, { handleReward, RootState, addExp } from "../redux-stuff";
 import { createItemSlots, SkillNames } from "../constants/data";
 import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
@@ -14,121 +22,106 @@ import Equipment from "../model/Equipment";
 
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
+import TaskTimer from "./TaskTimer/TaskTimer";
 
-console.log("FUCK");
+const useBankFromPlayer = (id: number) => { // this can't be called in a loop
+  const bankData = useSelector((state: RootState) => ({
+    bank: state.players[id].bank,
+    name: state.players[id].name,
+  }), shallowEqual);
+  return bankData;
+};
 
-const App = () => {
-  const dispatch = useDispatch();
-  const [time, setTime] = useState(new Date());
-  const tasks = useSelector((state: RootState) => state.tasks);
-  const players = useSelector((state: RootState) => state.players);
+const selectBanks = createSelector(
+  (state: RootState) => state.players,
+  (players) => players.map((singlePlayer) => singlePlayer.bank),
+);
+const selectNames = createSelector(
+  (state: RootState) => state.players,
+  (players) => players.map((singlePlayer) => singlePlayer.name),
+);
+
+function toSubItem(id: number, bank: ItemBank) {
+  return { id, bank };
+}
+
+const attempt9 = createSelector(
+  (state: RootState) => state.players,
+  (players) => {
+    return players.map((singlePlayer) => toSubItem(singlePlayer.id, singlePlayer.bank));
+  },
+);
+
+const test = createSelector(
+  [selectBanks, selectNames],
+  (banks, names) => {
+    return ({ banks, names });
+  },
+);
+
+const Banks = () => { // todo extract component
+  const banks = useSelector(selectBanks, shallowEqual);
+  const names = useSelector(selectNames, shallowEqual);
+
+  console.log("Don't re-render me!");
+
+  return (
+    <div>
+      {banks.map((bank, index) => <Bank name={names[index]} bank={bank} />)}
+    </div>
+  );
+};
+
+// const mapStateToProps = (state: RootState) => {
+//   return {
+//     names: state.players.map((sPlayer) => sPlayer.name),
+//     banks: state.players.map((sPlayer) => sPlayer.bank),
+//   };
+// };
+
+// const Idk = connect(mapStateToProps)(Banks);
+
+const App = (): JSX.Element => {
+  console.log("whyyyyyy???????");
 
   useEffect(() => {
-    // check current time vs tasks.tasks[0]
-    // if complete, remove task [0]
-    // do reward
-
-    if (tasks.tasks.length > 0) {
-      const task = tasks.tasks[0];
-      const { duration } = task;
-
-      // console.log(duration);
-      // console.log(time.valueOf());
-
-      if (time.valueOf() > duration) {
-        dispatch(handleReward(task));
-      }
-    }
-
-    const timer = setTimeout(() => {
-      setTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []); // todo fix why is this making bank render every time
-
-  useEffect(() => {
-    interface Ahhh {
-      "id": string;
-    }
-
-    console.log(players);
     console.log("Rendered");
     // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
     new Laps({ playerID: 0, name: "a", amount: 1 }).start();
-    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
-    new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    // new Laps({ playerID: 1, name: "a", amount: 1 }).start();
+    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
     // const simulator = new CombatSimulator(0, 0, 600, AttackStyle.aggressive, {});
 
-    const playerCombatStats = {
-      attack: { level: players[0].skills.attack.level, boost: 8 },
-      defence: { level: players[0].skills.defence.level },
-      strength: { level: players[0].skills.strength.level },
-      hitpoints: { level: players[0].skills.hitpoints.level },
-      ranged: { level: players[0].skills.ranged.level },
-      magic: { level: players[0].skills.magic.level, boost: 5 },
-    };
+    // const playerCombatStats = {
+    //   attack: { level: players[0].skills.attack.level, boost: 8 },
+    //   defence: { level: players[0].skills.defence.level },
+    //   strength: { level: players[0].skills.strength.level },
+    //   hitpoints: { level: players[0].skills.hitpoints.level },
+    //   ranged: { level: players[0].skills.ranged.level },
+    //   magic: { level: players[0].skills.magic.level, boost: 5 },
+    // };
 
     // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
     // simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
 
     // simulator.simulate();
-    // simulator.simulate();
-    // simulator.simulate();
-    // simulator.simulate();
 
     console.log("blabla");
     console.log(createItemSlots());
 
-    // const y = new Player({
-    //   id: 2, name: "FUCK", skills: cunt, equipment: createItemSlots(),
-    // });
-
-    // console.log(y);
-
-    // const equipment = new Equipment(0);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const herp = TestMonster;
-  // console.log(herp);
-
-  // const loot1 = herp.getLoot(10);
-  // console.log(loot1);
-  // const loot2 = herp.getLoot(100);
-  // console.log(loot2);
-
-  // const y = addLootToBank(loot2);
-
-  // console.log(derp());
-  // console.log(getSkillObject());
-
-  // console.log(skillObject);
-
-  // console.log(player);
-
-  // console.log(getSkillObject());
-
-  // console.log(player.getBank());
-
-  // player.addBankToBank(loot1);
-  // player.addBankToBank(loot1);
-  // player.removeBankFromBank(loot1);
-  // player.addToItemBank({ item: 2048, amount: 1065764500 });
-  // player.removeFromItemBank({ item: 4151, amount: 1 });
-  // player.removeFromItemBank({ item: 4151, amount: 1 });
-  // player.removeFromItemBank({ item: 41531, amount: 1 });
-  // console.log(player.getBank());
-
   return (
     <div className="app">
-      <Bank />
+      <Banks />
+      {/* <Bank props={useBankFromPlayer(0)} />
+      <Bank props={useBankFromPlayer(1)} /> */}
       <Skills />
+      <TaskTimer />
     </div>
   );
 };

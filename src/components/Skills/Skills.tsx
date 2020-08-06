@@ -37,7 +37,7 @@ const Skills = (): JSX.Element => {
   );
 
   const renderSkills = () => { // todo fix
-    console.log(Object.keys(skills).length);
+    console.log(`${name} Skills Rendered`);
 
     const itemCount = Object.keys(skills).length;
     const skillDivs = [];

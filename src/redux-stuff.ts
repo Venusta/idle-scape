@@ -2,18 +2,19 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import {
-  combineReducers, configureStore, createSlice, getDefaultMiddleware,
+  combineReducers, configureStore, createSlice, getDefaultMiddleware, AnyAction, Dispatch,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
+import { useDispatch } from "react-redux";
 import { SkillsStats } from "./types/types";
 import player from "./model/Player";
 import { decide } from "./model/Skill";
 
 const playerInitialState = [
 
-  player({ id: 0, name: "yeetus" }),
+  player({ id: 0, name: "Maximus Decimus Meridius" }),
   player({ id: 1, name: "deletus" }),
 
 ];
@@ -127,6 +128,8 @@ const store = configureStore({
 });
 sagaMiddleware.run(rootSaga);
 
+export type RootState = ReturnType<typeof store.getState>;
 export default store;
 
-export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = (): Dispatch<AnyAction> => useDispatch<AppDispatch>(); // Export a hook that can be reused to resolve types

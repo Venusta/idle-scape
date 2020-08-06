@@ -8,17 +8,17 @@ import { getIcon } from "../../model/Icon";
 interface ItemProps {
   itemID: number;
   amount: number;
-  onDragEnter: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDragLeave: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDragOver: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDragStart: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDragEnter: (e: React.DragEvent) => void;
+  onDragLeave: (e: React.DragEvent) => void;
+  onDragOver: (e: React.DragEvent) => void;
+  onDrop: (e: React.DragEvent) => void;
+  onDragStart: (e: React.DragEvent) => void;
 }
 
 const Item: React.FC<ItemProps> = ({
   itemID, amount, onDragEnter, onDragLeave, onDragOver, onDrop, onDragStart,
 }) => (
-  <li
+  <div
     className="itemInBank"
     draggable="true"
     title={`${itemID}`}
@@ -35,7 +35,7 @@ const Item: React.FC<ItemProps> = ({
       height="32"
       src={`data:image/png;base64, ${getIcon(itemID)}`}
     />
-  </li>
+  </div>
 );
 
 export default Item;
