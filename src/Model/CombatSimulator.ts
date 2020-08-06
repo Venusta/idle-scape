@@ -127,7 +127,13 @@ export default class CombatSimulator {
   ) {
     this.timeLimit = timeLimit;
     this.supplies = supplies;
-    this.player = store.getState().players[playerID]; // 0 for player 1
+    this.player = {
+      id: playerID,
+      name: store.getState().characters.names[playerID],
+      skills: store.getState().characters.skills[playerID],
+      equipment: store.getState().characters.equipment[playerID],
+      bank: store.getState().characters.banks[playerID],
+    };
     this.monster = TestMonster;
     this.attackStyle = attackStyle;
   }

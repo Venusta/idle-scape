@@ -23,73 +23,53 @@ import Equipment from "../model/Equipment";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
+import playerInitialState, {
+  ItemBankState, NameState, SkillsState, EquipmentState, IDsState,
+} from "../model/OhGodWhy";
 
-const useBankFromPlayer = (id: number) => { // this can't be called in a loop
-  const bankData = useSelector((state: RootState) => ({
-    bank: state.players[id].bank,
-    name: state.players[id].name,
-  }), shallowEqual);
-  return bankData;
-};
+// const selectBanks = createSelector(
+//   (state: RootState) => state.players.banks,
+//   // (banks) => Object.keys(banks).map((key) => banks[key]),
+//   (banks) => banks,
+// );
+// const selectNames = createSelector(
+//   (state: RootState) => state.players.names,
+//   (names) => names,
+// );
 
-const selectBanks = createSelector(
-  (state: RootState) => state.players,
-  (players) => players.map((singlePlayer) => singlePlayer.bank),
-);
-const selectNames = createSelector(
-  (state: RootState) => state.players,
-  (players) => players.map((singlePlayer) => singlePlayer.name),
-);
-
-function toSubItem(id: number, bank: ItemBank) {
-  return { id, bank };
+interface PlayerBanksData {
+  banks: ItemBankState,
+  names: NameState,
 }
 
-const attempt9 = createSelector(
-  (state: RootState) => state.players,
-  (players) => {
-    return players.map((singlePlayer) => toSubItem(singlePlayer.id, singlePlayer.bank));
-  },
-);
-
-const test = createSelector(
-  [selectBanks, selectNames],
-  (banks, names) => {
-    return ({ banks, names });
-  },
-);
-
 const Banks = () => { // todo extract component
-  const banks = useSelector(selectBanks, shallowEqual);
-  const names = useSelector(selectNames, shallowEqual);
+  const playerData: PlayerBanksData = useSelector((state: RootState) => ({
+    names: state.characters.names,
+    banks: state.characters.banks,
+  }), shallowEqual);
+  const { names, banks } = playerData;
 
   console.log("Don't re-render me!");
 
   return (
     <div>
-      {banks.map((bank, index) => <Bank name={names[index]} bank={bank} />)}
+      {Object.keys(banks).map((id) => <Bank bank={banks[id]} name={names[id]} />)}
     </div>
   );
 };
 
-// const mapStateToProps = (state: RootState) => {
-//   return {
-//     names: state.players.map((sPlayer) => sPlayer.name),
-//     banks: state.players.map((sPlayer) => sPlayer.bank),
-//   };
-// };
-
-// const Idk = connect(mapStateToProps)(Banks);
-
 const App = (): JSX.Element => {
-  console.log("whyyyyyy???????");
-
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log("Rendered");
-    // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
-    // dispatch(addExp({ playerID: 0, skill: SkillNames.agility, expReward: 50 }));
-    new Laps({ playerID: 0, name: "a", amount: 1 }).start();
-    // new Laps({ playerID: 1, name: "a", amount: 1 }).start();
+
+    console.log(playerInitialState({}));
+
+    // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
+    // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
+    // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
+    new Laps({ playerID: "3", name: "a", amount: 1 }).start();
+    new Laps({ playerID: "3", name: "a", amount: 1 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 

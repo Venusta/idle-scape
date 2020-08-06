@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 import React from "react";
+import { useSelector } from "react-redux";
 
 import "./Bank.css";
 import { getRandomInt } from "../../util";
@@ -13,7 +14,10 @@ interface BankProps {
   name: string;
 }
 
-const Bank: React.FC<BankProps> = ({ bank, name }) => { // todo pass bank / loot data in props
+const Bank: React.FC<BankProps> = ({ name, bank }) => { // todo pass bank / loot data in props
+  // const name = useSelector((state: RootState) => state.players[bank.id].name);
+  // const name = "DFHSDFGHSDFGH";
+
   const handleDragStart = (e: React.DragEvent) => { // todo make this work
     console.log(e.currentTarget);
     // e.preventDefault();

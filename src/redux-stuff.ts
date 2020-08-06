@@ -10,36 +10,36 @@ import logger from "redux-logger";
 import { useDispatch } from "react-redux";
 import { SkillsStats } from "./types/types";
 import player from "./model/Player";
-import { decide } from "./model/Skill";
-
-const playerInitialState = [
-
-  player({ id: 0, name: "Maximus Decimus Meridius" }),
-  player({ id: 1, name: "deletus" }),
-
-];
+import playerInitialState from "./model/OhGodWhy";
 
 export interface AddExp { // TODO move later
-  payload: Herp
+  payload: AddExpPayload
 }
 
-type Herp = {
-  playerID: number
+type AddExpPayload = {
+  playerID: string
   skill: string
   expReward: number
 };
 
-const playerSlice = createSlice({
-  name: "players",
-  initialState: playerInitialState,
+const characterSlice = createSlice({
+  name: "characters",
+  initialState: playerInitialState({}),
   reducers: {
     addExp: (state, { payload: { playerID, skill, expReward } }: AddExp) => {
-      const { skills, name } = state[playerID];
+      // const { skills, name } = state[playerID];
+      const skills = state.skills[playerID];
+      const name = state.names[playerID];
       skills[skill as keyof SkillsStats].exp += expReward;
       console.log(`${name} gained ${expReward} ${skill} exp`);
       // TODO level up if needed
       // TODO support multiple skills
     },
+    // changeName: (state, { payload: { playerID, newName } }: { payload: { playerID: number, newName: string } }) => {
+    //   const { name } = state[playerID];
+    //   state[playerID].name = newName;
+    //   console.log(`${name} changed to ${newName}`);
+    // },
   },
 });
 
@@ -53,7 +53,7 @@ export interface TaskPayload { // TODO move later
 }
 
 type TheActualPayloads = {
-  playerID: number
+  playerID: string
   duration: number
   skill: string
   expReward: number
@@ -97,7 +97,8 @@ export const {
 
 export const {
   addExp,
-} = playerSlice.actions;
+  // changeName,
+} = characterSlice.actions;
 
 export function* shiftTaskRequest(action: AddExp) {
   const { skill, expReward, playerID } = action.payload;
@@ -117,7 +118,7 @@ export function* rootSaga() {
 
 const reducer = combineReducers({
   tasks: taskSlice.reducer,
-  players: playerSlice.reducer,
+  characters: characterSlice.reducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

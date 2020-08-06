@@ -4,7 +4,7 @@ import store, { task } from "../../redux-stuff";
 import { SkillNames } from "../data";
 
 export default class Laps {
-  private playerID: number;
+  private playerID: string;
   private name: string;
   private amount: number;
 
@@ -16,7 +16,9 @@ export default class Laps {
 
   start = ():void => {
     const { playerID, name, amount } = this;
-    const player: Player = store.getState().players[playerID];
+    // const player: Player = store.getState().players[playerID];
+    const playerName = store.getState().characters.names[playerID];
+    const playerSkills = store.getState().characters.skills[playerID];
 
     const selectedCourse = Agility.courses.find((course) => course.name === name);
     if (!selectedCourse) {
@@ -27,14 +29,14 @@ export default class Laps {
       name: courseName, exp: courseExp, lapTime, level: courseLevel,
     } = selectedCourse;
 
-    const { level, boost = 0 } = player.skills[SkillNames.agility];
+    const { level, boost = 0 } = playerSkills[SkillNames.agility];
 
     if (level + boost < courseLevel) {
-      console.log(`${player.name}'s ${SkillNames.agility} level too low for course: ${courseName}`);
+      console.log(`${playerName}'s ${SkillNames.agility} level too low for course: ${courseName}`);
       return;
     }
     console.log(selectedCourse);
-    console.log(`${player.name} wants to do ${amount}x laps of course: ${courseName}`);
+    console.log(`${playerName} wants to do ${amount}x laps of course: ${courseName}`);
     console.log(`It will take ${lapTime * amount} seconds`);
     console.log(`The reward will be ${courseExp * amount} ${SkillNames.agility} exp`);
 

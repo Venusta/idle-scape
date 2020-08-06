@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import "./Skills.css";
 import { getRandomInt, expToLevel } from "../../util";
 import { RootState } from "../../redux-stuff";
-import { Player } from "../../types/types";
+import { Player, SkillsStats } from "../../types/types";
 
 interface ItemProps {
   skillID: number;
@@ -25,7 +25,11 @@ const Skill: React.FC<ItemProps> = ({ skillID, exp }) => (
 );
 
 const Skills = (): JSX.Element => {
-  const playerData: Player = useSelector((state: RootState) => state.players[0]); // TODO multi player
+  const playerData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
+    name: state.characters.names["3"], // TODO MULTICHARACTER SKILLS
+    skills: state.characters.skills["3"],
+  }));
+
   const { name, skills } = playerData;
 
   const renderSkill = (skillID: number, exp: number) => (

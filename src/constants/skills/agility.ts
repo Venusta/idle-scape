@@ -5,7 +5,7 @@ const courses = [
     name: "a",
     level: 1,
     exp: 80,
-    lapTime: 10,
+    lapTime: 30,
   },
   {
     name: "b",

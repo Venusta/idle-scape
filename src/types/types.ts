@@ -80,12 +80,12 @@ export interface Player {
   name: string;
   skills: SkillsStats
   bank: ItemBank;
-  inventory: ItemBank;
+  // inventory: ItemBank;
   equipment: EquipmentSlots
 }
 
 interface PlayerID {
-  playerID: number;
+  playerID: string;
 }
 
 export interface LapOptions extends PlayerID {
@@ -108,6 +108,13 @@ export type Item = [number, number];
 export interface ItemBank {
   [key: number]: number;
 }
+
+// export interface ItemBank2 {
+//   id: number,
+//   items: {
+//     [key: number]: number;
+//   }
+// }
 
 export interface SkillStats {
   level: number;
