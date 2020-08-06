@@ -53,9 +53,9 @@ export interface RewardPayload { // TODO move later
   payload: TasksThing
 }
 
-const taskInitialState: {busy: boolean, tasks: Array<TasksThing >} = {
+const taskInitialState: {busy: boolean, queue: Array<TasksThing >} = {
   busy: false,
-  tasks: [],
+  queue: [],
 };
 
 export interface TaskPayload { // TODO move later
@@ -74,26 +74,26 @@ const taskSlice = createSlice({
   initialState: taskInitialState,
   reducers: {
     // eslint-disable-next-line object-curly-newline
-    task: ({ tasks, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
+    task: ({ queue, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
       // if busy halt maybe
       const now = Date.now();
       let when = 0;
-      if (tasks.length === 0) {
+      if (queue.length === 0) {
         when = now + duration;
       } else {
-        const wtf = tasks[tasks.length - 1].when;
+        const wtf = queue[queue.length - 1].when;
         when = wtf + duration;
       }
 
-      tasks.push({
+      queue.push({
         when, skill, expReward, playerID,
       });
       busy = true;
     },
-    handleReward: ({ tasks, busy }, { payload }: RewardPayload) => {
+    handleReward: ({ queue, busy }, { payload }: RewardPayload) => {
       console.log(`${payload.skill} task finished.`);
-      tasks.shift();
-      if (tasks.length === 0) {
+      queue.shift();
+      if (queue.length === 0) {
         busy = false;
       }
     },

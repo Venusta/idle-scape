@@ -16,7 +16,6 @@ export default class Laps {
 
   start = ():void => {
     const { playerID, name, amount } = this;
-    // const player: Player = store.getState().players[playerID];
     const playerName = store.getState().characters.names[playerID];
     const playerSkills = store.getState().characters.skills[playerID];
 

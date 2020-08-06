@@ -3,24 +3,24 @@
 /* eslint-disable no-console */
 import React from "react";
 import { useSelector } from "react-redux";
+import { v1 as uuid } from "uuid";
 
 import "./Skills.css";
-import { getRandomInt, expToLevel } from "../../util";
+import { expToLevel } from "../../util";
 import { RootState } from "../../redux-stuff";
-import { Player, SkillsStats } from "../../types/types";
+import { SkillsStats, SkillStats } from "../../types/types";
 
 interface ItemProps {
-  skillID: number;
+  skillName: string;
   exp: number;
 }
 
-const Skill: React.FC<ItemProps> = ({ skillID, exp }) => (
+const Skill: React.FC<ItemProps> = ({ skillName, exp }) => (
   <li
     className="player-skill"
-    title={`${skillID}`}
+    title={`${skillName}`}
   >
-    <div className="skill-exp">{`Exp: ${exp}`}</div>
-    <div className="skill-exp">{`Level: ${expToLevel(exp)}`}</div>
+    <div className="skill-exp">{`${skillName}: ${expToLevel(exp)} exp: ${exp} `}</div>
   </li>
 );
 
@@ -32,26 +32,26 @@ const Skills = (): JSX.Element => {
 
   const { name, skills } = playerData;
 
-  const renderSkill = (skillID: number, exp: number) => (
+  const renderSkill = (skillName: string, exp: number): JSX.Element => (
     <Skill
-      key={`stat-${skillID}-${getRandomInt(0, 10000000)}`} // TODO remove random number
-      skillID={skillID}
+      key={`skills-${uuid()}`}
+      skillName={skillName}
       exp={exp}
     />
   );
 
-  const renderSkills = () => { // todo fix
+  const renderSkills = (): JSX.Element[] => { // todo fix
     console.log(`${name} Skills Rendered`);
 
     const itemCount = Object.keys(skills).length;
     const skillDivs = [];
 
-    for (let row = 0; row < itemCount; row += 1) {
-      const stats = Object.entries(skills)[row];
-      const [id, data] = stats;
+    for (let index = 0; index < itemCount; index += 1) {
+      const skillName: string = Object.keys(skills)[index];
+      const data: SkillStats = skills[skillName as keyof SkillsStats];
       const { exp } = data;
 
-      skillDivs.push(renderSkill(parseInt(id, 10), exp));
+      skillDivs.push(renderSkill(skillName, exp));
     }
     return skillDivs;
   };
@@ -59,7 +59,7 @@ const Skills = (): JSX.Element => {
   return (
     <div className="skill-window">
       <div className="skill-title">
-        <span>{`${name}'s Stats`}</span>
+        <div>{`${name}'s Stats`}</div>
       </div>
       <ul className="skill-inner">
         {renderSkills()}

@@ -1,17 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
+import { v1 as uuid } from "uuid";
 import { RootState, handleReward, useAppDispatch } from "../../redux-stuff";
 
 const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(new Date());
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const queue = useSelector((state: RootState) => state.tasks.queue);
 
-  useEffect(() => { // todo i think this has to be external
+  const MakeList = (): JSX.Element => (
+    <div>
+      {queue.map((task) => <div key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)}
+    </div>
+  );
+
+  useEffect(() => { // todo maybe make this outside of react
     console.log("Tick!");
 
-    if (tasks.tasks.length > 0) {
-      const task = tasks.tasks[0];
+    if (queue.length > 0) {
+      const task = queue[0];
       const { when } = task;
 
       if (time.valueOf() > when) {
@@ -26,9 +34,11 @@ const TaskTimer = (): JSX.Element => {
     return () => {
       clearTimeout(timer);
     };
-  }); // todo fix why is this making bank render every time
+  });
 
-  return (<div />);
+  return (
+    <MakeList />
+  );
 };
 
 export default TaskTimer;

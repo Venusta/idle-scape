@@ -2,30 +2,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect, useContext } from "react";
-import {
-  shallowEqual, useDispatch, useSelector, connect, useStore,
-} from "react-redux";
-// import Bank from "./Bank/Bank";
+import React, { useEffect } from "react";
+import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
-import { createSelector } from "@reduxjs/toolkit";
-import {
-  SkillsStats, AttackStyle, Player, ItemBank,
-} from "../types/types";
-import store, { handleReward, RootState, addExp } from "../redux-stuff";
-import { createItemSlots, SkillNames } from "../constants/data";
+import { RootState, useAppDispatch } from "../redux-stuff";
+import { createItemSlots } from "../constants/data";
 import Laps from "../constants/player/laps";
 import CombatSimulator from "../model/CombatSimulator";
-import { save, loadSave } from "../model/Save";
 import Equipment from "../model/Equipment";
 
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import charactersInitialState, {
-  ItemBankState, NameState, SkillsState, EquipmentState, IDsState,
-} from "../model/OhGodWhy";
+import charactersInitialState, { ItemBankState, NameState } from "../model/OhGodWhy";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -53,23 +43,21 @@ const Banks = () => { // todo extract component
 
   return (
     <div>
-      {Object.keys(banks).map((id) => <Bank bank={banks[id]} name={names[id]} />)}
+      {Object.keys(banks).map((id) => <Bank key={id} bank={banks[id]} name={names[id]} />)}
     </div>
   );
 };
 
 const App = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("Rendered");
-
     console.log(charactersInitialState({}));
 
     // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
-    new Laps({ playerID: "3", name: "a", amount: 1 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 1 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
@@ -97,11 +85,9 @@ const App = (): JSX.Element => {
 
   return (
     <div className="app">
-      <Banks />
-      {/* <Bank props={useBankFromPlayer(0)} />
-      <Bank props={useBankFromPlayer(1)} /> */}
-      <Skills />
       <TaskTimer />
+      <Banks />
+      <Skills />
     </div>
   );
 };
