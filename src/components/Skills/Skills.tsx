@@ -22,7 +22,7 @@ const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
   const handleClick = () => {
     console.log(`Clicked ${skillName}`);
     if (skillName === "agility") {
-      new Laps({ playerID: "3", name: "a", amount: 15 }).start();
+      new Laps({ playerID: "3", name: "a", amount: 1 }).start();
     }
   };
   return (

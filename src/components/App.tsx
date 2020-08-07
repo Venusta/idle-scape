@@ -48,6 +48,97 @@ const Banks = () => { // todo extract component
   );
 };
 
+const tasksExample = {
+  playerID3: {
+    queue: [
+      {
+        playerID: "playerID3",
+        when: 348907534,
+        duration: 300,
+        type: "AgilityLaps",
+        info: {
+          name: "Gnome",
+          laps: 300,
+        },
+        reward: {
+          exp: {
+            agility: 20,
+            strength: 30,
+          },
+          items: {
+            4151: 20,
+            995: 300,
+          },
+        },
+      },
+      {
+        playerID: "playerID3",
+        when: 348907534,
+        duration: 900,
+        type: "SlayerTask",
+        info: {
+          name: "Chicken",
+          amount: 200,
+        },
+        reward: {
+          exp: {
+            agility: 20,
+            strength: 30,
+          },
+          items: {
+            4151: 20,
+            995: 300,
+          },
+        },
+      },
+    ],
+  },
+  playerID9: {
+    queue: [
+      {
+        playerID: "playerID9",
+        when: 348907534,
+        duration: 100,
+        type: "AgilityLaps",
+        info: {
+          name: "Roof",
+          laps: 400,
+        },
+        reward: {
+          exp: {
+            agility: 20,
+            strength: 30,
+          },
+          items: {
+            4151: 20,
+            995: 300,
+          },
+        },
+      },
+      {
+        playerID: "playerID9",
+        when: 348907534,
+        duration: 1000,
+        type: "SlayerTask",
+        info: {
+          name: "Goblin",
+          amount: 100,
+        },
+        reward: {
+          exp: {
+            agility: 20,
+            strength: 30,
+          },
+          items: {
+            4151: 20,
+            995: 300,
+          },
+        },
+      },
+    ],
+  },
+};
+
 const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -57,11 +148,11 @@ const App = (): JSX.Element => {
     // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
-    new Laps({ playerID: "3", name: "a", amount: 2 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 3 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 4 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 5 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 6 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 2 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 3 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 4 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 5 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 

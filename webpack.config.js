@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-unused-vars */
 // webpack.config.js
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 
 // We'll refer to our source and dist paths frequently, so let's store them here
 const PATH_SOURCE = path.join(__dirname, "./src");
@@ -125,6 +129,7 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: "development", // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false,
+      PUBLIC_URL: "/",
     }),
 
     // This plugin will delete all files inside `output.path` (the dist directory),

@@ -40,14 +40,25 @@ export default class Laps {
     console.log(`The reward will be ${courseExp * amount} ${SkillNames.agility} exp`);
 
     const duration = amount * lapTime * 100; // TODO should be 1000
-    const expReward = courseExp * amount;
+    const reward = {
+      exp: {
+        agility: courseExp * amount,
+      },
+    };
     const skill = SkillNames.agility;
+    const type = "Agility-Laps";
+    const info = {
+      name: courseName,
+      amount,
+    };
 
     const agilityTask = {
       playerID,
       duration,
+      type,
+      info,
       skill,
-      expReward,
+      reward,
     };
 
     store.dispatch(task(agilityTask));

@@ -116,6 +116,30 @@ export interface ItemBank {
 //   }
 // }
 
+export type SkillName = "attack" |
+"defence" |
+"strength" |
+"hitpoints" |
+"ranged" |
+"prayer" |
+"magic" |
+"cooking" |
+"woodcutting" |
+"fletching" |
+"fishing" |
+"firemaking" |
+"crafting" |
+"smithing" |
+"mining" |
+"herblore" |
+"agility" |
+"thieving" |
+"slayer" |
+"farming" |
+"runecrafting" |
+"hunter" |
+"construction";
+
 export interface SkillStats {
   level: number;
   exp: number;
