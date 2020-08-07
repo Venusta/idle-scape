@@ -12,20 +12,11 @@ import { SkillsStats, ItemBank, SkillName } from "./types/types";
 import charactersInitialState from "./model/OhGodWhy";
 import { SkillNames } from "./constants/data";
 
-export interface AddExp { // TODO remove / fix
-  payload: AddExpPayload
-}
-
-type AddExpPayload = {
-  playerID: string
-  expReward: ExpReward
-};
-
 const characterSlice = createSlice({
   name: "characters",
   initialState: charactersInitialState({}),
-  reducers: {
-    addExp: (state, { payload: { playerID, reward, type } }: RewardPayload) => { // todo loop over expReward
+  reducers: { // todo maybe handle all rewards
+    addExp: (state, { payload: { playerID, reward, type } }: RewardPayload) => {
       // const { skills, name } = state[playerID];
       const skills = state.skills[playerID];
       const name = state.names[playerID];
@@ -43,7 +34,7 @@ const characterSlice = createSlice({
   },
 });
 
-export type NewQueuePayload = { // todo remove / fix
+type NewQueuePayload = { // todo remove / fix
   playerID: string
   when: number
   duration: number
@@ -61,7 +52,9 @@ export interface RewardPayload { // TODO move later
   }
 }
 
-const taskInitialState: {[characterID: string]:{ queue: Array<NewQueuePayload>} } = {
+export type TaskState = {[characterID: string]:{ queue: Array<NewQueuePayload>} };
+
+const taskInitialState: TaskState = {
   3: { queue: [] },
 };
 
@@ -122,7 +115,7 @@ const taskSlice = createSlice({
         playerID,
         duration,
         skill,
-        type: "Agility-Laps",
+        type,
         info,
         reward,
         when,

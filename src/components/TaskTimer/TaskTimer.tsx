@@ -3,13 +3,15 @@
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
-import { RootState, handleReward, useAppDispatch, NewQueuePayload } from "../../redux-stuff";
+import {
+  RootState, handleReward, useAppDispatch, TaskState,
+} from "../../redux-stuff";
 import "./TaskTimer.css";
 
 const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(new Date());
-  const tasks2 = useSelector((state: RootState) => state.tasks);
+  const tasks: TaskState = useSelector((state: RootState) => state.tasks);
 
   const MakeList = (): JSX.Element => (
     <div className="task-list-window">
@@ -20,14 +22,13 @@ const TaskTimer = (): JSX.Element => {
         {/* {queue.map((task) => <div className="task-list-item" key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)} */}
       </div>
     </div>
-  );
+  ); // TODO fix this to render all queues
 
-  const handleTask = (tasks: {[characterID: string]:{ queue: Array<NewQueuePayload>} }) => { // todo migrate to this
+  const handleTask = () => {
     const characterIds = Object.keys(tasks);
-    // console.log(characterIds);
+
     characterIds.forEach((character) => {
       const { queue } = tasks[character];
-      // console.log(queue.length);
       if (queue.length > 0) {
         const task = queue[0];
         const { when } = task;
@@ -40,17 +41,7 @@ const TaskTimer = (): JSX.Element => {
 
   useEffect(() => { // todo maybe make this outside of react
     console.log("Tick!");
-
-    // if (queue.length > 0) {
-    //   const task = queue[0];
-    //   const { when } = task;
-    //   // todo change to duration so we can re-calculate the "when", when you change the list order
-
-    //   if (time.valueOf() > when) {
-    //     dispatch(handleReward(task));
-    //   }
-    // }
-    handleTask(tasks2);
+    handleTask();
 
     const timer = setTimeout(() => {
       setTime(new Date());
