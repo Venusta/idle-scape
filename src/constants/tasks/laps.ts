@@ -43,8 +43,13 @@ export default class Laps {
     const expReward = courseExp * amount;
     const skill = SkillNames.agility;
 
-    store.dispatch(task({
-      playerID, duration, skill, expReward,
-    }));
+    const agilityTask = {
+      playerID,
+      duration,
+      skill,
+      expReward,
+    };
+
+    store.dispatch(task(agilityTask));
   };
 }

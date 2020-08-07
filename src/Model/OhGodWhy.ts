@@ -32,9 +32,9 @@ interface PlayerState {
   equipment: EquipmentState,
 }
 
-const startingIDs = ["3", "9"];
+const startingIDs = ["3"];
 
-const startingNames = ["Maximus Decimus Meridius", "Marcus Aurelius"];
+const startingNames = ["Maximus Decimus Meridius"];
 
 const startingItems: ItemBank = {
   995: 100000,

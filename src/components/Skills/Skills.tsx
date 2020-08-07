@@ -8,7 +8,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import { v1 as uuid } from "uuid";
 
 import "./Skills.css";
-import Laps from "../../constants/player/laps";
+import Laps from "../../constants/tasks/laps";
 import { expToLevel } from "../../util";
 import { RootState } from "../../redux-stuff";
 import { SkillsStats, SkillStats } from "../../types/types";

@@ -7,7 +7,7 @@ const TestMonsterHerbTable = new DropTable()
   .add(HerbDropTable, 2, 11)
   .add(HerbDropTable, 3, 4);
 
-const TestMonsterTable = new DropTable(({ limit: 6 }))
+const dropTable = new DropTable(({ limit: 6 }))
   .always(526, [1, 11])
   .always(2138, 1)
 
@@ -27,5 +27,5 @@ const TestMonsterTable = new DropTable(({ limit: 6 }))
 export default new SimpleMonster({
   id: 1,
   name: "Test Monster",
-  dropTable: TestMonsterTable,
+  dropTable,
 });

@@ -21,6 +21,10 @@ const TaskTimer = (): JSX.Element => {
     </div>
   );
 
+  const handleTask = (task: any) => {
+
+  };
+
   useEffect(() => { // todo maybe make this outside of react
     console.log("Tick!");
 
@@ -36,7 +40,7 @@ const TaskTimer = (): JSX.Element => {
 
     const timer = setTimeout(() => {
       setTime(new Date());
-    }, 10000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);

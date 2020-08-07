@@ -8,7 +8,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import "./App.css";
 import { RootState, useAppDispatch } from "../redux-stuff";
 import { createItemSlots } from "../constants/data";
-import Laps from "../constants/player/laps";
+import Laps from "../constants/tasks/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import Equipment from "../model/Equipment";
 
@@ -89,9 +89,13 @@ const App = (): JSX.Element => {
 
   return (
     <div className="app">
-      <Banks />
-      <Skills />
-      <TaskTimer />
+      <div className="content">
+        <TaskTimer />
+        <div>
+          <Skills />
+          <Banks />
+        </div>
+      </div>
     </div>
   );
 };

@@ -6,3 +6,10 @@
   /* border: solid pink 1px; */
   /* min-height: 100vh; */
 }
+
+.content {
+  display: flex;
+    border: solid pink 1px;
+    align-items: stretch;
+    /* max-height: 600px; */
+}

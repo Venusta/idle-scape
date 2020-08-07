@@ -92,7 +92,11 @@ const taskSlice = createSlice({
             0: {
               playerID,
               duration: 300,
-              tasktype: "Agility-Laps",
+              type: "Agility-Laps",
+              info: {
+                course: "Gnome",
+                laps: 300,
+              },
               reward: {
                 exp: {
                   agility: 20,
