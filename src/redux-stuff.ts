@@ -76,7 +76,7 @@ const taskSlice = createSlice({
     // eslint-disable-next-line object-curly-newline
     task: ({ queue, busy }, { payload: { playerID, duration, skill, expReward } }: TaskPayload) => {
       // if busy halt maybe
-      const now = Date.now();
+      const now = Date.now(); // move this logic to the actual timer shit
       let when = 0;
       if (queue.length === 0) {
         when = now + duration;
@@ -85,6 +85,49 @@ const taskSlice = createSlice({
         when = wtf + duration;
       }
 
+      // todo change to duration so we can re-calculate the "when", when you change the list order
+      const exampleTaskQ = {
+        playerID3: {
+          queue: {
+            0: {
+              playerID,
+              duration: 300,
+              tasktype: "Agility-Laps",
+              reward: {
+                exp: {
+                  agility: 20,
+                  strength: 30,
+                },
+                items: {
+                  4151: 20,
+                  995: 300,
+                },
+              },
+            },
+            1: {
+
+            },
+            2: {
+
+            },
+          },
+        },
+        playerID9: {
+          queue: {
+            0: {
+
+            },
+          },
+        },
+      };
+      /*
+      * push task to queue { duration, tasktype, reward, playerID }
+      * the queue itself then calculates when the next task is done
+      * queue can process one task per playerID
+      * ability to cancel tasks by clicking them (can confirm)
+      * reodering the task list will recalculate when the tasks finish
+      * active tasks can't be re-ordered
+      */
       queue.push({
         when, skill, expReward, playerID,
       });

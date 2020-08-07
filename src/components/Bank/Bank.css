@@ -23,8 +23,7 @@
   align-items: center;
 }
 
-.bank-inner {
-  
+.bank-inner {  
   /* height: 100%; */
   padding-left: 8px;
   padding-right: 8px;
@@ -45,7 +44,7 @@
   margin-left: 0;
   box-sizing: border-box;
   list-style: none;
-  float: left;
+  /* float: left; */
   font-size: 12px;
   margin-top: 0px;
   padding: 0px;

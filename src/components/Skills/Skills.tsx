@@ -1,11 +1,14 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { v1 as uuid } from "uuid";
 
 import "./Skills.css";
+import Laps from "../../constants/player/laps";
 import { expToLevel } from "../../util";
 import { RootState } from "../../redux-stuff";
 import { SkillsStats, SkillStats } from "../../types/types";
@@ -15,20 +18,29 @@ interface ItemProps {
   exp: number;
 }
 
-const Skill: React.FC<ItemProps> = ({ skillName, exp }) => (
-  <li
-    className="player-skill"
-    title={`${skillName}`}
-  >
-    <div className="skill-exp">{`${skillName}: ${expToLevel(exp)} exp: ${exp} `}</div>
-  </li>
-);
+const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
+  const handleClick = () => {
+    console.log(`Clicked ${skillName}`);
+    if (skillName === "agility") {
+      new Laps({ playerID: "3", name: "a", amount: 15 }).start();
+    }
+  };
+  return (
+    <div
+      className="player-skill"
+      title={`${skillName} Click me!`}
+      onClick={() => handleClick()}
+    >
+      <div className="skill-exp">{`${skillName}: ${expToLevel(exp)} exp: ${exp} `}</div>
+    </div>
+  );
+};
 
 const Skills = (): JSX.Element => {
   const playerData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
     name: state.characters.names["3"], // TODO MULTICHARACTER SKILLS
     skills: state.characters.skills["3"],
-  }));
+  }), shallowEqual);
 
   const { name, skills } = playerData;
 

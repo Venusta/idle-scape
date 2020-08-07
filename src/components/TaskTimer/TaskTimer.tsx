@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
 import { RootState, handleReward, useAppDispatch } from "../../redux-stuff";
+import "./TaskTimer.css";
 
 const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -10,8 +11,13 @@ const TaskTimer = (): JSX.Element => {
   const queue = useSelector((state: RootState) => state.tasks.queue);
 
   const MakeList = (): JSX.Element => (
-    <div>
-      {queue.map((task) => <div key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)}
+    <div className="task-list-window">
+      <div className="task-list-title">
+        <div>Task List</div>
+      </div>
+      <div className="task-list-inner">
+        {queue.map((task) => <div className="task-list-item" key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)}
+      </div>
     </div>
   );
 
@@ -21,6 +27,7 @@ const TaskTimer = (): JSX.Element => {
     if (queue.length > 0) {
       const task = queue[0];
       const { when } = task;
+      // todo change to duration so we can re-calculate the "when", when you change the list order
 
       if (time.valueOf() > when) {
         dispatch(handleReward(task));
@@ -29,7 +36,7 @@ const TaskTimer = (): JSX.Element => {
 
     const timer = setTimeout(() => {
       setTime(new Date());
-    }, 1000);
+    }, 10000);
 
     return () => {
       clearTimeout(timer);

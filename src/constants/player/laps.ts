@@ -1,4 +1,4 @@
-import { LapOptions, Player } from "../../types/types";
+import { LapOptions } from "../../types/types";
 import Agility from "../skills/agility";
 import store, { task } from "../../redux-stuff";
 import { SkillNames } from "../data";

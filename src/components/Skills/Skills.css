@@ -20,8 +20,7 @@
 
 .skill-inner{
   padding: 5px;
-}
-
-.player-skill {
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* justify-items: center; */
 }

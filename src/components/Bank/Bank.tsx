@@ -75,9 +75,9 @@ const Bank: React.FC<BankProps> = ({ name, bank }) => { // todo pass bank / loot
       <div className="bank-title">
         <span>{`${name}'s Bank`}</span>
       </div>
-      <ul className="bank-inner">
+      <div className="bank-inner">
         {renderBank2()}
-      </ul>
+      </div>
     </div>
   );
 };
