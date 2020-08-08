@@ -32,7 +32,7 @@ export default class Requirements {
 
     let hasReq = true;
 
-    console.log(requirements);
+    // console.log(requirements);
 
     const missingSkills: Array<[SkillName, number]> = [];
 
@@ -50,7 +50,7 @@ export default class Requirements {
         }
       });
     }
-    console.log(`${missingSkills} too low`);
+    // console.log(`${missingSkills} too low`);
 
     const missingEquipment: Array<[EquipmentSlotName, number]> = [];
 

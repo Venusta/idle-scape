@@ -150,16 +150,15 @@ const App = (): JSX.Element => {
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     new Laps({ playerID: "3", name: "a", amount: 1 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 3 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 4 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 5 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 3 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 4 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 5 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
-    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
-    // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
+    new Laps({ playerID: "3", name: "a", amount: 2 }).start();
+    new Laps({ playerID: "3", name: "a", amount: 3 }).start();
+    new Laps({ playerID: "3", name: "a", amount: 4 }).start();
+    new Laps({ playerID: "9", name: "a", amount: 5 }).start();
+    new Laps({ playerID: "9", name: "a", amount: 6 }).start();
+    new Laps({ playerID: "9", name: "a", amount: 7 }).start();
+    new Laps({ playerID: "9", name: "a", amount: 6 }).start();
+    new Laps({ playerID: "3", name: "a", amount: 6 }).start();
+
 
     // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
     // simulator.simulate();

@@ -14,7 +14,7 @@ import {
 import charactersInitialState from "./model/OhGodWhy";
 import { addBankToBank } from "./util";
 
-type QueuedTask = {
+export type QueuedTask = {
   playerID: string
   when: number
   duration: number
