@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import {
@@ -11,6 +12,7 @@ import {
   SkillsStats, ItemBank, SkillName, SingleItem,
 } from "./types/types";
 import charactersInitialState from "./model/OhGodWhy";
+import { addBankToBank } from "./util";
 
 const characterSlice = createSlice({
   name: "characters",
@@ -19,6 +21,7 @@ const characterSlice = createSlice({
     addReward: (state, { payload: { playerID, reward } }: RewardPayload) => {
       const skills = state.skills[playerID];
       const name = state.names[playerID];
+      const bank = state.banks[playerID];
 
       const { exp, items } = reward;
 
@@ -36,6 +39,7 @@ const characterSlice = createSlice({
         // Object.entries(items).forEach((item: SingleItem) => {
         //   const [itemID, amount] = item;
         // });
+        state.banks[playerID] = addBankToBank(items, bank);
         console.log(items);
         // TODO add items to character bank >addBankToBank
       }
