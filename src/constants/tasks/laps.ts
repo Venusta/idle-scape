@@ -43,6 +43,11 @@ export default class Laps {
     const reward = {
       exp: {
         agility: courseExp * amount,
+        strength: courseExp * 2 * amount,
+      },
+      items: {
+        4151: 1 * amount,
+        995: 12 * amount,
       },
     };
     const skill = SkillNames.agility;

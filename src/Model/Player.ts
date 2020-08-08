@@ -9,14 +9,11 @@ interface PlayerOptions {
 const player = ({ id, name }: PlayerOptions): Player => {
   console.log("Player Remake!");
   const bank = {
-    id,
-    items: {
-      995: 100000,
-      50: 5,
-      101: 300,
-      201: 40,
-      301: 50,
-    },
+    995: 100000,
+    50: 5,
+    101: 300,
+    201: 40,
+    301: 50,
   };
 
   const equipment = {

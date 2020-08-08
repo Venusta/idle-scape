@@ -40,7 +40,8 @@
 }
 
 .task-list-item {
-  background-color: rgb(16, 122, 183);
+  /* background-color: rgb(16, 122, 183); */
+  background-color: rgb(60, 60, 60);
   color: rgb(255, 255, 255);
   box-sizing: border-box;
   /* border: 1px solid rgb(29, 29, 29); */
@@ -53,6 +54,10 @@
   /* margin: -2px; */
   box-shadow: 0 0px 4px 0 rgb(0, 0, 0, 0.85);
 
+}
+
+.task-list-active {
+  background-color: rgb(16, 183, 100);
 }
 
 .task-list-item:hover {

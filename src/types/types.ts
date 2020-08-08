@@ -105,8 +105,9 @@ export type ItemStringData = {
 
 export type Item = [number, number];
 
+export type SingleItem = [string, number];
 export interface ItemBank {
-  [key: number]: number;
+  [key: string]: number;
 }
 
 // export interface ItemBank2 {

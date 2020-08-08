@@ -6,23 +6,11 @@ import { v1 as uuid } from "uuid";
 import {
   RootState, handleReward, useAppDispatch, TaskState,
 } from "../../redux-stuff";
-import "./TaskTimer.css";
 
 const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(new Date());
   const tasks: TaskState = useSelector((state: RootState) => state.tasks);
-
-  const MakeList = (): JSX.Element => (
-    <div className="task-list-window">
-      <div className="task-list-title">
-        <div>Task List</div>
-      </div>
-      <div className="task-list-inner">
-        {/* {queue.map((task) => <div className="task-list-item" key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)} */}
-      </div>
-    </div>
-  ); // TODO fix this to render all queues
 
   const handleTask = () => {
     const characterIds = Object.keys(tasks);
@@ -53,7 +41,7 @@ const TaskTimer = (): JSX.Element => {
   });
 
   return (
-    <MakeList />
+    <div />
   );
 };
 

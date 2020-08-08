@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
-/* eslint-disable no-param-reassign */
 import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware, AnyAction, Dispatch,
 } from "@reduxjs/toolkit";
@@ -8,23 +7,38 @@ import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
-import { SkillsStats, ItemBank, SkillName } from "./types/types";
+import {
+  SkillsStats, ItemBank, SkillName, SingleItem,
+} from "./types/types";
 import charactersInitialState from "./model/OhGodWhy";
-import { SkillNames } from "./constants/data";
 
 const characterSlice = createSlice({
   name: "characters",
   initialState: charactersInitialState({}),
   reducers: { // todo maybe handle all rewards
-    addExp: (state, { payload: { playerID, reward, type } }: RewardPayload) => {
-      // const { skills, name } = state[playerID];
+    addReward: (state, { payload: { playerID, reward } }: RewardPayload) => {
       const skills = state.skills[playerID];
       const name = state.names[playerID];
-      // skills[skill as keyof SkillName].exp += expReward;
-      console.log(`${name} gained FIX ME exp `);
-      console.log(reward);
-      // TODO level up if needed
-      // TODO support multiple skills
+
+      const { exp, items } = reward;
+
+      if (exp) {
+        let expMsg = `${name} gained `;
+        Object.entries(exp).forEach((expReward) => {
+          const [skill, amount = 0] = expReward;
+          skills[skill as keyof SkillsStats].exp += amount;
+          expMsg = expMsg.concat(`${amount} ${skill}, `);
+        });
+        console.log(`${expMsg.trim().slice(0, -1)} exp`);
+      }
+
+      if (items) {
+        // Object.entries(items).forEach((item: SingleItem) => {
+        //   const [itemID, amount] = item;
+        // });
+        console.log(items);
+        // TODO add items to character bank >addBankToBank
+      }
     },
     // changeName: (state, { payload: { playerID, newName } }: { payload: { playerID: number, newName: string } }) => {
     //   const { name } = state[playerID];
@@ -34,49 +48,52 @@ const characterSlice = createSlice({
   },
 });
 
-type NewQueuePayload = { // todo remove / fix
+type QueuedTask = {
   playerID: string
   when: number
   duration: number
   type: string
-  info: NewTaskInfo
+  info: TaskInfo
   skill: SkillName
-  reward: NewTaskReward
+  reward: TaskReward
 };
 
-export interface RewardPayload { // TODO move later
+interface RewardPayload {
   payload: {
     playerID: string,
-    reward: NewTaskReward,
+    reward: TaskReward,
     type: string,
   }
 }
 
-export type TaskState = {[characterID: string]:{ queue: Array<NewQueuePayload>} };
-
-const taskInitialState: TaskState = {
-  3: { queue: [] },
-};
-
 type ExpReward = { [Key in SkillName]?: number; };
 
-interface NewTaskReward {
+interface TaskReward {
   exp?: ExpReward
   items?: ItemBank
 }
 
-interface NewTaskInfo {
+interface TaskInfo {
   name: string,
   amount?: number
 }
 
-type NewTaskPayload = {
-  playerID: string
-  duration: number
-  type: string
-  info: NewTaskInfo
-  skill: SkillName
-  reward: NewTaskReward
+type TaskPayload = {
+  payload: {
+    playerID: string
+    duration: number
+    type: string
+    info: TaskInfo
+    skill: SkillName
+    reward: TaskReward
+  }
+};
+
+export type TaskState = {[characterID: string]:{ queue: Array<QueuedTask>} };
+
+const taskInitialState: TaskState = { // todo auto generate based on character ids / save
+  3: { queue: [] },
+  9: { queue: [] },
 };
 
 const taskSlice = createSlice({
@@ -84,23 +101,21 @@ const taskSlice = createSlice({
   initialState: taskInitialState,
   reducers: {
     // eslint-disable-next-line object-curly-newline
-    task: (state, { payload: { playerID, duration, type, info, skill, reward } }: {payload: NewTaskPayload}) => {
+    task: (state, { payload: { playerID, duration, type, info, skill, reward } }: TaskPayload) => {
       if (!state[playerID]) {
-        console.log("FUCK");
-        state[playerID].queue = [];
+        console.error("FUCK, Something went wrong!");
         return;
       }
 
       const { queue } = state[playerID];
-      // if busy halt maybe
-      // todo fix reward
+
       const now = Date.now();
       let when = 0;
       if (queue.length === 0) {
         when = now + duration;
       } else {
-        const wtf = queue[queue.length - 1].when;
-        when = wtf + duration;
+        const lastQueueWhen = queue[queue.length - 1].when;
+        when = lastQueueWhen + duration;
       }
 
       /*
@@ -111,7 +126,7 @@ const taskSlice = createSlice({
       * reodering the task list will recalculate when the tasks finish
       * active tasks can't be re-ordered
       */
-      const qObj: NewQueuePayload = {
+      const qObj: QueuedTask = {
         playerID,
         duration,
         skill,
@@ -140,13 +155,13 @@ export const {
 } = taskSlice.actions;
 
 export const {
-  addExp,
+  addReward,
   // changeName,
 } = characterSlice.actions;
 
 export function* shiftTaskRequest(action: RewardPayload) {
   const { playerID, reward, type } = action.payload;
-  yield put(addExp({ playerID, reward, type }));
+  yield put(addReward({ playerID, reward, type }));
 }
 
 export function* taskSagas() {
