@@ -1,4 +1,5 @@
 import skill, { Skill } from "./Skill";
+import { levelToExp } from "../util";
 
 export interface Skills {
   attack: Skill;
@@ -27,13 +28,13 @@ export interface Skills {
 }
 
 const skills = (): Skills => ({
-  attack: skill(),
-  defence: skill(),
-  strength: skill(),
-  hitpoints: skill(1154),
-  ranged: skill(),
-  prayer: skill(),
-  magic: skill(),
+  attack: skill(levelToExp(70)),
+  defence: skill(levelToExp(70)),
+  strength: skill(levelToExp(70)),
+  hitpoints: skill(levelToExp(70)),
+  ranged: skill(levelToExp(70)),
+  prayer: skill(levelToExp(70)),
+  magic: skill(levelToExp(70)),
   cooking: skill(),
   woodcutting: skill(),
   fletching: skill(),

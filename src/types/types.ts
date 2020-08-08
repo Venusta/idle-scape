@@ -27,19 +27,13 @@ export enum MonsterSlayerMaster {
   Duradel = "duradel"
 }
 
-export enum MonsterAttackType {
-  Melee = "melee",
-  Magic = "magic",
-  Range = "range"
-}
-
 export interface MonsterData {
   members: boolean;
   releaseDate: string | null;
   combatLevel: number;
   hitpoints: number;
   maxHit: number;
-  attackType: MonsterAttackType[];
+  attackType: AttackType[];
   attackSpeed: number;
   aggressive: boolean;
   poisonous: boolean;
@@ -201,40 +195,40 @@ export enum EquipmentSlotNames {
   Neck = "neck"
 }
 
-export interface CompleteItemData {
-  "id": number;
-  "name": string;
-  "incomplete": boolean;
-  "members": boolean;
-  "tradeable": boolean;
-  "tradeable_on_ge": boolean;
-  "stackable": boolean;
-  "stacked": null;
-  "noted": boolean;
-  "noteable": boolean;
-  "linked_id_item": number | null;
-  "linked_id_noted": number | null;
-  "linked_id_placeholder": number | null;
-  "placeholder": boolean;
-  "equipable": boolean;
-  "equipable_by_player": boolean;
-  "equipable_weapon": boolean;
-  "cost": number;
-  "lowalch": number | null;
-  "highalch": number | null;
-  "weight": number;
-  "buy_limit": number | null;
-  "quest_item": boolean;
-  "release_date": string;
-  "duplicate": boolean;
-  "examine": string;
-  "icon": string;
-  "wiki_name": string;
-  "wiki_url": string;
-  "wiki_exchange": string | null;
-  "equipment": EquipmentData | null;
-  "weapon": WeaponData | null;
-}
+// export interface CompleteItemData {
+//   "id": number;
+//   "name": string;
+//   "incomplete": boolean;
+//   "members": boolean;
+//   "tradeable": boolean;
+//   "tradeable_on_ge": boolean;
+//   "stackable": boolean;
+//   "stacked": null;
+//   "noted": boolean;
+//   "noteable": boolean;
+//   "linked_id_item": number | null;
+//   "linked_id_noted": number | null;
+//   "linked_id_placeholder": number | null;
+//   "placeholder": boolean;
+//   "equipable": boolean;
+//   "equipable_by_player": boolean;
+//   "equipable_weapon": boolean;
+//   "cost": number;
+//   "lowalch": number | null;
+//   "highalch": number | null;
+//   "weight": number;
+//   "buy_limit": number | null;
+//   "quest_item": boolean;
+//   "release_date": string;
+//   "duplicate": boolean;
+//   "examine": string;
+//   "icon": string;
+//   "wiki_name": string;
+//   "wiki_url": string;
+//   "wiki_exchange": string | null;
+//   "equipment": EquipmentData | null;
+//   "weapon": WeaponData | null;
+// }
 
 export interface EquipmentData {
   "attack_stab": number;
@@ -264,19 +258,19 @@ export interface EquipableRequirements {
   prayer?: number;
 }
 
-export interface WeaponData {
-  "attack_speed": number;
-  "weapon_type": string;
-  "stances": WeaponStance[];
-}
+// export interface WeaponData {
+//   "attack_speed": number;
+//   "weapon_type": string;
+//   "stances": WeaponStance[];
+// }
 
-export interface WeaponStance {
-  "combat_style": string;
-  "attack_type": AttackType | null;
-  "attack_style": AttackStyle | null;
-  "experience": string;
-  "boosts": string | null;
-}
+// export interface WeaponStance {
+//   "combat_style": string;
+//   "attack_type": AttackType | null;
+//   "attack_style": AttackStyle | null;
+//   "experience": string;
+//   "boosts": string | null;
+// }
 
 export enum AttackStyle {
   aggressive = "aggressive",
@@ -292,7 +286,8 @@ export enum AttackType {
   Slash = "slash",
   Crush = "crush",
   Magic = "magic",
-  Ranged = "ranged"
+  Ranged = "ranged",
+  Melee = "melee",
 }
 
 export interface EquipmentBonuses {

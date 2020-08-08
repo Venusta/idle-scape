@@ -3,19 +3,25 @@ import { SkillNames } from "../data";
 const courses = [
   {
     name: "a",
-    level: 1,
+    requirements: {
+      [SkillNames.agility]: 1,
+    },
     exp: 80,
     lapTime: 30,
   },
   {
     name: "b",
-    level: 2,
+    requirements: {
+      [SkillNames.agility]: 2,
+    },
     exp: 30,
     lapTime: 40,
   },
   {
     name: "c",
-    level: 3,
+    requirements: {
+      [SkillNames.agility]: 3,
+    },
     exp: 40,
     lapTime: 50,
   },

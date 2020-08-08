@@ -1,5 +1,5 @@
 import {
-  MonsterOptions, MonsterData, MonsterAttackType, MonsterAttribute,
+  MonsterOptions, MonsterData, AttackType,
 } from "../types/types";
 
 export default abstract class Monster {
@@ -18,7 +18,7 @@ export default abstract class Monster {
       combatLevel: 111,
       hitpoints: 105,
       maxHit: 11,
-      attackType: [],
+      attackType: [AttackType.Slash],
       attackSpeed: 4,
       aggressive: true,
       poisonous: false,

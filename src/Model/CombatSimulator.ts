@@ -1,39 +1,15 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import store from "../redux-stuff";
-import { AttackStyle, Player } from "../types/types";
+import {
+  AttackStyle, AttackType, SkillsStats, EquipmentSlots, EquipmentBonuses,
+} from "../types/types";
 import SimpleMonster from "./SimpleMonster";
 import TestMonster from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
 import Equipment from "./Equipment";
 
-enum StyleValue {
-  aggressive = 3,
-  melee_accurate = 3,
-  controlled = 1,
-  defensive = 3,
-  longRange = 3,
-  ranged_accurate = 3
-}
-
 type EffectiveLevels = {
-  player: {
-    attack: number,
-    strength: number,
-    defence: number,
-    ranged: number,
-    magic: number,
-  },
-  monster : {
-    attack: number,
-    strength: number,
-    defence: number,
-    ranged: number,
-    magic: number,
-  }
-};
-
-type EffectiveLevels2 = {
   attack: number,
   strength: number,
   defence: number,
@@ -41,101 +17,114 @@ type EffectiveLevels2 = {
   magic: number,
 };
 
-export interface CombatStat {
-  level: number;
-  boost?: number
-}
 export interface CombatStats {
-  attack: CombatStat;
-  defence: CombatStat;
-  strength: CombatStat;
-  hitpoints: CombatStat;
-  ranged: CombatStat;
-  prayer?: CombatStat;
-  magic: CombatStat;
+  attack: number;
+  defence: number;
+  strength: number;
+  ranged: number;
+  prayer?: number;
+  magic: number;
 }
-type Aids2 = {
-  attack: number,
-  strength: number,
-  defence: number,
-  ranged: number,
-  magic: number,
-};
 
-const addAttackStance = (attackStyle: AttackStyle, combatStats: EffectiveLevels2) => {
+interface CombatBonuses {
+  playerStrengthBonus: number;
+  playerAttackBonus: number;
+  playerDefenceBonus: number;
+  monsterAttackBonus: number;
+  monsterDefenceBonus: number;
+}
+
+const addAttackStance = (attackStyle: AttackStyle, attackType: AttackType, combatStats: EffectiveLevels) => {
   let {
     attack, strength, defence, ranged,
   } = combatStats;
-  switch (attackStyle) {
-    case AttackStyle.accurate:
-      attack += 3;
-      break;
-    case AttackStyle.controlled:
-      attack += 1;
-      strength += 1;
-      defence += 1;
-      break;
-    case AttackStyle.aggressive:
-      strength += 3;
-      break;
-    case AttackStyle.defensive:
-    case AttackStyle.longrange:
-      defence += 3;
-      break;
-    // case AttackStyle.ranged_accurate:
-    //   ranged += 3;
-    //   break;
-    default:
-      break;
+
+  if (attackType === AttackType.Ranged) {
+    // Using ranged
+    switch (attackStyle) {
+      case AttackStyle.accurate:
+        ranged += 3;
+        break;
+      case AttackStyle.longrange:
+        defence += 3;
+        break;
+      default:
+        break;
+    }
+  } else if (attackType === AttackType.Magic) {
+    // Using magic
+    // TODO: actually check if weapon is trident
+  } else {
+    // Using melee
+    switch (attackStyle) {
+      case AttackStyle.accurate:
+        attack += 3;
+        break;
+      case AttackStyle.controlled:
+        attack += 1;
+        strength += 1;
+        defence += 1;
+        break;
+      case AttackStyle.aggressive:
+        strength += 3;
+        break;
+      default:
+        break;
+    }
   }
   return {
     ...combatStats, attack, strength, defence, ranged,
   };
 };
 
-const addToEffectiveLevels = (playerEffectiveLevels: EffectiveLevels2, amount = 0) => {
+const addToEffectiveLevels = (playerEffectiveLevels: EffectiveLevels, amount = 0) => {
   return Object.entries(playerEffectiveLevels).reduce((accum, [key, value]) => {
     if (key === "hitpoints") {
       return { ...accum, [key]: value };
     }
     return { ...accum, [key]: value + amount };
-  }, {}) as EffectiveLevels2;
+  }, {}) as EffectiveLevels;
 };
 
-const addBoost = (levelData: CombatStats) => { // TODO redo this
-  return Object.entries(levelData).reduce((accum, [skill, { level, boost = 0 }]: [string, CombatStat]) => {
-    return {
-      ...accum,
-      [skill]: level + boost,
-    };
-  }, {}) as Aids2;
+const getBoostedCombatStats = (stats: SkillsStats): CombatStats => {
+  return {
+    attack: stats.attack.level + stats.attack.boost,
+    defence: stats.defence.level + stats.defence.boost,
+    strength: stats.strength.level + stats.strength.boost,
+    ranged: stats.ranged.level + stats.ranged.boost,
+    prayer: stats.prayer.level + stats.prayer.boost,
+    magic: stats.magic.level + stats.magic.boost,
+  };
 };
 
 export default class CombatSimulator {
   private monster: SimpleMonster;
   private timeLimit: number;
   private supplies: any;
-  private player: Player;
   private attackStyle: AttackStyle;
+  private attackType: AttackType;
+  private attackSpeed: number;
+  private skills: SkillsStats;
+  private equipment: EquipmentSlots;
 
   constructor(
     monsterID: number,
-    playerID: number,
+    playerID: string,
     timeLimit: number,
     attackStyle: AttackStyle,
     supplies: any,
   ) {
+    this.skills = store.getState().characters.skills[playerID];
+    this.equipment = store.getState().characters.equipment[playerID];
     this.timeLimit = timeLimit;
     this.supplies = supplies;
-    this.player = {
-      id: playerID,
-      name: store.getState().characters.names[playerID],
-      skills: store.getState().characters.skills[playerID],
-      equipment: store.getState().characters.equipment[playerID],
-      bank: store.getState().characters.banks[playerID],
-    };
-    this.monster = TestMonster;
+
+    const equipment = new Equipment(this.equipment);
     this.attackStyle = attackStyle;
+    this.attackType = equipment.getAttackType(this.attackStyle);
+    this.attackSpeed = equipment.getAttackSpeed(this.attackStyle);
+
+    this.monster = TestMonster; // getMonsterByID(monsterID)
   }
 
   private calculateAccuracy = (
@@ -156,80 +145,24 @@ export default class CombatSimulator {
     return Math.floor(0.5 + (effectiveLevel * (equipmentBonus + 64)) / 640);
   };
 
-  public calculateEffectiveLevelsPlayer = (skills: CombatStats, type = 0): EffectiveLevels2 => {
-    // const {
-    //   attack, strength, defence, ranged, magic,
-    // } = skills;
+  public calculateEffectiveLevelsPlayer = (): EffectiveLevels => {
+    const boostedCombatStats = getBoostedCombatStats(this.skills);
+    console.log(boostedCombatStats);
 
-    // TODO format the skills object to stat:level, we want to keep the format consistent
-    console.log(skills);
-    const boostedStats = addBoost(skills);
-    console.log(boostedStats);
     // TODO: Handle prayer bonus here
 
-    let playerEffectiveLevels = addAttackStance(this.attackStyle, boostedStats);
+    let playerEffectiveLevels = addAttackStance(this.attackStyle, this.attackType, boostedCombatStats);
     console.log(playerEffectiveLevels);
 
     playerEffectiveLevels = addToEffectiveLevels(playerEffectiveLevels, 8);
     console.log(playerEffectiveLevels);
+
+    // TODO: Handle set bonuses here
 
     return playerEffectiveLevels;
   };
 
-  private calculateEffectiveLevels = (): EffectiveLevels => {
-    // Obtain player levels
-    const {
-      attack: playerAttack,
-      strength: playerStrength,
-      defence: playerDefence,
-      ranged: playerRanged,
-      magic: playerMagic,
-    } = this.player.skills;
-
-    // Calculate base level + boost
-    let playerEffectiveLevels = {
-      attack: playerAttack.level + playerAttack.boost,
-      strength: playerStrength.level + playerStrength.boost,
-      defence: playerDefence.level + playerDefence.boost,
-      ranged: playerRanged.level + playerRanged.boost,
-      magic: playerMagic.level + playerMagic.boost,
-    };
-
-    // TODO: Handle prayer bonus here
-    // Multiplicative so order matters
-    // Floor result
-
-    // Handle attack style bonuses
-    switch (this.attackStyle) {
-      case AttackStyle.accurate:
-        playerEffectiveLevels.attack += 3;
-        break;
-      case AttackStyle.controlled:
-        playerEffectiveLevels.attack += 1;
-        playerEffectiveLevels.strength += 1;
-        playerEffectiveLevels.defence += 1;
-        break;
-      case AttackStyle.aggressive:
-        playerEffectiveLevels.strength += 3;
-        break;
-      case AttackStyle.defensive:
-      case AttackStyle.longrange:
-        playerEffectiveLevels.defence += 3;
-        break;
-      // case AttackStyle.accurate:
-      //   playerEffectiveLevels.ranged += 3;
-      //   break;
-      default:
-        break;
-    }
-
-    // Add 8 for some reason
-    playerEffectiveLevels = addToEffectiveLevels(playerEffectiveLevels, 8);
-
-    // TODO: Handle void set bonuses here
-    // Also multiplicative so has to be done last
-    // Also floor result
-
+  private calculateEffectiveLevelsMonster = (): EffectiveLevels => {
     // Obtain monster stats
     const {
       attackLevel: monsterAttack,
@@ -248,7 +181,7 @@ export default class CombatSimulator {
       magic: monsterMagic + 9,
     };
 
-    return { player: playerEffectiveLevels, monster: monsterEffectiveLevels };
+    return monsterEffectiveLevels;
   };
 
   private rollHit = (accuracy: number, maxHit: number) => {
@@ -259,46 +192,131 @@ export default class CombatSimulator {
     return 0;
   };
 
+  private getRelevantCombatBonuses = (playerAttackType: AttackType, monsterAttackType: AttackType, equipmentBonuses: EquipmentBonuses): CombatBonuses => {
+    const combatBonuses = {
+      playerStrengthBonus: 0,
+      playerAttackBonus: 0,
+      playerDefenceBonus: 0,
+      monsterAttackBonus: 0,
+      monsterDefenceBonus: 0,
+    };
+
+    // Figure out player attack & strength bonus and monster defence bonus based on player attack type
+    switch (playerAttackType) {
+      case AttackType.Ranged:
+        combatBonuses.playerAttackBonus = equipmentBonuses.attack_ranged;
+        combatBonuses.playerStrengthBonus = equipmentBonuses.ranged_strength;
+        combatBonuses.monsterDefenceBonus = this.monster.data.defenceRanged;
+        break;
+      case AttackType.Magic:
+        combatBonuses.playerAttackBonus = equipmentBonuses.attack_magic;
+        combatBonuses.playerStrengthBonus = equipmentBonuses.magic_damage;
+        combatBonuses.monsterDefenceBonus = this.monster.data.defenceMagic;
+        break;
+      case AttackType.Crush:
+        combatBonuses.playerAttackBonus = equipmentBonuses.attack_crush;
+        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.monsterDefenceBonus = this.monster.data.defenceCrush;
+        break;
+      case AttackType.Slash:
+        combatBonuses.playerAttackBonus = equipmentBonuses.attack_slash;
+        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.monsterDefenceBonus = this.monster.data.defenceSlash;
+        break;
+      case AttackType.Stab:
+        combatBonuses.playerAttackBonus = equipmentBonuses.attack_stab;
+        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.monsterDefenceBonus = this.monster.data.defenceStab;
+        break;
+      default:
+        break;
+    }
+
+    // Figure out monster attack bonus and player defence bonus based on monster attack type
+    switch (monsterAttackType) {
+      case AttackType.Ranged:
+        combatBonuses.monsterAttackBonus = this.monster.data.attackRanged;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_ranged;
+        break;
+      case AttackType.Magic:
+        combatBonuses.monsterAttackBonus = this.monster.data.attackMagic;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_magic;
+        break;
+      case AttackType.Crush:
+        combatBonuses.monsterAttackBonus = this.monster.data.attackCrush;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_crush;
+        break;
+      case AttackType.Slash:
+        combatBonuses.monsterAttackBonus = this.monster.data.attackSlash;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_slash;
+        break;
+      case AttackType.Stab:
+        combatBonuses.monsterAttackBonus = this.monster.data.attackStab;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_stab;
+        break;
+      default:
+        // So we need to think about what to do when monster attack type is 'melee'
+        // I guess just default to slash for now, probably fine forever tbh
+        combatBonuses.monsterAttackBonus = this.monster.data.attackSlash;
+        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_slash;
+        break;
+    }
+
+    return combatBonuses;
+  };
+
+  private getDamageAndAccuracyLevels = (playerAttackType: AttackType, playerEffectiveLevels: EffectiveLevels): { damage: number, accuracy: number } => {
+    const relevantDamageAndAccuracyLevels = {
+      damage: 0,
+      accuracy: 0,
+    };
+
+    switch (playerAttackType) {
+      case AttackType.Ranged:
+        // Ranged: accuracy and damage both scale with the player's ranged level
+        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.ranged;
+        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.ranged;
+        break;
+      case AttackType.Magic:
+        // Magic: accuracy and damage both scale with the player's magic level (probably only for fucking trident)
+        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.magic;
+        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.magic;
+        break;
+      default:
+        // Melee: accuracy scales with player's attack level, damage with player's strength level
+        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.strength;
+        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.attack;
+        break;
+    }
+
+    return relevantDamageAndAccuracyLevels;
+  };
+
   public simulate = (): { killcount: number; time: number } => {
+    const playerEffectiveLevels = this.calculateEffectiveLevelsPlayer();
+    const monsterEffectiveLevels = this.calculateEffectiveLevelsMonster();
+
     const {
-      player: playerEffectiveLevels,
-      monster: monsterEffectiveLevels,
-    } = this.calculateEffectiveLevels();
+      damage: playerEffectiveDamageLevel,
+      accuracy: playerEffectiveAccuracyLevel,
+    } = this.getDamageAndAccuracyLevels(this.attackType, playerEffectiveLevels);
 
-    const playerEffectiveDamageLevel = 1;
-    const playerEffectiveHitLevel = 1;
+    const playerEquipmentBonuses = new Equipment(this.equipment).equipmentBonuses;
 
-    const playerEquipmentBonuses = new Equipment(this.player).equipmentBonuses;
+    const {
+      playerStrengthBonus,
+      playerAttackBonus,
+      playerDefenceBonus,
+      monsterAttackBonus,
+      monsterDefenceBonus,
+    } = this.getRelevantCombatBonuses(this.attackType, this.monster.data.attackType[0], playerEquipmentBonuses);
 
-    // switch (this.attackStyle) {
-    //   case AttackStyle.aggressive:
-    //   case AttackStyle.accurate:
-    //   case AttackStyle.controlled:
-    //   case AttackStyle.defensive:
-    //     playerEffectiveDamageLevel = playerEffectiveLevels.strength;
-    //     playerEffectiveHitLevel = playerEffectiveLevels.attack;
-    //     break;
-    //   case AttackStyle.rapid:
-    //   case AttackStyle.accurate:
-    //   case AttackStyle.longrange:
-    //     playerEffectiveDamageLevel = playerEffectiveLevels.ranged;
-    //     playerEffectiveHitLevel = playerEffectiveLevels.ranged;
-    //     break;
-    //   default:
-    // }
+    const monsterMaxAttackRoll = this.calculateMaxRoll(monsterEffectiveLevels.attack, monsterAttackBonus);
+    const monsterMaxDefenceRoll = this.calculateMaxRoll(monsterEffectiveLevels.defence, monsterDefenceBonus);
+    const playerMaxAttackRoll = this.calculateMaxRoll(playerEffectiveAccuracyLevel, playerAttackBonus);
+    const playerMaxDefenceRoll = this.calculateMaxRoll(playerEffectiveLevels.defence, playerDefenceBonus);
 
-    const playerEquipmentStrBonus = 103; // TODO: Get this from actual player data
-    const playerEquipmentAttackBonus = 114; // TODO: Get this from player data too (needs to be bonus of weapon attack style used)
-    const playerEquipmentDefenceBonus = 216; // TODO: also get this from player data (defence against monster attack style)
-    const monsterEquipmentDefenceBonus = this.monster.data.defenceSlash; // TODO: also actually determine what defence this is based on attack style used by player
-    const monsterEquipmentAttackBonus = this.monster.data.attackSlash; // TODO: blabla
-
-    const monsterMaxAttackRoll = this.calculateMaxRoll(monsterEffectiveLevels.attack, monsterEquipmentAttackBonus);
-    const monsterMaxDefenceRoll = this.calculateMaxRoll(monsterEffectiveLevels.defence, monsterEquipmentDefenceBonus);
-    const playerMaxAttackRoll = this.calculateMaxRoll(playerEffectiveHitLevel, playerEquipmentAttackBonus);
-    const playerMaxDefenceRoll = this.calculateMaxRoll(playerEffectiveLevels.defence, playerEquipmentDefenceBonus);
-
-    const playerMaxHit = this.calculateMaxHit(playerEffectiveDamageLevel, playerEquipmentStrBonus);
+    const playerMaxHit = this.calculateMaxHit(playerEffectiveDamageLevel, playerStrengthBonus);
     const monsterMaxHit = this.monster.data.maxHit;
 
     console.log(`Player max hit: ${playerMaxHit}`);
@@ -310,13 +328,13 @@ export default class CombatSimulator {
     console.log(`Player accuracy: ${playerAccuracy}`);
     console.log(`Monster accuracy: ${monsterAccuracy}`);
 
-    let playerHitpoints = this.player.skills.hitpoints.level + this.player.skills.hitpoints.boost;
+    let playerHitpoints = this.skills.hitpoints.level + this.skills.hitpoints.boost;
     let monsterHitpoints = this.monster.data.hitpoints;
     let killcount = 0;
     let time = 0; // In in-game ticks (0.6s per tick)
     let playerAttackCountdown = 0;
     let monsterAttackCountdown = 2;
-    const playerEatThreshold = playerHitpoints - 20; // TODO: determine number from how much the food heals
+    const playerEatThreshold = playerHitpoints - 20 - this.skills.hitpoints.boost; // TODO: determine number from how much the food heals
 
     let saveMyPc = 0;
 
@@ -346,7 +364,7 @@ export default class CombatSimulator {
           killcount += 1;
           monsterHitpoints = this.monster.data.hitpoints;
         }
-        playerAttackCountdown = 4; // TODO: get attack speed from weapon used
+        playerAttackCountdown = this.attackSpeed;
       }
 
       if (monsterAttackCountdown <= 0) {

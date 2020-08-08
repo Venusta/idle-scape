@@ -9,13 +9,13 @@ import { NameState } from "../../model/OhGodWhy";
 
 const TaskList = (): JSX.Element => {
   const tasks: TaskState = useSelector((state: RootState) => state.tasks);
-  const names: NameState = useSelector((state: RootState) => (state.characters.names), shallowEqual);
+  const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
 
   const MakeList = (): JSX.Element => {
     console.log("Task list re-render");
     console.log(tasks);
 
-    const characterData = Object.entries(tasks);
+    const characterData = Object.entries(tasks); // todo sort by when before the loop
     const taskListData: Array<JSX.Element> = [];
 
     characterData.forEach((character) => {
@@ -38,7 +38,6 @@ const TaskList = (): JSX.Element => {
         </div>
         <div className="task-list-inner">
           {taskListData}
-          {/* {queue.map((task) => <div className="task-list-item" key={uuid()}>{`${task.when} ${task.skill} ${task.expReward}`}</div>)} */}
         </div>
       </div>
     );

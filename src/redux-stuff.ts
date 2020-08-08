@@ -7,7 +7,7 @@ import {
 import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
-import { useDispatch } from "react-redux";
+import { useDispatch, shallowEqual, useSelector } from "react-redux";
 import {
   SkillsStats, ItemBank, SkillName, SingleItem,
 } from "./types/types";

@@ -7,7 +7,6 @@ import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
 import { RootState, useAppDispatch } from "../redux-stuff";
-import { createItemSlots } from "../constants/data";
 import Laps from "../constants/tasks/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import Equipment from "../model/Equipment";
@@ -17,6 +16,7 @@ import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
 import charactersInitialState, { ItemBankState, NameState } from "../model/OhGodWhy";
 import TaskList from "./TaskList/TaskList";
+import { AttackStyle } from "../types/types";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -150,18 +150,19 @@ const App = (): JSX.Element => {
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     new Laps({ playerID: "3", name: "a", amount: 1 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 3 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 4 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 5 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 3 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 4 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 5 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 6 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 3 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 4 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 5 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 3 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 4 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 5 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
     // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
-    // const simulator = new CombatSimulator(0, 0, 600, AttackStyle.aggressive, {});
+    const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
+    simulator.simulate();
 
     // const playerCombatStats = {
     //   attack: { level: players[0].skills.attack.level, boost: 8 },
@@ -176,9 +177,6 @@ const App = (): JSX.Element => {
     // simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
 
     // simulator.simulate();
-
-    console.log("blabla");
-    console.log(createItemSlots());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

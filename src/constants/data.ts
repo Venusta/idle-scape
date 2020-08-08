@@ -1,5 +1,4 @@
-import { SkillStats, EquipmentSlots, SkillsStats } from "../types/types";
-import Skill from "../model/Skill";
+import { SkillsStats } from "../types/types";
 import { levelToExp, expToLevel } from "../util";
 
 // Creates object consisting of item slots as described by enum EquipmentSlots
@@ -10,21 +9,21 @@ import { levelToExp, expToLevel } from "../util";
 //     [slot]: 4151,
 //   }), {} as EquipmentSlots);
 
-export const testGear = {
-  head: 2619,
-  body: 2615,
-  legs: 2617,
-  feet: -2,
-  hands: -2,
-  cape: -2,
-  weapon: 4151,
-  shield: 8845,
-  ammo: -2,
-  ring: -2,
-  neck: -2,
-};
+// export const testGear = {
+//   head: 2619,
+//   body: 2615,
+//   legs: 2617,
+//   feet: -2,
+//   hands: -2,
+//   cape: -2,
+//   weapon: 4151,
+//   shield: 8845,
+//   ammo: -2,
+//   ring: -2,
+//   neck: -2,
+// };
 
-export const createItemSlots = (): EquipmentSlots => testGear as EquipmentSlots;
+// export const createItemSlots = (): EquipmentSlots => testGear as EquipmentSlots;
 
 export const skillList = [
   "attack",
