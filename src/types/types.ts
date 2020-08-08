@@ -135,6 +135,18 @@ export type SkillName = "attack" |
 "hunter" |
 "construction";
 
+export type EquipmentSlotName = "head" |
+"body" |
+"legs" |
+"feet" |
+"hands" |
+"cape" |
+"weapon" |
+"shield" |
+"ammo" |
+"ring" |
+"neck";
+
 export interface SkillStats {
   level: number;
   exp: number;
@@ -182,17 +194,17 @@ export interface EquipmentSlots {
 }
 
 export enum EquipmentSlotNames {
-  Head = "head",
-  Body = "body",
-  Legs = "legs",
-  Feet = "feet",
-  Hands = "hands",
-  Cape = "cape",
-  Weapon = "weapon",
-  Shield = "shield",
-  Ammo = "ammo",
-  Ring = "ring",
-  Neck = "neck"
+  head = "head",
+  body = "body",
+  legs = "legs",
+  feet = "feet",
+  hands = "hands",
+  cape = "cape",
+  weapon = "weapon",
+  shield = "shield",
+  ammo = "ammo",
+  ring = "ring",
+  neck = "neck"
 }
 
 // export interface CompleteItemData {

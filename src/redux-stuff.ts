@@ -14,6 +14,49 @@ import {
 import charactersInitialState from "./model/OhGodWhy";
 import { addBankToBank } from "./util";
 
+type QueuedTask = {
+  playerID: string
+  when: number
+  duration: number
+  type: string
+  info: TaskInfo
+  skill: SkillName
+  reward: TaskReward
+};
+
+interface RewardPayload {
+  payload: {
+    playerID: string,
+    reward: TaskReward,
+    type: string,
+  }
+}
+
+type ExpReward = { [Key in SkillName]?: number; };
+
+export interface TaskReward {
+  exp?: ExpReward
+  items?: ItemBank
+}
+
+interface TaskInfo {
+  name: string,
+  amount?: number
+}
+
+type TaskPayload = {
+  payload: {
+    playerID: string
+    duration: number
+    type: string
+    info: TaskInfo
+    skill: SkillName
+    reward: TaskReward
+  }
+};
+
+export type TaskState = {[characterID: string]:{ queue: Array<QueuedTask>} };
+
 const characterSlice = createSlice({
   name: "characters",
   initialState: charactersInitialState({}),
@@ -36,12 +79,8 @@ const characterSlice = createSlice({
       }
 
       if (items) {
-        // Object.entries(items).forEach((item: SingleItem) => {
-        //   const [itemID, amount] = item;
-        // });
         state.banks[playerID] = addBankToBank(items, bank);
         console.log(items);
-        // TODO add items to character bank >addBankToBank
       }
     },
     // changeName: (state, { payload: { playerID, newName } }: { payload: { playerID: number, newName: string } }) => {
@@ -51,49 +90,6 @@ const characterSlice = createSlice({
     // },
   },
 });
-
-type QueuedTask = {
-  playerID: string
-  when: number
-  duration: number
-  type: string
-  info: TaskInfo
-  skill: SkillName
-  reward: TaskReward
-};
-
-interface RewardPayload {
-  payload: {
-    playerID: string,
-    reward: TaskReward,
-    type: string,
-  }
-}
-
-type ExpReward = { [Key in SkillName]?: number; };
-
-interface TaskReward {
-  exp?: ExpReward
-  items?: ItemBank
-}
-
-interface TaskInfo {
-  name: string,
-  amount?: number
-}
-
-type TaskPayload = {
-  payload: {
-    playerID: string
-    duration: number
-    type: string
-    info: TaskInfo
-    skill: SkillName
-    reward: TaskReward
-  }
-};
-
-export type TaskState = {[characterID: string]:{ queue: Array<QueuedTask>} };
 
 const taskInitialState: TaskState = { // todo auto generate based on character ids / save
   3: { queue: [] },

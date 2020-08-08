@@ -1,30 +1,21 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable max-len */
+import { ItemBankState } from "src/model/OhGodWhy";
 import {
-  LapOptions, SkillsStats, SkillName, ItemBank, EquipmentSlots,
+  LapOptions, SkillsStats, SkillName, ItemBank, EquipmentSlots, EquipmentSlotName, EquipmentSlotNames,
 } from "../../types/types";
 import Agility from "../skills/agility";
-import store, { task } from "../../redux-stuff";
+import store, { task, TaskReward } from "../../redux-stuff";
 import { SkillNames } from "../data";
+import Requirements, { TaskRequirements } from "./Requirements";
 
-type SkillReq = { [Key in SkillName]?: number; };
-
-interface TaskRequirements {
-  skills?: SkillReq
-  items?: ItemBank
-  equipment?: Partial<EquipmentSlots>
+interface AgilityCourse {
+  name: string
+  requirements: TaskRequirements
+  reward: TaskReward
+  duration: number
 }
-
-const requirements: TaskRequirements = {
-  skills: {
-    [SkillNames.agility]: 1,
-    [SkillNames.slayer]: 2,
-  },
-  equipment: {
-    weapon: 4151,
-  },
-  items: {
-    995: 100,
-  },
-};
 
 export default class Laps {
   private playerID: string;
@@ -41,38 +32,32 @@ export default class Laps {
     this.playerSkills = store.getState().characters.skills[playerID];
   }
 
-  hasReqs = (selectedCourse: any): boolean => {
-    console.log("yeet");
-
-    console.log(selectedCourse.requirements);
-
-    console.log(this.playerSkills);
-
-    return true;
-  };
-
   start = ():void => {
     const { playerID, name, amount } = this;
     const playerName = store.getState().characters.names[playerID];
     const playerSkills = store.getState().characters.skills[playerID];
 
-    const selectedCourse = Agility.courses.find((course) => course.name === name);
+    const selectedCourse: AgilityCourse | undefined = Agility.courses.find((course) => course.name === name);
     if (!selectedCourse) {
       console.log("Course not found");
       return;
     }
     const {
-      name: courseName, exp: courseExp, lapTime, requirements,
+      name: courseName, reward: singleLapReward, duration: lapTime, requirements,
     } = selectedCourse;
 
     const { level, boost = 0 } = playerSkills[SkillNames.agility];
 
-    if (!this.hasReqs(selectedCourse)) {
+    const wank = new Requirements(playerID, requirements);
+
+    if (!wank.hasReqs()) {
       console.log(`${playerName}'s ${SkillNames.agility} level too low for course: ${courseName}`);
       return;
     }
 
-    console.log(selectedCourse);
+    const courseExp = 30; // todo remove
+
+    // console.log(selectedCourse);
     console.log(`${playerName} wants to do ${amount}x laps of course: ${courseName}`);
     console.log(`It will take ${lapTime * amount} seconds`);
     console.log(`The reward will be ${courseExp * amount} ${SkillNames.agility} exp`);

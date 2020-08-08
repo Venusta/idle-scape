@@ -99,27 +99,27 @@ export default class Equipment {
 
   private getItemDataForSlot = (slot: EquipmentSlotNames): { [id: string]: MinifiedItemData } => {
     switch (slot) {
-      case EquipmentSlotNames.Body:
+      case EquipmentSlotNames.body:
         return bodySlotData;
-      case EquipmentSlotNames.Ammo:
+      case EquipmentSlotNames.ammo:
         return ammoSlotData;
-      case EquipmentSlotNames.Cape:
+      case EquipmentSlotNames.cape:
         return capeSlotData;
-      case EquipmentSlotNames.Feet:
+      case EquipmentSlotNames.feet:
         return feetSlotData;
-      case EquipmentSlotNames.Hands:
+      case EquipmentSlotNames.hands:
         return handsSlotData;
-      case EquipmentSlotNames.Head:
+      case EquipmentSlotNames.head:
         return headSlotData;
-      case EquipmentSlotNames.Legs:
+      case EquipmentSlotNames.legs:
         return legsSlotData;
-      case EquipmentSlotNames.Neck:
+      case EquipmentSlotNames.neck:
         return neckSlotData;
-      case EquipmentSlotNames.Ring:
+      case EquipmentSlotNames.ring:
         return ringSlotData;
-      case EquipmentSlotNames.Shield:
+      case EquipmentSlotNames.shield:
         return shieldSlotData;
-      case EquipmentSlotNames.Weapon:
+      case EquipmentSlotNames.weapon:
         return weaponSlotData;
       default:
         console.error("wtf");
@@ -128,7 +128,7 @@ export default class Equipment {
   };
 
   public getAttackType = (attackStyle: AttackStyle): AttackType => {
-    const weaponID = this.playerEquipment[EquipmentSlotNames.Weapon];
+    const weaponID = this.playerEquipment[EquipmentSlotNames.weapon];
     const weaponData = weaponSlotData[weaponID].weapon;
     const weaponType = weaponData?.weapon_type;
 
@@ -151,7 +151,7 @@ export default class Equipment {
   };
 
   public getAttackSpeed = (attackStyle: AttackStyle): number => {
-    const weaponID = this.playerEquipment[EquipmentSlotNames.Weapon];
+    const weaponID = this.playerEquipment[EquipmentSlotNames.weapon];
     const weaponData = weaponSlotData[weaponID].weapon;
     const attackSpeed = weaponData?.attack_speed;
 

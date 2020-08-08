@@ -14,7 +14,7 @@ import Equipment from "../model/Equipment";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import charactersInitialState, { ItemBankState, NameState } from "../model/OhGodWhy";
+import { ItemBankState, NameState } from "../model/OhGodWhy";
 import TaskList from "./TaskList/TaskList";
 import { AttackStyle } from "../types/types";
 
@@ -144,7 +144,7 @@ const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("Rendered");
-    console.log(charactersInitialState({}));
+    // console.log(charactersInitialState({}));
 
     // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
@@ -161,8 +161,8 @@ const App = (): JSX.Element => {
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
     // new Laps({ playerID: 1, name: "b", amount: 2 }).start();
 
-    const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
-    simulator.simulate();
+    // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
+    // simulator.simulate();
 
     // const playerCombatStats = {
     //   attack: { level: players[0].skills.attack.level, boost: 8 },
