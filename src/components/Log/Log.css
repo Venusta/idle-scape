@@ -1,4 +1,4 @@
-.task-list-window {
+.log-window {
   box-sizing: border-box;
   background-color: rgb(39, 39, 39);
   box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
@@ -13,7 +13,7 @@
   max-height: 500px;
 }
 
-.task-list-title {
+.log-title {
   font-size: large;
   font-weight: bold;
   background-color: rgb(33, 33, 33);
@@ -24,7 +24,7 @@
   /* align-items: center; */
 }
 
-.task-list-inner {
+.log-inner {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -39,7 +39,7 @@
   /* background-color: pink; */
 }
 
-.task-list-item {
+.log-item {
   /* background-color: rgb(16, 122, 183); */
   background-color: rgb(60, 60, 60);
   color: rgb(255, 255, 255);
@@ -55,10 +55,10 @@
   box-shadow: 0 0px 4px 0 rgb(0, 0, 0, 0.85);
 }
 
-.task-list-active {
+.log-active {
   background-color: rgb(16, 183, 100);
 }
 
-.task-list-item:hover {
+.log-item:hover {
   background-color: rgba(16, 172, 183);
 }

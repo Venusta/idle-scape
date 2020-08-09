@@ -1,5 +1,4 @@
 .skill-window {
-  box-sizing: border-box;
   background-color: rgb(39, 39, 39);
   display: flex;
   flex-direction: column;

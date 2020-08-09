@@ -5,11 +5,17 @@ body {
   font-family: "Consolas";
   font-size: 14px;
   box-sizing: border-box;
-  /* border: solid green 1px; */
+  /* border: solid rgb(219, 91, 202) 1px; */
+  /* height: 100%; */
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   scrollbar-color: rgb(70, 70, 70) rgb(32, 32, 32);
 }
+
+/* a:visited {
+  color: hotpink;
+} */

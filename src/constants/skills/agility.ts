@@ -7,12 +7,12 @@ const courses = [
     requirements: {
       skills: {
         [SkillNames.agility]: 1,
-        [SkillNames.slayer]: 2,
-        [SkillNames.runecrafting]: 2,
+        // [SkillNames.slayer]: 2,
+        // [SkillNames.runecrafting]: 2,
       },
       equipment: {
         [EquipmentSlotNames.weapon]: 4151,
-        [EquipmentSlotNames.head]: 2618,
+        // [EquipmentSlotNames.head]: 2618,
       },
       items: {
         995: 100,

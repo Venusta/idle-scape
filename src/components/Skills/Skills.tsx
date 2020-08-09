@@ -36,10 +36,14 @@ const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
   );
 };
 
-const Skills = (): JSX.Element => {
+interface SkillsProps {
+  id: string;
+}
+
+const Skills = ({ id }: SkillsProps): JSX.Element => {
   const playerData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
-    name: state.characters.names["3"], // TODO MULTICHARACTER SKILLS
-    skills: state.characters.skills["3"],
+    name: state.characters.names[id],
+    skills: state.characters.skills[id],
   }), shallowEqual);
 
   const { name, skills } = playerData;

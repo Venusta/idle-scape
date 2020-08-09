@@ -3,6 +3,14 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  RouteComponentProps,
+} from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
@@ -14,9 +22,11 @@ import Equipment from "../model/Equipment";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import { ItemBankState, NameState } from "../model/OhGodWhy";
+import { NameState } from "../model/OhGodWhy";
 import TaskList from "./TaskList/TaskList";
 import { AttackStyle } from "../types/types";
+import CharacterPanel from "./CharacterPanel/CharacterPanel";
+import Log from "./Log/Log";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -28,23 +38,39 @@ import { AttackStyle } from "../types/types";
 //   (names) => names,
 // );
 
-interface PlayerBanksData {
-  banks: ItemBankState,
-  names: NameState,
+interface MatchParams {
+  playerID: string;
 }
 
 const Banks = () => { // todo extract component
-  const playerData: PlayerBanksData = useSelector((state: RootState) => ({
-    names: state.characters.names,
-    banks: state.characters.banks,
-  }), shallowEqual);
-  const { names, banks } = playerData;
-
+  const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
   console.log("Don't re-render me!");
 
   return (
     <div>
-      {Object.keys(banks).map((id) => <Bank key={id} bank={banks[id]} name={names[id]} />)}
+      {Object.keys(ids).map((id) => <Bank key={id} id={id} />)}
+    </div>
+  );
+};
+
+const SingleCharacterView = ({ playerID }: { playerID: string }) => {
+  const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
+
+  if (ids[playerID] === undefined) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
+
+  return (
+    <div className="reeee">
+      <TaskList />
+      <Bank id={playerID} />
+      <Skills id={playerID} />
     </div>
   );
 };
@@ -181,13 +207,32 @@ const App = (): JSX.Element => {
 
   return (
     <div className="app">
+      <CharacterPanel />
       <TaskTimer />
       <div className="content">
-        <TaskList />
-        <div>
-          <Banks />
-        </div>
-        <Skills />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div className="something">
+                <Log />
+                <TaskList />
+                <Banks />
+              </div>
+            )}
+          />
+          <Route
+            path="/player/:playerID"
+            render={({ match }: RouteComponentProps<MatchParams>) => (
+              <SingleCharacterView playerID={match.params.playerID} />
+            )}
+          />
+          <Route path="*">
+            <h1>404 Not Found</h1>
+          </Route>
+        </Switch>
+
       </div>
     </div>
   );

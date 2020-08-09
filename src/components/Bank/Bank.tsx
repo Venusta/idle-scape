@@ -4,16 +4,20 @@
 import React from "react";
 
 import "./Bank.css";
+import { useSelector, shallowEqual } from "react-redux";
 import { getRandomInt } from "../../util";
 import { ItemBank } from "../../types/types";
 import Item from "./Item";
+import { RootState } from "../../redux-stuff";
 
 interface BankProps {
-  bank: ItemBank;
-  name: string;
+  id: string;
 }
 
-const Bank: React.FC<BankProps> = ({ name, bank }) => { // todo pass bank / loot data in props
+const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in props
+  const name: string = useSelector((state: RootState) => state.characters.names[id], shallowEqual);
+  const bank: ItemBank = useSelector((state: RootState) => state.characters.banks[id], shallowEqual);
+
   const handleDragStart = (e: React.DragEvent) => { // todo make this work
     console.log(e.currentTarget);
     // e.preventDefault();
@@ -63,9 +67,9 @@ const Bank: React.FC<BankProps> = ({ name, bank }) => { // todo pass bank / loot
 
     for (let itemID = 0; itemID < itemCount; itemID += 1) {
       const itemInBank = Object.entries(bank)[itemID];
-      const [id, amount] = itemInBank;
+      const [alsoItemIDWtf, amount] = itemInBank;
 
-      bankGrid.push(renderItem(parseInt(id, 10), amount));
+      bankGrid.push(renderItem(parseInt(alsoItemIDWtf, 10), amount));
     }
     return bankGrid;
   };

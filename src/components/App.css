@@ -1,15 +1,27 @@
 .app {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  box-sizing: border-box;
-  /* border: solid pink 1px; */
-  /* min-height: 100vh; */
+  /* flex-direction: row; */
+  /* align-items: flex-start; */
+  /* align-self: stretch; */
+  /* align-content: stretch; */
+  /* align-items: stretch; */
+
+  height: 100vh;
+
+
 }
 
 .content {
   display: flex;
-    border: solid pink 1px;
-    align-items: stretch;
-    /* max-height: 600px; */
+  flex-direction: row;
+  /* background-color: lightcoral; */
+    align-self: stretch;
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 100vw;
 }
+
+/* .something {
+  display: flex;
+  flex-direction: row;
+} */

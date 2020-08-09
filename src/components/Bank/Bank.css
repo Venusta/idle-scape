@@ -7,7 +7,7 @@
   /* box-shadow: 2px 0px rgba(0, 0, 0, 0.5); */
   box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
   margin: 20px;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
 }
 
@@ -19,13 +19,11 @@
   padding: 3px 10px 3px 10px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .bank-inner {
   box-sizing: border-box;
-  /* min-height: 300px;  */
-  height: 300px; 
+  height: 300px;
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 8px;
@@ -37,7 +35,7 @@
   grid-template-columns: repeat(8, 1fr);
   row-gap: 2px;
   column-gap: 15px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .itemInBank {
@@ -49,7 +47,7 @@
   font-size: 12px;
   margin-top: 0px;
   padding: 0px;
-  max-height: 40px;
+  max-height: 45px;
   /* cursor: move; */
   /* background-color: rgb(145, 145, 33); */
   position: relative;
@@ -60,12 +58,11 @@
 }
 
 .itemImage {
+  margin-top: 5px;
   pointer-events: none;
-  padding-top: 5px;
 }
 
 .itemAmount {
   pointer-events: none;
   position: absolute;
 }
-
