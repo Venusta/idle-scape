@@ -22,36 +22,36 @@ export default class Laps {
   private name: string;
   private amount: number;
   private playerName: string;
-  private playerSkills: SkillsStats;
+  // private playerSkills: SkillsStats;
 
   constructor({ playerID, name, amount }: LapOptions) {
     this.playerID = playerID;
     this.name = name;
     this.amount = amount;
     this.playerName = store.getState().characters.names[playerID];
-    this.playerSkills = store.getState().characters.skills[playerID];
+    // this.playerSkills = store.getState().characters.skills[playerID];
   }
 
   start = ():void => {
-    const { playerID, name, amount } = this;
-    const playerName = store.getState().characters.names[playerID];
-    const playerSkills = store.getState().characters.skills[playerID];
+    const {
+      playerID, name, amount, playerName,
+    } = this;
 
     const selectedCourse: AgilityCourse | undefined = Agility.courses.find((course) => course.name === name);
     if (!selectedCourse) {
       console.log("Course not found");
       return;
     }
+
     const {
-      name: courseName, reward: singleLapReward, duration: lapTime, requirements,
+      name: courseName, requirements, reward: singleLapReward, duration: lapTime,
     } = selectedCourse;
 
-    const { level, boost = 0 } = playerSkills[SkillNames.agility];
+    const doesPlayer = new Requirements(playerID, requirements);
 
-    const wank = new Requirements(playerID, requirements);
-
-    if (!wank.hasReqs()) {
-      console.log(`${playerName}'s ${SkillNames.agility} level too low for course: ${courseName}`);
+    if (!doesPlayer.haveReqs()) {
+      doesPlayer.missingReqsMsg();
+      console.log(`${playerName}'s ${doesPlayer.missingReqsMsg()} course: ${courseName}`);
       return;
     }
 

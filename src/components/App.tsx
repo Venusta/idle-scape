@@ -159,7 +159,6 @@ const App = (): JSX.Element => {
     new Laps({ playerID: "9", name: "a", amount: 6 }).start();
     new Laps({ playerID: "3", name: "a", amount: 6 }).start();
 
-
     // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
     // simulator.simulate();
 
