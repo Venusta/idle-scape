@@ -6,7 +6,7 @@ import React from "react";
 import "./Bank.css";
 import { useSelector, shallowEqual } from "react-redux";
 import { getRandomInt } from "../../util";
-import { ItemBank } from "../../types/types";
+import { ItemData } from "../../types/types";
 import Item from "./Item";
 import { RootState } from "../../redux-stuff";
 
@@ -16,7 +16,7 @@ interface BankProps {
 
 const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in props
   const name: string = useSelector((state: RootState) => state.characters.names[id], shallowEqual);
-  const bank: ItemBank = useSelector((state: RootState) => state.characters.banks[id], shallowEqual);
+  const bank: ItemData[] = useSelector((state: RootState) => state.characters.banks[id], shallowEqual);
 
   const handleDragStart = (e: React.DragEvent) => { // todo make this work
     console.log(e.currentTarget);
@@ -61,16 +61,12 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
   const renderBank2 = () => { // todo add some error checks and shit
     console.log(`${name} Bank Rendered`);
 
-    const itemCount = Object.keys(bank).length;
+    const bankGrid: JSX.Element[] = [];
 
-    const bankGrid = [];
+    bank.forEach((itemInBank) => {
+      bankGrid.push(renderItem(itemInBank.item, itemInBank.amount));
+    });
 
-    for (let itemID = 0; itemID < itemCount; itemID += 1) {
-      const itemInBank = Object.entries(bank)[itemID];
-      const [alsoItemIDWtf, amount] = itemInBank;
-
-      bankGrid.push(renderItem(parseInt(alsoItemIDWtf, 10), amount));
-    }
     return bankGrid;
   };
 

@@ -14,19 +14,19 @@ const courses = [
         [EquipmentSlotNames.weapon]: 4151,
         // [EquipmentSlotNames.head]: 2618,
       },
-      items: {
-        995: 100,
-      },
+      items: [
+        { item: 995, amount: 100 },
+      ],
     },
     reward: {
       exp: {
         agility: 20,
         strength: 10,
       },
-      items: {
-        4151: 1,
-        995: 120,
-      },
+      items: [
+        { item: 4151, amount: 1 },
+        { item: 995, amount: 120 },
+      ],
     },
     duration: 30,
   },

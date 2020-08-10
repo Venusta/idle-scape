@@ -15,7 +15,7 @@
 
   font-size: large;
   font-weight: bold;
-  background-color: rgb(100, 177, 201);
+  /* background-color: rgb(100, 177, 201); */
   background-color: hsl(202, 74%, 60%);
 
   box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4);
@@ -60,7 +60,7 @@
 .selected-button.selected {
   background-color: rgb(16, 122, 183);
   color: rgb(255, 255, 255);
-  /* box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4); */
+  box-shadow: inset 0 0px 8px 0 rgba(0, 0, 0, 0.4);
 
   transform: translateY(1px)
 }

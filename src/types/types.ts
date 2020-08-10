@@ -92,24 +92,9 @@ export type ItemData = {
   amount: number;
 };
 
-export type ItemStringData = {
-  item: string;
-  amount: number;
-};
-
-export type Item = [number, number];
-
-export type SingleItem = [string, number];
 export interface ItemBank {
   [key: string]: number;
 }
-
-// export interface ItemBank2 {
-//   id: number,
-//   items: {
-//     [key: number]: number;
-//   }
-// }
 
 export type SkillName = "attack" |
 "defence" |

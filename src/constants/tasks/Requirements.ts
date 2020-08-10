@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable class-methods-use-this */
 import {
-  ItemBank, SkillName, EquipmentSlots, EquipmentSlotName, EquipmentSlotNames, SkillsStats,
+  ItemData, SkillName, EquipmentSlots, EquipmentSlotName, EquipmentSlotNames, SkillsStats,
 } from "../../types/types";
 import store from "../../redux-stuff";
 import { SkillNames } from "../data";
@@ -10,9 +10,9 @@ import { SkillNames } from "../data";
 export type SkillReq = { [Key in SkillName]?: number; };
 
 export interface TaskRequirements {
-  skills?: SkillReq
-  items?: ItemBank
-  equipment?: Partial<EquipmentSlots>
+  skills: SkillReq
+  items: ItemData[]
+  equipment: Partial<EquipmentSlots>
 }
 
 const isValidSkill = (value: string): value is SkillName => value in SkillNames;
@@ -59,7 +59,7 @@ export default class Requirements {
 
     // const missingSkills: Array<[SkillName, number]> = [];
 
-    if (skills) { // todo split?
+    if (Object.keys(skills).length > 0) { // todo split?
       Object.entries(skills).forEach(([skill, reqLvl]) => {
         if (!isValidSkill(skill) || reqLvl === undefined) {
           throw new Error("SHIT FUCK OH NO AAAAA");
@@ -78,7 +78,7 @@ export default class Requirements {
 
     // const missingEquipment: Array<[EquipmentSlotName, number]> = [];
 
-    if (equipment) {
+    if (Object.keys(equipment).length > 0) {
       Object.entries(equipment).forEach(([itemSlot, itemId]) => {
         if (!isValidItemSlot(itemSlot) || itemId === undefined) {
           throw new Error("SHIT FUCK OH NO AAAAA");

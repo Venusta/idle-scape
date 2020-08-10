@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MonsterOptions, ItemBank } from "../types/types";
+import { MonsterOptions, ItemData } from "../types/types";
 import Monster from "./Monster";
 import Loot from "./Loot";
 import DropTable from "./DropTable";
@@ -16,7 +16,7 @@ export default class SimpleMonster extends Monster {
     this.dropTable = options.dropTable;
   }
 
-  getLoot = (amount = 1, options?: any): ItemBank => {
+  getLoot = (amount = 1, options?: any): ItemData[] => {
     console.log(`Loot from ${amount}x ${this.name}`);
     const loot = new Loot();
 

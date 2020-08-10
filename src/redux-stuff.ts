@@ -8,7 +8,7 @@ import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
-import { SkillsStats, ItemBank, SkillName } from "./types/types";
+import { SkillsStats, ItemData, SkillName } from "./types/types";
 import charactersInitialState from "./model/OhGodWhy";
 import { addBankToBank } from "./util";
 
@@ -34,7 +34,7 @@ type ExpReward = { [Key in SkillName]?: number; };
 
 export interface TaskReward {
   exp?: ExpReward
-  items?: ItemBank
+  items?: ItemData[]
 }
 
 interface TaskInfo {

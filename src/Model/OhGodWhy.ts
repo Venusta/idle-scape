@@ -1,11 +1,11 @@
 /* eslint-disable arrow-body-style */
 import * as startingSkills from "./Skills";
-import { ItemBank, EquipmentSlots } from "../types/types";
+import { ItemBank, EquipmentSlots, ItemData } from "../types/types";
 
 export type IDsState = string[];
 
 export interface ItemBankState {
-  [x: string]: ItemBank
+  [x: string]: ItemData[]
 }
 
 export interface NameState {
@@ -36,77 +36,66 @@ const startingIDs = ["3", "9", "11", "15", "18"];
 
 const startingNames = ["Maximus Decimus Meridius", "Marcus Aurelius", "Character 3", "Character 4", "Character 5"];
 
-const ohshit = [
-  {
-    id: 995,
-    amount: 100000,
-  },
-  {
-    id: 50,
-    amount: 5,
-  },
+const startingItems: ItemData[] = [
+  { item: 995, amount: 100000 },
+  { item: 50, amount: 5 },
+  { item: 101, amount: 300 },
+  { item: 201, amount: 40 },
+  { item: 301, amount: 50 },
+  { item: 401, amount: 201 },
+  { item: 4151, amount: 200 },
+  { item: 1031, amount: 3 },
+  { item: 1033, amount: 3 },
+  { item: 1035, amount: 3 },
+  { item: 1037, amount: 3 },
+  { item: 1038, amount: 3 },
+  { item: 1040, amount: 3 },
+  { item: 1042, amount: 3 },
+  { item: 1044, amount: 3 },
+  { item: 1046, amount: 3 },
+  { item: 1048, amount: 3 },
+  { item: 1050, amount: 3 },
+  { item: 1052, amount: 3 },
+  { item: 1053, amount: 3 },
+  { item: 1055, amount: 3 },
+  { item: 1057, amount: 3 },
+  { item: 1059, amount: 3 },
+  { item: 1061, amount: 3 },
+  { item: 2619, amount: 1 },
+  { item: 2615, amount: 1 },
+  { item: 2617, amount: 1 },
+  { item: 8845, amount: 1 },
+  { item: 8846, amount: 1 },
+  { item: 8847, amount: 1 },
+  { item: 8848, amount: 1 },
+  { item: 8849, amount: 1 },
+  { item: 8850, amount: 1 },
+  { item: 8851, amount: 1 },
+  { item: 8852, amount: 1 },
+  { item: 8853, amount: 1 },
+  { item: 8855, amount: 1 },
+  { item: 8856, amount: 1 },
+  { item: 8857, amount: 1 },
+  { item: 885, amount: 1 },
+  { item: 8859, amount: 1 },
+  { item: 8860, amount: 1 },
+  { item: 8861, amount: 1 },
+  { item: 8862, amount: 1 },
+  { item: 8863, amount: 1 },
+  { item: 8865, amount: 1 },
+  { item: 8867, amount: 1 },
+  { item: 8869, amount: 1 },
+  { item: 8269, amount: 1 },
+  { item: 8369, amount: 1 },
+  { item: 8469, amount: 1 },
+  { item: 8569, amount: 1 },
+  { item: 2569, amount: 1 },
+  { item: 2570, amount: 1 },
+  { item: 2571, amount: 1 },
+  { item: 2572, amount: 1 },
+  { item: 2573, amount: 1 },
+  { item: 24537, amount: 1 },
 ];
-
-const startingItems: ItemBank = {
-  995: 100000,
-  50: 5,
-  101: 300,
-  201: 40,
-  301: 50,
-  401: 201,
-  4151: 200,
-  1031: 3,
-  1033: 3,
-  1035: 3,
-  1037: 3,
-  1038: 3,
-  1040: 3,
-  1042: 3,
-  1044: 3,
-  1046: 3,
-  1048: 3,
-  1050: 3,
-  1052: 3,
-  1053: 3,
-  1055: 3,
-  1057: 3,
-  1059: 3,
-  1061: 3,
-  2619: 1,
-  2615: 1,
-  2617: 1,
-  8845: 1,
-  8846: 1,
-  8847: 1,
-  8848: 1,
-  8849: 1,
-  8850: 1,
-  8851: 1,
-  8852: 1,
-  8853: 1,
-  8855: 1,
-  8856: 1,
-  8857: 1,
-  885: 1,
-  8859: 1,
-  8860: 1,
-  8861: 1,
-  8862: 1,
-  8863: 1,
-  8865: 1,
-  8867: 1,
-  8869: 1,
-  8269: 1,
-  8369: 1,
-  8469: 1,
-  8569: 1,
-  2569: 1,
-  2570: 1,
-  2571: 1,
-  2572: 1,
-  2573: 1,
-  24537: 1,
-};
 
 const startingEquipment: EquipmentSlots = {
   head: 2619,
@@ -122,7 +111,7 @@ const startingEquipment: EquipmentSlots = {
   neck: -2,
 };
 
-const mapDataToId = (ids: string[], data: unknown) => {
+const mapDataToId = (ids: string[], data: ItemData[] | startingSkills.Skills | EquipmentSlots) => {
   return ids.reduce((accum, id) => ({
     ...accum,
     [id]: data,

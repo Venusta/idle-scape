@@ -68,10 +68,10 @@ export default class Laps {
         agility: courseExp * amount,
         strength: courseExp * 2 * amount,
       },
-      items: {
-        4151: 1 * amount,
-        995: 12 * amount,
-      },
+      items: [
+        { item: 4151, amount: 1 * amount },
+        { item: 995, amount: 12 * amount },
+      ],
     };
     const skill = SkillNames.agility;
     const type = "Agility-Laps";

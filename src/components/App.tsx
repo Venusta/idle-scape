@@ -9,6 +9,8 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
+import { SkillNames } from "../constants/data";
+import Task from "../model/Task";
 import { RootState, useAppDispatch } from "../redux-stuff";
 import Laps from "../constants/tasks/laps";
 import CombatSimulator from "../model/CombatSimulator";
@@ -19,7 +21,7 @@ import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
 import { NameState } from "../model/OhGodWhy";
 import TaskList from "./TaskList/TaskList";
-import { AttackStyle } from "../types/types";
+import { AttackStyle, EquipmentSlotNames } from "../types/types";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
 
@@ -180,6 +182,28 @@ const App = (): JSX.Element => {
     // new Laps({ playerID: "9", name: "a", amount: 7 }).start();
     // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
     // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
+
+    const task = new Task({ name: "Gnome" });
+
+    task
+      .reqSkill(SkillNames.agility, 1)
+      .reqSkill(SkillNames.slayer, 2)
+      .reqSkill(SkillNames.runecrafting, 2)
+
+      .reqItem(995, 150)
+
+      .reqEquip(EquipmentSlotNames.weapon, 4151)
+
+      .rewardSkill(SkillNames.agility, 20)
+      .rewardSkill(SkillNames.strength, 10)
+
+      .rewardItem(995, 150)
+      .rewardItem(4151, 3)
+      .rewardItem(2048)
+
+      .finalise(30);
+
+    console.log(task);
 
     // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
     // simulator.simulate();

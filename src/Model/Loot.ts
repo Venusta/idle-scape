@@ -1,8 +1,8 @@
-import { ItemData, ItemBank } from "../types/types";
+import { ItemData } from "../types/types";
 import { addToItemBank } from "../util";
 
 export default class Loot {
-  loot:ItemBank = {};
+  loot: ItemData[] = [];
 
   add = (itemData: ItemData | ItemData[]): void => {
     if (Array.isArray(itemData)) {
@@ -16,5 +16,5 @@ export default class Loot {
     this.loot = addToItemBank(this.loot, itemData);
   };
 
-  getLoot = (): ItemBank => this.loot;
+  getLoot = (): ItemData[] => this.loot;
 }
