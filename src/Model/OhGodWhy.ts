@@ -32,9 +32,20 @@ interface PlayerState {
   equipment: EquipmentState,
 }
 
-const startingIDs = ["3", "9"];
+const startingIDs = ["3", "9", "11", "15", "18"];
 
-const startingNames = ["Maximus Decimus Meridius", "Marcus Aurelius"];
+const startingNames = ["Maximus Decimus Meridius", "Marcus Aurelius", "Character 3", "Character 4", "Character 5"];
+
+const ohshit = [
+  {
+    id: 995,
+    amount: 100000,
+  },
+  {
+    id: 50,
+    amount: 5,
+  },
+];
 
 const startingItems: ItemBank = {
   995: 100000,
@@ -126,6 +137,9 @@ const charactersInitialState = ({ ids = startingIDs }: StateOptions): PlayerStat
   const names: NameState = {
     [ids[0]]: startingNames[0],
     [ids[1]]: startingNames[1],
+    [ids[2]]: startingNames[2],
+    [ids[3]]: startingNames[3],
+    [ids[4]]: startingNames[4],
   };
   const equipment: EquipmentState = mapDataToId(ids, startingEquipment);
 

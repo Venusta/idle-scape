@@ -52,7 +52,7 @@
   /* background-color: pink; */
   /* margin: 2px 0 2px 0; */
   /* margin: -2px; */
-  box-shadow: 0 0px 4px 0 rgb(0, 0, 0, 0.85);
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.85);
 }
 
 .log-active {
@@ -60,5 +60,6 @@
 }
 
 .log-item:hover {
-  background-color: rgba(16, 172, 183);
+  /* background-color: rgba(16, 172, 183); */
+  background-color: rgb(100, 177, 201);
 }
