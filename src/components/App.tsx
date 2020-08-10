@@ -4,12 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  RouteComponentProps,
+  Switch, Route, Redirect, useParams,
 } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 
@@ -53,8 +48,9 @@ const Banks = () => { // todo extract component
   );
 };
 
-const SingleCharacterView = ({ playerID }: { playerID: string }) => {
+const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
+  const { playerID } = useParams<{playerID: string}>();
 
   if (ids[playerID] === undefined) {
     return (
@@ -175,15 +171,15 @@ const App = (): JSX.Element => {
     // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
     // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
-    new Laps({ playerID: "3", name: "a", amount: 1 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 2 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 3 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 4 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 5 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 6 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 7 }).start();
-    new Laps({ playerID: "9", name: "a", amount: 6 }).start();
-    new Laps({ playerID: "3", name: "a", amount: 6 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 1 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 2 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 3 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 4 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 5 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 7 }).start();
+    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
+    // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
 
     // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
     // simulator.simulate();
@@ -211,28 +207,20 @@ const App = (): JSX.Element => {
       <TaskTimer />
       <div className="content">
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <div className="something">
-                <Log />
-                <TaskList />
-                <Banks />
-              </div>
-            )}
-          />
-          <Route
-            path="/player/:playerID"
-            render={({ match }: RouteComponentProps<MatchParams>) => (
-              <SingleCharacterView playerID={match.params.playerID} />
-            )}
-          />
-          <Route path="*">
+          <Route exact path="/">
+            <div className="something">
+              <Log />
+              <TaskList />
+              <Banks />
+            </div>
+          </Route>
+          <Route path="/player/:playerID">
+            <SingleCharacterView />
+          </Route>
+          <Route>
             <h1>404 Not Found</h1>
           </Route>
         </Switch>
-
       </div>
     </div>
   );

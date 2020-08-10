@@ -9,6 +9,9 @@
 }
 
 .character-panel-title {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+
   font-size: large;
   font-weight: bold;
   background-color: rgb(100, 177, 201);
@@ -19,10 +22,6 @@
   align-items: center;
 }
 
-.home-button {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-}
 .character-panel-inner {
   display: flex;
   flex-direction: column;
@@ -51,4 +50,9 @@
 
 .character-panel-item:hover {
   background-color: rgb(100, 177, 201);
+}
+
+.selected-button.selected {
+  background-color: rgb(16, 122, 183);
+  color: rgb(255, 255, 255);
 }

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useSelector, shallowEqual } from "react-redux";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../../redux-stuff";
 
 import "./CharacterPanel.css";
@@ -9,28 +9,32 @@ import { NameState } from "../../model/OhGodWhy";
 
 const CharacterPanel = (): JSX.Element => {
   const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
+  const location = useLocation();
 
-  const MakeList = (): JSX.Element => {
+  const MakeList = () => {
     const sortedTaskData: Array<JSX.Element> = [];
-    // sortedTaskData.push(<Link to="/">Home</Link>);
     Object.entries(names).forEach(([playerID, name]) => {
-      sortedTaskData.push(<Link className="character-panel-item" to={`/player/${playerID}`}>{name}</Link>);
+      sortedTaskData.push(
+        <Link
+          className={`character-panel-item selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
+          to={`/player/${playerID}`}
+        >
+          {name}
+        </Link>,
+      );
     });
-
-    return (
-      <div className="character-panel-window">
-        <div className="character-panel-title">
-          <Link to="/" className="home-button">Overview</Link>
-        </div>
-        <div className="character-panel-inner">
-          {sortedTaskData}
-        </div>
-      </div>
-    );
+    return sortedTaskData;
   };
 
   return (
-    <MakeList />
+    <div className="character-panel-window">
+      <Link to="/" className="character-panel-title">
+        <div>Overview</div>
+      </Link>
+      <div className="character-panel-inner">
+        {MakeList()}
+      </div>
+    </div>
   );
 };
 
