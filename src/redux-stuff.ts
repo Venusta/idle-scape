@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import {
   SkillsStats, ItemData, SkillName, TaskReward,
 } from "./types/types";
-import charactersInitialState from "./model/OhGodWhy";
+import charactersInitialState from "./model/CharacterBuilder";
 import { addBankToBank } from "./util";
 
 export type QueuedTask = {

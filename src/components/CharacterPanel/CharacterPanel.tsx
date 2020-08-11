@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../../redux-stuff";
 
 import "./CharacterPanel.css";
-import { NameState } from "../../model/OhGodWhy";
+import { NameState } from "../../model/CharacterBuilder";
 
 const CharacterPanel = (): JSX.Element => {
   const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);

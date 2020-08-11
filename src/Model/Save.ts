@@ -1,5 +1,3 @@
-import { Player } from "../types/types";
-import player from "./Player";
 import skills from "./Skills";
 
 // eslint-disable-next-line object-curly-newline
@@ -26,17 +24,14 @@ const playerSave = {
   skills: skills(),
 };
 
-export const save = (thingToSave: Player[]): void => {
+export const save = (thingToSave: string): void => {
   localStorage.setItem("testSave", JSON.stringify(thingToSave));
 };
 
-export const loadSave = (): Player[] => {
+export const loadSave = () => {
   const test = localStorage.getItem("testSave");
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (test) { return JSON.parse(test); }
-  return [
-    player({ id: 0, name: "yeetus" }),
-  ];
 };
 
 export const wipeSave = () => {

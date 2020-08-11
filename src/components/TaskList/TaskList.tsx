@@ -5,7 +5,7 @@ import { v1 as uuid } from "uuid";
 import { RootState, TaskState, QueuedTask } from "../../redux-stuff";
 
 import "./TaskList.css";
-import { NameState } from "../../model/OhGodWhy";
+import { NameState } from "../../model/CharacterBuilder";
 
 interface TaskData extends QueuedTask {
   playerName: string

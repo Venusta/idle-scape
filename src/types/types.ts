@@ -116,22 +116,10 @@ export interface MonsterData {
   assignableSlayerMasters: MonsterSlayerMaster[];
 }
 
-export interface Player { // todo remove
-  id: number;
-  name: string;
-  skills: SkillsStats
-  bank: ItemBank;
-  equipment: EquipmentSlots
-}
-
 export type ItemData = {
   item: number;
   amount: number;
 };
-
-export interface ItemBank { // todo remove
-  [key: string]: number;
-}
 
 export type SkillName = "attack" |
 "defence" |

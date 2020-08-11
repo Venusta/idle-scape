@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import * as startingSkills from "./Skills";
-import { ItemBank, EquipmentSlots, ItemData } from "../types/types";
+import { EquipmentSlots, ItemData } from "../types/types";
 
 export type IDsState = string[];
 

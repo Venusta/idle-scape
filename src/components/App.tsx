@@ -18,7 +18,7 @@ import Equipment from "../model/Equipment";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import { NameState } from "../model/OhGodWhy";
+import { NameState } from "../model/CharacterBuilder";
 import TaskList from "./TaskList/TaskList";
 import { AttackStyle, EquipmentSlotNames } from "../types/types";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
