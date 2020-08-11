@@ -17,7 +17,7 @@ export const addToItemBank = (bank: ItemData[], itemToBeAdded: ItemData): ItemDa
       amount: tempBank[index].amount + itemToBeAdded.amount,
     };
   } else {
-    tempBank.push(itemToBeAdded);
+    tempBank.push(itemToBeAdded); // todo FIX
   }
 
   return tempBank;
@@ -45,7 +45,7 @@ export const removeFromItemBank = (bank: ItemData[], itemToBeRemoved: ItemData):
         amount: tempBank[index].amount - itemToBeRemoved.amount,
       };
     } else {
-      tempBank.splice(index, 1);
+      tempBank.splice(index, 1); // todo FIX
     }
   } else {
     console.error(`Item not found in player bank: ${itemToBeRemoved.item}`);

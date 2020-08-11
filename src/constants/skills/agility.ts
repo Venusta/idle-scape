@@ -1,51 +1,38 @@
 import { SkillNames } from "../data";
-import { EquipmentSlotNames } from "../../types/types";
+import TaskBuilder from "../../model/TaskBuilder";
+
+const gnome = new TaskBuilder({ name: "Gnome" })
+
+  .reqSkill(SkillNames.agility, 1)
+
+  .rewardExp(SkillNames.agility, 20)
+  .rewardExp(SkillNames.strength, 10)
+  .rewardExp(SkillNames.attack, 300)
+
+  .rewardItem(995, 150)
+  .rewardItem(4151, 3)
+  .rewardItem(2048)
+
+  .finalise(10);
+
+const barb = new TaskBuilder({ name: "Barb" })
+
+  .reqSkill(SkillNames.agility, 1)
+  .reqSkill(SkillNames.slayer, 2)
+
+  .rewardExp(SkillNames.agility, 2000)
+  .rewardExp(SkillNames.strength, 10)
+  .rewardExp(SkillNames.attack, 300)
+
+  .rewardItem(995, 150)
+  .rewardItem(4151, 3)
+  .rewardItem(2048)
+
+  .finalise(20);
 
 const courses = [
-  {
-    name: "a",
-    requirements: {
-      skills: {
-        [SkillNames.agility]: 1,
-        // [SkillNames.slayer]: 2,
-        // [SkillNames.runecrafting]: 2,
-      },
-      equipment: {
-        [EquipmentSlotNames.weapon]: 4151,
-        // [EquipmentSlotNames.head]: 2618,
-      },
-      items: [
-        { item: 995, amount: 100 },
-      ],
-    },
-    reward: {
-      exp: {
-        agility: 20,
-        strength: 10,
-      },
-      items: [
-        { item: 4151, amount: 1 },
-        { item: 995, amount: 120 },
-      ],
-    },
-    duration: 30,
-  },
-  // {
-  //   name: "b",
-  //   requirements: {
-  //     [SkillNames.agility]: 2,
-  //   },
-  //   exp: 30,
-  //   lapTime: 40,
-  // },
-  // {
-  //   name: "c",
-  //   requirements: {
-  //     [SkillNames.agility]: 3,
-  //   },
-  //   exp: 40,
-  //   lapTime: 50,
-  // },
+  gnome,
+  barb,
 ];
 
 const Agility = {

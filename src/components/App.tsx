@@ -10,9 +10,8 @@ import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
 import { SkillNames } from "../constants/data";
-import Task from "../model/Task";
+import TaskBuilder from "../model/TaskBuilder";
 import { RootState, useAppDispatch } from "../redux-stuff";
-import Laps from "../constants/tasks/laps";
 import CombatSimulator from "../model/CombatSimulator";
 import Equipment from "../model/Equipment";
 
@@ -24,6 +23,9 @@ import TaskList from "./TaskList/TaskList";
 import { AttackStyle, EquipmentSlotNames } from "../types/types";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
+import Requirements from "../constants/tasks/Requirements";
+import RewardBuilder from "../model/RewardBuilder";
+import Laps from "../constants/tasks/laps";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -165,27 +167,18 @@ const tasksExample = {
 };
 
 const App = (): JSX.Element => {
-  const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("Rendered");
     // console.log(charactersInitialState({}));
 
-    // dispatch(changeName({ playerID: 0, newName: "FUCK" }));
-    // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
-    // dispatch(addExp({ playerID: "3", skill: SkillNames.agility, expReward: 50 }));
-    // new Laps({ playerID: "3", name: "a", amount: 1 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 2 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 3 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 4 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 5 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 7 }).start();
-    // new Laps({ playerID: "9", name: "a", amount: 6 }).start();
-    // new Laps({ playerID: "3", name: "a", amount: 6 }).start();
+    new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
+    new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
+    // new Laps({ playerID: "3", name: "Gnome", amount: 5 }).start();
+    // new Laps({ playerID: "3", name: "Gnome", amount: 10 }).start();
+    // new Laps({ playerID: "3", name: "Gnome", amount: 1 }).start();
 
-    const task = new Task({ name: "Gnome" });
+    const task = new TaskBuilder({ name: "Gnome" })
 
-    task
       .reqSkill(SkillNames.agility, 1)
       .reqSkill(SkillNames.slayer, 2)
       .reqSkill(SkillNames.runecrafting, 2)
@@ -193,9 +186,11 @@ const App = (): JSX.Element => {
       .reqItem(995, 150)
 
       .reqEquip(EquipmentSlotNames.weapon, 4151)
+      .reqEquip(EquipmentSlotNames.head, 4151)
 
-      .rewardSkill(SkillNames.agility, 20)
-      .rewardSkill(SkillNames.strength, 10)
+      .rewardExp(SkillNames.agility, 20)
+      .rewardExp(SkillNames.strength, 10)
+      .rewardExp(SkillNames.attack, 300)
 
       .rewardItem(995, 150)
       .rewardItem(4151, 3)
@@ -203,23 +198,15 @@ const App = (): JSX.Element => {
 
       .finalise(30);
 
-    console.log(task);
+    // console.log(task);
+
+    // const doesCharacter = new Requirements("3", task.requirements);
+    // console.log(doesCharacter.haveReqs());
+
+    // const rewards = new RewardBuilder(task.rewards).amount(20);
+    // console.log(rewards);
 
     // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
-    // simulator.simulate();
-
-    // const playerCombatStats = {
-    //   attack: { level: players[0].skills.attack.level, boost: 8 },
-    //   defence: { level: players[0].skills.defence.level },
-    //   strength: { level: players[0].skills.strength.level },
-    //   hitpoints: { level: players[0].skills.hitpoints.level },
-    //   ranged: { level: players[0].skills.ranged.level },
-    //   magic: { level: players[0].skills.magic.level, boost: 5 },
-    // };
-
-    // simulator.calculateEffectiveLevels2(monsterCombatStats, 1);
-    // simulator.calculateEffectiveLevelsPlayer(playerCombatStats);
-
     // simulator.simulate();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

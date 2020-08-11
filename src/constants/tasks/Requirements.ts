@@ -1,19 +1,10 @@
 /* eslint-disable arrow-body-style */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable class-methods-use-this */
+
 import {
-  ItemData, SkillName, EquipmentSlots, EquipmentSlotName, EquipmentSlotNames, SkillsStats,
+  SkillName, EquipmentSlotName, EquipmentSlotNames, TaskRequirements, EquipmentSlots, SkillsStats,
 } from "../../types/types";
 import store from "../../redux-stuff";
 import { SkillNames } from "../data";
-
-export type SkillReq = { [Key in SkillName]?: number; };
-
-export interface TaskRequirements {
-  skills: SkillReq
-  items: ItemData[]
-  equipment: Partial<EquipmentSlots>
-}
 
 const isValidSkill = (value: string): value is SkillName => value in SkillNames;
 
@@ -23,78 +14,51 @@ export default class Requirements {
   private requirements: TaskRequirements;
   private playerEquipment: EquipmentSlots;
   private playerSkills: SkillsStats;
-  private missingReqs: any;
+  // private missingReqs: TaskRequirements;
 
   constructor(playerID: string, requirements: TaskRequirements) {
     this.requirements = requirements;
 
     this.playerEquipment = store.getState().characters.equipment[playerID];
     this.playerSkills = store.getState().characters.skills[playerID];
-    this.missingReqs = {
-      skills: { },
-      equipment: { },
-      items: { },
-    };
+    // this.missingReqs = {
+    //   skills: [],
+    //   items: [],
+    //   equipment: [],
+    // };
   }
 
-  // eslint-disable-next-line arrow-body-style
-  missingReqsMsg = () => {
-    const { missingReqs: { skills } } = this;
-    console.log(skills);
-    let msg = Object.entries(skills).reduce((accum, [skill, level]) => {
-      return accum += `${skill}, `;
-    }, "");
-    msg += "levels are too low";
-    console.log(msg);
-
-    return msg;
-  };
-
   haveReqs = (): boolean => {
-    // eslint-disable-next-line object-curly-newline
-    const { requirements, playerEquipment, playerSkills, missingReqs } = this;
+    const { requirements } = this;
     const { skills, equipment, items } = requirements;
 
     let hasReq = true;
 
-    // const missingSkills: Array<[SkillName, number]> = [];
+    const hasSkillReq = skills.map(({ skill, level }) => {
+      if (this.playerSkills[skill].level < level) {
+        hasReq = false; // todo remove later prob
+        console.log(`${skill} is too low`);
+        return [skill, false];
+      }
+      console.log(`${skill} is high enough`);
+      return [skill, true];
+    });
+    console.log(hasSkillReq);
 
-    if (Object.keys(skills).length > 0) { // todo split?
-      Object.entries(skills).forEach(([skill, reqLvl]) => {
-        if (!isValidSkill(skill) || reqLvl === undefined) {
-          throw new Error("SHIT FUCK OH NO AAAAA");
-        }
-
-        const { level, boost } = playerSkills[skill];
-
-        if (level + boost < reqLvl) {
-          hasReq = false;
-          missingReqs.skills[skill] = reqLvl;
-        }
-      });
-      // if (missingSkills.length > 0) missingReqs.skills = missingSkills;
-    }
-    // console.log(`${missingSkills} too low`);
-
-    // const missingEquipment: Array<[EquipmentSlotName, number]> = [];
-
-    if (Object.keys(equipment).length > 0) {
-      Object.entries(equipment).forEach(([itemSlot, itemId]) => {
-        if (!isValidItemSlot(itemSlot) || itemId === undefined) {
-          throw new Error("SHIT FUCK OH NO AAAAA");
-        }
-        if (playerEquipment[itemSlot] !== itemId) {
-          hasReq = false;
-          // missingEquipment.push([itemSlot, itemId]);
-          missingReqs.equipment[itemSlot] = itemId;
-        }
-      });
-    }
-    // console.log(missingEquipment);
+    const hasEquipmentReq = equipment.map(({ item, slot }) => {
+      if (this.playerEquipment[slot] !== item) {
+        hasReq = false; // todo remove later prob
+        console.log(`Missing item in ${slot} slot`);
+        return [slot, false];
+      }
+      console.log(`Correct item in ${slot} slot`);
+      return [slot, true];
+    });
+    console.log(hasEquipmentReq);
 
     if (items) {
       // todo ???
-      console.log(items);
+      // console.log(items);
     }
 
     return hasReq;

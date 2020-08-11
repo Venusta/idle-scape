@@ -8,7 +8,9 @@ import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
-import { SkillsStats, ItemData, SkillName } from "./types/types";
+import {
+  SkillsStats, ItemData, SkillName, TaskReward,
+} from "./types/types";
 import charactersInitialState from "./model/OhGodWhy";
 import { addBankToBank } from "./util";
 
@@ -28,13 +30,6 @@ interface RewardPayload {
     reward: TaskReward,
     type: string,
   }
-}
-
-type ExpReward = { [Key in SkillName]?: number; };
-
-export interface TaskReward {
-  exp?: ExpReward
-  items?: ItemData[]
 }
 
 interface TaskInfo {
@@ -66,11 +61,11 @@ const characterSlice = createSlice({
 
       const { exp, items } = reward;
 
-      if (exp) {
+      if (exp.length > 0) {
         let expMsg = `${name} gained `;
-        Object.entries(exp).forEach((expReward) => {
-          const [skill, amount = 0] = expReward;
-          skills[skill as keyof SkillsStats].exp += amount;
+        exp.forEach((expReward) => {
+          const { skill, amount } = expReward;
+          skills[skill].exp += amount;
           expMsg = expMsg.concat(`${amount} ${skill}, `);
         });
         console.log(`${expMsg.trim().slice(0, -1)} exp`);
@@ -78,7 +73,7 @@ const characterSlice = createSlice({
 
       if (items) {
         state.banks[playerID] = addBankToBank(items, bank);
-        console.log(items);
+        // console.log(items);
       }
     },
     // changeName: (state, { payload: { playerID, newName } }: { payload: { playerID: number, newName: string } }) => {

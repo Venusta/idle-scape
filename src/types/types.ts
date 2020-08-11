@@ -1,3 +1,50 @@
+// type ExpReward = { [Key in SkillName]?: number; };
+
+// type SkillReq = { [Key in SkillName]?: number; };
+
+// export interface TaskReward {
+//   exp: ExpReward
+//   items: ItemData[]
+// }
+
+// export interface TaskRequirements {
+//   skills: SkillReq
+//   items: ItemData[]
+//   equipment: Partial<EquipmentSlots>
+// }
+
+export type SkillData = {
+  skill: SkillName;
+  level: number;
+};
+
+export type ExpReward = {
+  skill: SkillName;
+  amount: number;
+};
+
+export interface TaskReward {
+  exp: ExpReward[]
+  items: ItemData[]
+}
+
+export interface TaskEquipmentData extends ItemData {
+  slot: EquipmentSlotName
+}
+
+export interface TaskRequirements {
+  skills: SkillData[]
+  items: ItemData[]
+  equipment: TaskEquipmentData[]
+}
+
+export interface TaskOptions {
+  name: string;
+  requirements: TaskRequirements;
+  rewards: TaskReward;
+  duration: number;
+}
+
 export interface MonsterOptions {
   id: number;
   name: string;
@@ -69,22 +116,12 @@ export interface MonsterData {
   assignableSlayerMasters: MonsterSlayerMaster[];
 }
 
-export interface Player {
+export interface Player { // todo remove
   id: number;
   name: string;
   skills: SkillsStats
   bank: ItemBank;
-  // inventory: ItemBank;
   equipment: EquipmentSlots
-}
-
-interface PlayerID {
-  playerID: string;
-}
-
-export interface LapOptions extends PlayerID {
-  name: string;
-  amount: number
 }
 
 export type ItemData = {
@@ -92,7 +129,7 @@ export type ItemData = {
   amount: number;
 };
 
-export interface ItemBank {
+export interface ItemBank { // todo remove
   [key: string]: number;
 }
 
