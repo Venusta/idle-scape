@@ -53,14 +53,12 @@ export type TaskState = {[characterID: string]:{ queue: Array<QueuedTask>} };
 const characterSlice = createSlice({
   name: "characters",
   initialState: charactersInitialState({}),
-  reducers: { // todo maybe handle all rewards
+  reducers: {
     addReward: (state, { payload: { playerID, reward } }: RewardPayload) => {
       const skills = state.skills[playerID];
       const name = state.names[playerID];
       const bank = state.banks[playerID];
-
       const { exp, items } = reward;
-
       if (exp.length > 0) {
         let expMsg = `${name} gained `;
         exp.forEach((expReward) => {
@@ -72,15 +70,9 @@ const characterSlice = createSlice({
       }
 
       if (items) {
-        state.banks[playerID] = addBankToBank(items, bank);
-        // console.log(items);
+        state.banks[playerID] = addBankToBank(bank, items);
       }
     },
-    // changeName: (state, { payload: { playerID, newName } }: { payload: { playerID: number, newName: string } }) => {
-    //   const { name } = state[playerID];
-    //   state[playerID].name = newName;
-    //   console.log(`${name} changed to ${newName}`);
-    // },
   },
 });
 
@@ -149,7 +141,6 @@ export const {
 
 export const {
   addReward,
-  // changeName,
 } = characterSlice.actions;
 
 export function* shiftTaskRequest(action: RewardPayload) {

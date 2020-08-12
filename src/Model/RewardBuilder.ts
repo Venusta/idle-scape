@@ -8,6 +8,10 @@ export default class RewardBuilder {
     this.rewards = rewards;
   }
 
+  add = (quantity = 1) => {
+    const { rewards: { exp: expReward, items: itemsReward } } = this;
+  };
+
   /**
  * @param quantity reward multiplier, default: 1
  */

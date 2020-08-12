@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import {
-  SkillName, EquipmentSlotName, TaskRequirements, TaskEquipmentData, ItemData, SkillData, ExpReward, TaskReward, TaskOptions,
+  SkillName, EquipmentSlotName, TaskRequirements, TaskEquipmentData, ItemData, SkillData, ExpReward, TaskReward, TaskOptions, TaskFail,
 } from "../types/types";
 
 interface TaskBuilderOptions {
@@ -27,9 +27,10 @@ const equipmentExists = (slot: EquipmentSlotName, arrayToSearch: Array<TaskEquip
 };
 
 export default class TaskBuilder {
-  private name: string;
+  public name: string;
   public requirements: TaskRequirements;
-  private rewards: TaskReward;
+  public rewards: TaskReward;
+  public fails: TaskFail;
 
   constructor(options: TaskBuilderOptions) {
     this.name = options.name;
@@ -40,6 +41,9 @@ export default class TaskBuilder {
     };
     this.rewards = {
       exp: [],
+      items: [],
+    };
+    this.fails = {
       items: [],
     };
   }
@@ -89,14 +93,23 @@ export default class TaskBuilder {
     return this;
   };
 
+  failItem = (item: number, amount = 1): this => {
+    if (itemExists(item, this.fails.items)) {
+      console.error(`${item} already exists as a fail`);
+      return this;
+    }
+    this.fails.items.push({ item, amount });
+    return this;
+  };
+
   /**
  * finalises and returns a task
- * @param time how long the task should take in seconds
+ * @param duration how long the task should take in seconds
  */
 
   finalise = (duration = 0): TaskOptions => {
     const {
-      name, requirements, rewards,
+      name, requirements, rewards, fails,
     } = this;
 
     return {
@@ -104,6 +117,7 @@ export default class TaskBuilder {
       requirements,
       rewards,
       duration,
+      fails,
     };
   };
 }

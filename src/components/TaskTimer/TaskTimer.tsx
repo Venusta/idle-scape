@@ -18,7 +18,7 @@ const TaskTimer = (): JSX.Element => {
     characterIds.forEach((character) => {
       const { queue } = tasks[character];
       if (queue.length > 0) {
-        const task = queue[0];
+        const task = queue[0]; // todo calc task now??
         const { when } = task;
         if (time.valueOf() > when) {
           dispatch(handleReward(task));
@@ -26,6 +26,46 @@ const TaskTimer = (): JSX.Element => {
       }
     });
   };
+
+  /* Option 1
+    Click UI >
+    dispatch(newTask({ playerID: 3, amount: 50, type: "Cooking" task: "Raw_Chicken" }))
+
+    newTaskReducer (state, payload) => {
+      switch(type) {
+        Cooking: { // can't dispatch inside a reducer :(
+          new CookingTask({ playerID, amount, task }).preliminary(); // info for the ui & items to remove etc
+          estimate "when"?
+        }
+        Melee: {
+          new MeleeTask({ playerID, amount, task })
+        }
+      }
+    }
+
+    Timer > every 1 sec
+    {
+      if (task[0].rewards === undefined) {
+        ; // calc "reward" (xp / items) actual "when"?
+        new CookingTask({ playerID, amount, task }).calculateReward();
+      }
+    }
+
+  */
+
+  /*
+    Deploy an action (cook 50 raw chicken) and send it to the task list
+    Calculate the "when"
+    UI needs to know the "playerID", "when", "action", possibly "duration"
+
+    tasks.queue [
+      { action: "raw chicken", amount: 50, skill: cook } // this is one action
+      { action: "raw shrimp", amount: 50, skill: cook }
+    ]
+
+    dispatch(tasks.queue[0]); // actually calculate the task here
+
+  */
 
   useEffect(() => { // todo maybe make this outside of react
     console.log("Tick!");

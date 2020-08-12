@@ -17,12 +17,16 @@ export const addToItemBank = (bank: ItemData[], itemToBeAdded: ItemData): ItemDa
       amount: tempBank[index].amount + itemToBeAdded.amount,
     };
   } else {
-    tempBank.push(itemToBeAdded); // todo FIX
+    tempBank.push(itemToBeAdded);
   }
 
   return tempBank;
 };
-
+/**
+ * merges two sets of banks (ItemData[])
+ * @param bank - the bank of which you want to preserve the order
+ * @param bankToAdd - the bank you want to add to the first bank
+ */
 export const addBankToBank = (bank: ItemData[], bankToAdd: ItemData[]): ItemData[] => {
   let tempBank = [...bank];
 
@@ -45,7 +49,7 @@ export const removeFromItemBank = (bank: ItemData[], itemToBeRemoved: ItemData):
         amount: tempBank[index].amount - itemToBeRemoved.amount,
       };
     } else {
-      tempBank.splice(index, 1); // todo FIX
+      tempBank.splice(index, 1);
     }
   } else {
     console.error(`Item not found in player bank: ${itemToBeRemoved.item}`);

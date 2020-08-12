@@ -13,6 +13,11 @@
 //   equipment: Partial<EquipmentSlots>
 // }
 
+export type ItemData = {
+  item: number;
+  amount: number;
+};
+
 export type SkillData = {
   skill: SkillName;
   level: number;
@@ -25,6 +30,9 @@ export type ExpReward = {
 
 export interface TaskReward {
   exp: ExpReward[]
+  items: ItemData[]
+}
+export interface TaskFail {
   items: ItemData[]
 }
 
@@ -43,6 +51,12 @@ export interface TaskOptions {
   requirements: TaskRequirements;
   rewards: TaskReward;
   duration: number;
+  fails: TaskFail;
+}
+
+export interface CookingTaskOptions extends TaskOptions {
+  stopBurnLevel: number;
+  stopBurnGauntlets: number;
 }
 
 export interface MonsterOptions {
@@ -115,11 +129,6 @@ export interface MonsterData {
   slayerXP: number;
   assignableSlayerMasters: MonsterSlayerMaster[];
 }
-
-export type ItemData = {
-  item: number;
-  amount: number;
-};
 
 export type SkillName = "attack" |
 "defence" |

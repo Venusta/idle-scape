@@ -26,6 +26,7 @@ import Log from "./Log/Log";
 import Requirements from "../constants/tasks/Requirements";
 import RewardBuilder from "../model/RewardBuilder";
 import Laps from "../constants/tasks/laps";
+import CookingTask from "../constants/tasks/cooking";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -173,6 +174,9 @@ const App = (): JSX.Element => {
 
     new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
     new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 100 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 5 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 10 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 1 }).start();
