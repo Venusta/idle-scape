@@ -25,6 +25,7 @@ import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
 import Requirements from "../constants/tasks/Requirements";
 import RewardBuilder from "../model/RewardBuilder";
+import { taskBuilder2 } from "../model/TaskBuilderFP";
 // import CookingTask from "../constants/tasks/cooking";
 
 // const selectBanks = createSelector(
@@ -169,28 +170,78 @@ const tasksExample = {
 const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    // const x = taskBuilder2({
+    //   name: "Raw Chicken",
+    //   type: "Cooking",
+    //   reqSkills: [],
+    //   reqItem: [2138, 2],
+    //   rewardItem: [[2140, 30]],
+    //   rewardExp: [SkillNames.cooking, 10],
+    //   failItem: [[2144], [2438], [1823, 45]],
+    //   duration: 11,
+    // },
+    // {
+    //   stopBurn: 24,
+    //   stopBurnCG: 22,
+    // });
+
+    // const y = taskBuilder2({
+    //   name: "Raw Chicken",
+    //   type: "Cooking",
+    //   reqSkills: [[SkillNames.cooking, 1], [SkillNames.slayer, 20], [SkillNames.strength, 2]],
+    //   reqItem: [[2138, 1]],
+    //   rewardItem: [[2140, 30]],
+    //   rewardExp: [[SkillNames.cooking, 30], [SkillNames.strength, 30]],
+    //   failItem: [[2144], [2438], [1823, 45]],
+    //   duration: 11,
+    // },
+    // {
+    //   stopBurn: 24,
+    //   stopBurnCG: 22,
+    // });
+
+    // const z = taskBuilder2({
+    //   name: "Raw Chicken",
+    //   type: "Cooking",
+    //   reqSkills: [SkillNames.cooking, 1],
+    //   reqItem: [[2138, 1], [2144, 20], [2144]],
+    //   rewardItem: [[2140, 30]],
+    //   rewardExp: [SkillNames.cooking, 50],
+    //   failItem: [[2144], [2438], [1823, 45]],
+    //   // duration: 10,
+    // });
+    // console.log(x);
+    // console.log(y);
+    // console.log(z);
+
     dispatch(
       newTask({
-        playerID: "3",
-        taskName: "Raw Chicken",
-        taskType: "Cooking",
-        amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
       }),
     );
     dispatch(
       newTask({
-        playerID: "3",
-        taskName: "Raw Chicken",
-        taskType: "Cooking",
-        amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
       }),
     );
     dispatch(
       newTask({
-        playerID: "3",
-        taskName: "Raw Chicken",
-        taskType: "Cooking",
-        amount: 15,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
       }),
     );
     console.log("Rendered");

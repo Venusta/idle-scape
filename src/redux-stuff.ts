@@ -166,7 +166,8 @@ const taskSlice = createSlice({
 
       console.log(`${type} task finished.`);
       state[playerID].active = false;
-      state[playerID].activeTask = false;
+      const { queue } = state[playerID];
+      if (queue.length === 0) state[playerID].activeTask = false; // may cause issues
     },
   },
 });

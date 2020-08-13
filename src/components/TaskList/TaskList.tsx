@@ -20,23 +20,37 @@ const TaskList = (): JSX.Element => {
     console.log("Task list re-render");
     console.log(tasks);
 
-    const characterData = Object.entries(tasks); // todo sort by when before the loop
+    const characterData = Object.entries(tasks);
     // const taskListData: Array<JSX.Element> = [];
-    const taskData: Array<TaskData> = [];
+    const taskData: Array<JSX.Element> = [];
 
-    characterData.forEach((character) => {
+    characterData.forEach((character) => { // todo save actives in an array and display it first
       const [id, data] = character;
-      data.queue.forEach((queueItem, index) => {
-        let classes = "task-list-item";
-        if (index === 0) {
-          classes = "task-list-item task-list-active";
-        }
-        // const { when, type, info: { name, amount = 0 } } = queueItem;
-        taskData.push({
-          playerName: names[id], classes, ...queueItem,
-        });
-        // taskListData.push(<div className={classes} key={uuid()}>{`${names[id]}: ${type} ${amount}x ${name} ${when}`}</div>);
+      console.log(data.activeTask);
+      if (data.activeTask) {
+        const { when, type, info: { name, amount = 0 } } = data.activeTask;
+        taskData.push(
+          <div className="task-list-item task-list-active" key={uuid()}>{`${names[id]}: ${type} ${amount}x ${name} ${when}`}</div>,
+        );
+      }
+      data.queue.forEach((item) => {
+        // console.log(item);
+        const { taskType, taskName, amount } = item;
+        taskData.push(
+          <div className="task-list-item" key={uuid()}>{`${names[id]}: ${taskType} ${amount}x ${taskName}`}</div>,
+        );
       });
+      // data.queue.forEach((queueItem, index) => {
+      //   let classes = "task-list-item";
+      //   if (index === 0) {
+      //     classes = "task-list-item task-list-active";
+      //   }
+      //   // const { when, type, info: { name, amount = 0 } } = queueItem;
+      //   taskData.push({
+      //     playerName: names[id], classes, ...queueItem,
+      //   });
+      //   // taskListData.push(<div className={classes} key={uuid()}>{`${names[id]}: ${type} ${amount}x ${name} ${when}`}</div>);
+      // });
     });
 
     // const sortedTaskData = taskData.sort((a, b) => a.when - b.when).map((item) => {
@@ -53,6 +67,7 @@ const TaskList = (): JSX.Element => {
         </div>
         <div className="task-list-inner">
           {/* {sortedTaskData} */}
+          {taskData}
         </div>
       </div>
     );
