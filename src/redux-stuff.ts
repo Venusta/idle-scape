@@ -13,6 +13,7 @@ import {
 } from "./types/types";
 import charactersInitialState from "./model/CharacterBuilder";
 import { addBankToBank } from "./util";
+import CookingTask from "./constants/tasks/cooking";
 
 export type QueuedTask = {
   playerID: string
@@ -69,7 +70,7 @@ const characterSlice = createSlice({
         console.log(`${expMsg.trim().slice(0, -1)} exp`);
       }
 
-      if (items) {
+      if (items.length > 0) {
         state.banks[playerID] = addBankToBank(bank, items);
       }
     },
@@ -124,7 +125,6 @@ const taskSlice = createSlice({
     },
     handleReward: (state, { payload: { playerID, reward, type } }: RewardPayload) => {
       const { queue } = state[playerID];
-
       console.log("reward:");
       console.log(reward);
 
@@ -143,14 +143,28 @@ export const {
   addReward,
 } = characterSlice.actions;
 
-export function* shiftTaskRequest(action: RewardPayload) {
-  const { playerID, reward, type } = action.payload;
-  yield put(addReward({ playerID, reward, type }));
+export function* handleRewardRequest(action: any) {
+  const {
+    playerID, reward, type, info,
+  } = action.payload;
+  console.log("YEEEEEEEEEEEEEEET");
+
+  console.log(action.payload);
+
+  // if (type === "CookingTask") {
+    console.log("THIS IS A COOKING TASK, LETS RE-CALC REWARDS");
+    const x = new CookingTask({ playerID, taskName: info.name, amount: info.amount }).calculateRewards();
+  // }
+  console.log("REWARDS RECALCULATED");
+
+  // TODO CALC REWARD HERE!!!!!!!!!!!!!!
+
+  yield put(addReward({ playerID, reward: x, type }));
 }
 
 export function* taskSagas() {
   yield all([
-    takeEvery(handleReward, shiftTaskRequest),
+    takeEvery(handleReward, handleRewardRequest),
   ]);
 }
 

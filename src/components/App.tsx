@@ -172,9 +172,25 @@ const App = (): JSX.Element => {
     console.log("Rendered");
     // console.log(charactersInitialState({}));
 
-    new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
-    new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 100 }).start();
+    // new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
+    // new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
     // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
     // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 5 }).start();

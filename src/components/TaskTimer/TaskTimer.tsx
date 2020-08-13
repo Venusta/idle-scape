@@ -21,6 +21,7 @@ const TaskTimer = (): JSX.Element => {
         const task = queue[0]; // todo calc task now??
         const { when } = task;
         if (time.valueOf() > when) {
+          console.log(task);
           dispatch(handleReward(task));
         }
       }
@@ -29,11 +30,12 @@ const TaskTimer = (): JSX.Element => {
 
   /* Option 1
     Click UI >
-    dispatch(newTask({ playerID: 3, amount: 50, type: "Cooking" task: "Raw_Chicken" }))
+    dispatch(newTaskReducer({ playerID: 3, amount: 50, type: "Cooking" task: "Raw_Chicken" }))
+    saga to watch for dispatch and delete the items?
 
     newTaskReducer (state, payload) => {
       switch(type) {
-        Cooking: { // can't dispatch inside a reducer :(
+        Cooking: {
           new CookingTask({ playerID, amount, task }).preliminary(); // info for the ui & items to remove etc
           estimate "when"?
         }
@@ -45,7 +47,7 @@ const TaskTimer = (): JSX.Element => {
 
     Timer > every 1 sec
     {
-      if (task[0].rewards === undefined) {
+      if (task[0].rewards === undefined) { // to update .rewards need to dispatch an action
         ; // calc "reward" (xp / items) actual "when"?
         new CookingTask({ playerID, amount, task }).calculateReward();
       }
