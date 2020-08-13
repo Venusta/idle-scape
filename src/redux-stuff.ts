@@ -1,6 +1,6 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
+/* eslint-disable object-curly-newline */
+/* eslint-disable no-param-reassign */
 import {
   combineReducers, configureStore, createSlice, getDefaultMiddleware, AnyAction, Dispatch,
 } from "@reduxjs/toolkit";
@@ -8,24 +8,17 @@ import createSagaMiddleware from "redux-saga";
 import { takeEvery, all, put } from "redux-saga/effects";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
-import {
-  SkillsStats, ItemData, SkillName, TaskReward,
-} from "./types/types";
+import { SkillName, TaskReward } from "./types/types";
 import charactersInitialState from "./model/CharacterBuilder";
 import { addBankToBank } from "./util";
-import CookingTask from "./constants/tasks/cooking";
-
-export type QueuedTask = {
-  playerID: string
-  when: number
-  duration: number
-  type: string
-  info: TaskInfo
-  skill: SkillName
-  reward: TaskReward
-};
 
 interface RewardPayload {
+  payload: {
+    playerID: string,
+    reward: TaskReward,
+  }
+}
+interface HandleRewardPayload {
   payload: {
     playerID: string,
     reward: TaskReward,
@@ -33,7 +26,7 @@ interface RewardPayload {
   }
 }
 
-interface TaskInfo {
+export interface TaskInfo {
   name: string,
   amount?: number
 }
@@ -49,7 +42,13 @@ type TaskPayload = {
   }
 };
 
-export type TaskState = {[characterID: string]:{ queue: Array<QueuedTask>} };
+export type TaskState = {
+  [characterID: string]: {
+    queue: Array<QueuedTask>
+    active: boolean
+    activeTask: TaskDerpThingWithWhen | false;
+  }
+};
 
 const characterSlice = createSlice({
   name: "characters",
@@ -78,88 +77,113 @@ const characterSlice = createSlice({
 });
 
 const taskInitialState: TaskState = { // todo auto generate based on character ids / save
-  3: { queue: [] },
-  9: { queue: [] },
+  3: {
+    queue: [],
+    active: false,
+    activeTask: false,
+  },
+  9: {
+    queue: [],
+    active: false,
+    activeTask: false,
+  },
+};
+
+type NewTaskPayload = {
+  payload: {
+    playerID: string
+    taskType: string
+    taskName: string
+    amount: number
+  }
+};
+
+export type QueuedTask = {
+  playerID: string
+  taskType: string
+  taskName: string
+  amount: number
+};
+
+export interface TaskDerpThing {
+  playerID: string
+  duration: number
+  type: string
+  info: TaskInfo
+  skill: SkillName
+  reward: TaskReward
+}
+export interface TaskDerpThingWithWhen extends TaskDerpThing {
+  when: number
+}
+
+type ProcessQueueTaskPayload = {
+  payload: {
+    playerID: string
+    task: TaskDerpThing | false
+  }
 };
 
 const taskSlice = createSlice({
   name: "tasks",
   initialState: taskInitialState,
   reducers: {
-    // eslint-disable-next-line object-curly-newline
-    task: (state, { payload: { playerID, duration, type, info, skill, reward } }: TaskPayload) => {
-      if (!state[playerID]) {
-        console.error("FUCK, Something went wrong!");
+    newTask: (state, { payload: { playerID, taskType, taskName, amount } }: NewTaskPayload) => {
+      const { queue } = state[playerID];
+      queue.push({ playerID, taskType, taskName, amount });
+    },
+
+    processQueue: (state, { payload: { playerID, task } }: ProcessQueueTaskPayload) => {
+      const { queue, active } = state[playerID];
+
+      if (task === false) {
+        console.log("Task doesn't exist or reqs not met");
+        queue.shift();
         return;
       }
 
-      const { queue } = state[playerID];
-
-      const now = Date.now();
-      let when = 0;
-      if (queue.length === 0) {
-        when = now + duration;
-      } else {
-        const lastQueueWhen = queue[queue.length - 1].when;
-        when = lastQueueWhen + duration;
+      if (active === true) {
+        console.error("This really shouldn't happen ever, what the fuck did you do?!");
+        queue.shift();
+        return;
       }
 
-      /*
-      * push task to queue { duration, type, info, reward, playerID }
-      * the queue itself then calculates when the next task is done
-      * queue can process one task per playerID
-      * ability to cancel tasks by clicking them (can confirm)
-      * reodering the task list will recalculate when the tasks finish
-      * active tasks can't be re-ordered
-      */
-      const qObj: QueuedTask = {
-        playerID,
-        duration,
-        skill,
-        type,
-        info,
-        reward,
+      const { duration } = task;
+      const now = Date.now();
+      const when = now + duration;
+
+      console.log(`Setting character ${playerID}'s queue to active`);
+      state[playerID].active = true;
+      state[playerID].activeTask = {
         when,
+        ...task,
       };
-      queue.push(qObj);
+      queue.shift();
     },
-    handleReward: (state, { payload: { playerID, reward, type } }: RewardPayload) => {
-      const { queue } = state[playerID];
+    handleReward: (state, { payload: { playerID, reward, type } }: HandleRewardPayload) => {
       console.log("reward:");
       console.log(reward);
 
       console.log(`${type} task finished.`);
-      queue.shift();
+      state[playerID].active = false;
+      state[playerID].activeTask = false;
     },
   },
 });
 
 export const {
-  task,
   handleReward,
+  newTask,
+  processQueue,
 } = taskSlice.actions;
 
 export const {
   addReward,
 } = characterSlice.actions;
 
-export function* handleRewardRequest(action: any) {
-  const {
-    playerID, reward, type, info,
-  } = action.payload;
-  console.log("YEEEEEEEEEEEEEEET");
-
-  console.log(action.payload);
-
-  // if (type === "CookingTask") {
-    console.log("THIS IS A COOKING TASK, LETS RE-CALC REWARDS");
-    const x = new CookingTask({ playerID, taskName: info.name, amount: info.amount }).calculateRewards();
-  // }
-  console.log("REWARDS RECALCULATED");
-
-  // TODO CALC REWARD HERE!!!!!!!!!!!!!!
-
-  yield put(addReward({ playerID, reward: x, type }));
+export function* handleRewardRequest(action: RewardPayload) {
+  const { playerID, reward } = action.payload;
+  yield put(addReward({ playerID, reward }));
 }
 
 export function* taskSagas() {

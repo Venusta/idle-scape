@@ -11,7 +11,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import "./App.css";
 import { SkillNames } from "../constants/data";
 import TaskBuilder from "../model/TaskBuilder";
-import { RootState, useAppDispatch } from "../redux-stuff";
+import { RootState, useAppDispatch, newTask } from "../redux-stuff";
 import CombatSimulator from "../model/CombatSimulator";
 import Equipment from "../model/Equipment";
 
@@ -25,8 +25,7 @@ import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
 import Requirements from "../constants/tasks/Requirements";
 import RewardBuilder from "../model/RewardBuilder";
-import Laps from "../constants/tasks/laps";
-import CookingTask from "../constants/tasks/cooking";
+// import CookingTask from "../constants/tasks/cooking";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -168,26 +167,40 @@ const tasksExample = {
 };
 
 const App = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
+    dispatch(
+      newTask({
+        playerID: "3",
+        taskName: "Raw Chicken",
+        taskType: "Cooking",
+        amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "3",
+        taskName: "Raw Chicken",
+        taskType: "Cooking",
+        amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "3",
+        taskName: "Raw Chicken",
+        taskType: "Cooking",
+        amount: 15,
+      }),
+    );
     console.log("Rendered");
     // console.log(charactersInitialState({}));
 
     // new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
+    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
 
     // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
     // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
@@ -196,38 +209,6 @@ const App = (): JSX.Element => {
     // new Laps({ playerID: "3", name: "Gnome", amount: 5 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 10 }).start();
     // new Laps({ playerID: "3", name: "Gnome", amount: 1 }).start();
-
-    const task = new TaskBuilder({ name: "Gnome" })
-
-      .reqSkill(SkillNames.agility, 1)
-      .reqSkill(SkillNames.slayer, 2)
-      .reqSkill(SkillNames.runecrafting, 2)
-
-      .reqItem(995, 150)
-
-      .reqEquip(EquipmentSlotNames.weapon, 4151)
-      .reqEquip(EquipmentSlotNames.head, 4151)
-
-      .rewardExp(SkillNames.agility, 20)
-      .rewardExp(SkillNames.strength, 10)
-      .rewardExp(SkillNames.attack, 300)
-
-      .rewardItem(995, 150)
-      .rewardItem(4151, 3)
-      .rewardItem(2048)
-
-      .finalise(30);
-
-    // console.log(task);
-
-    // const doesCharacter = new Requirements("3", task.requirements);
-    // console.log(doesCharacter.haveReqs());
-
-    // const rewards = new RewardBuilder(task.rewards).amount(20);
-    // console.log(rewards);
-
-    // const simulator = new CombatSimulator(0, "3", 1800, AttackStyle.controlled, {});
-    // simulator.simulate();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

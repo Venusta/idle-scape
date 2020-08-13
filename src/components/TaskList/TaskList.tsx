@@ -39,12 +39,12 @@ const TaskList = (): JSX.Element => {
       });
     });
 
-    const sortedTaskData = taskData.sort((a, b) => a.when - b.when).map((item) => {
-      const {
-        playerName, type, info: { name, amount = 0 }, when, classes,
-      } = item;
-      return <div className={classes} key={uuid()}>{`${playerName}: ${type} ${amount}x ${name} ${when}`}</div>;
-    });
+    // const sortedTaskData = taskData.sort((a, b) => a.when - b.when).map((item) => {
+    //   const {
+    //     playerName, type, info: { name, amount = 0 }, when, classes,
+    //   } = item;
+    //   return <div className={classes} key={uuid()}>{`${playerName}: ${type} ${amount}x ${name} ${when}`}</div>;
+    // });
 
     return (
       <div className="task-list-window">
@@ -52,7 +52,7 @@ const TaskList = (): JSX.Element => {
           <div>Task List</div>
         </div>
         <div className="task-list-inner">
-          {sortedTaskData}
+          {/* {sortedTaskData} */}
         </div>
       </div>
     );

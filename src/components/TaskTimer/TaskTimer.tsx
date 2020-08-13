@@ -3,8 +3,9 @@
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
+import CookingTask from "../../constants/tasks/cooking";
 import {
-  RootState, handleReward, useAppDispatch, TaskState,
+  RootState, handleReward, useAppDispatch, TaskState, processQueue,
 } from "../../redux-stuff";
 
 const TaskTimer = (): JSX.Element => {
@@ -16,58 +17,31 @@ const TaskTimer = (): JSX.Element => {
     const characterIds = Object.keys(tasks);
 
     characterIds.forEach((character) => {
-      const { queue } = tasks[character];
-      if (queue.length > 0) {
-        const task = queue[0]; // todo calc task now??
+      const { queue, active } = tasks[character];
+
+      if (queue.length > 0 && active === false) {
+        const task = queue[0];
+        const { playerID, taskName, amount } = task;
+        /*
+         * switch statement here for the task type
+        */
+        const x = new CookingTask({ playerID, taskName, amount }).start();
+
+        dispatch(processQueue({ playerID: character, task: x }));
+        console.log("This should only happen once per task");
+      }
+
+      const task = tasks[character].activeTask;
+      if (active && task) {
         const { when } = task;
+
         if (time.valueOf() > when) {
-          console.log(task);
+          console.log("TASK COMPLETE!!!!!!!!");
           dispatch(handleReward(task));
         }
       }
     });
   };
-
-  /* Option 1
-    Click UI >
-    dispatch(newTaskReducer({ playerID: 3, amount: 50, type: "Cooking" task: "Raw_Chicken" }))
-    saga to watch for dispatch and delete the items?
-
-    newTaskReducer (state, payload) => {
-      switch(type) {
-        Cooking: {
-          new CookingTask({ playerID, amount, task }).preliminary(); // info for the ui & items to remove etc
-          estimate "when"?
-        }
-        Melee: {
-          new MeleeTask({ playerID, amount, task })
-        }
-      }
-    }
-
-    Timer > every 1 sec
-    {
-      if (task[0].rewards === undefined) { // to update .rewards need to dispatch an action
-        ; // calc "reward" (xp / items) actual "when"?
-        new CookingTask({ playerID, amount, task }).calculateReward();
-      }
-    }
-
-  */
-
-  /*
-    Deploy an action (cook 50 raw chicken) and send it to the task list
-    Calculate the "when"
-    UI needs to know the "playerID", "when", "action", possibly "duration"
-
-    tasks.queue [
-      { action: "raw chicken", amount: 50, skill: cook } // this is one action
-      { action: "raw shrimp", amount: 50, skill: cook }
-    ]
-
-    dispatch(tasks.queue[0]); // actually calculate the task here
-
-  */
 
   useEffect(() => { // todo maybe make this outside of react
     console.log("Tick!");

@@ -3,7 +3,7 @@
 import { getRandomInt, expToLevel } from "../../util";
 import { CookingTaskOptions, SkillName, TaskReward } from "../../types/types";
 import Cooking from "../skills/cooking";
-import store, { task } from "../../redux-stuff";
+import store, { TaskInfo, TaskDerpThing } from "../../redux-stuff";
 import { SkillNames } from "../data";
 import Requirements from "./Requirements";
 
@@ -12,6 +12,7 @@ interface LapOptions {
   taskName: string;
   amount: number
 }
+
 export default class CookingTask {
   private playerID: string;
   private taskName: string;
@@ -27,25 +28,38 @@ export default class CookingTask {
     this.cookingExp = store.getState().characters.skills[playerID].cooking.exp;
   }
 
-  public calculateRewards = (): TaskReward => {
-    console.log("REWARDS RECALCULATED");
-    console.log(`Cooking from level ${expToLevel(this.cookingExp)} instead of 1!!!`);
+  start = ():TaskDerpThing | false => {
+    const {
+      playerID, taskName, amount, playerName,
+    } = this;
 
-    const selectedTask: CookingTaskOptions | undefined = Cooking.cookables.find((taskType) => taskType.name === this.taskName);
+    const selectedTask: CookingTaskOptions | undefined = Cooking.cookables.find((taskType) => taskType.name === taskName);
     if (!selectedTask) {
       console.log("Cooking task not found");
-      return { exp: [], items: [] };
+      return false;
     }
 
     const {
-      rewards, stopBurnLevel,
+      name, requirements, duration, rewards, stopBurnLevel,
+
     } = selectedTask;
+
+    console.log(selectedTask);
+
+    const doesPlayer = new Requirements(playerID, requirements);
+
+    if (!doesPlayer.haveReqs()) {
+      console.log(`${playerName} sucks and misses reqs for ${name}`);
+      return false;
+    }
+
+    console.log(`${playerName} wants to cook ${amount}x ${name}`);
 
     const findReward = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
     const cookingReward = findReward(SkillNames.cooking);
     if (!cookingReward) {
       console.error("somehow you fucked up");
-      return { exp: [], items: [] };
+      return false;
     }
 
     let cooked = 0;
@@ -78,38 +92,8 @@ export default class CookingTask {
         { item: selectedTask.fails.items[0].item, amount: this.amount - cooked },
       ], // todo reward builder this
     };
-    console.log(reward);
 
-    return reward;
-  };
-
-  start = ():void => {
-    const {
-      playerID, taskName, amount, playerName,
-    } = this;
-
-    const selectedTask: CookingTaskOptions | undefined = Cooking.cookables.find((taskType) => taskType.name === taskName);
-    if (!selectedTask) {
-      console.log("Cooking task not found");
-      return;
-    }
-
-    const {
-      name, requirements, duration,
-    } = selectedTask;
-
-    console.log(selectedTask);
-
-    const doesPlayer = new Requirements(playerID, requirements);
-
-    if (!doesPlayer.haveReqs()) {
-      console.log(`${playerName} sucks and misses reqs for ${name}`);
-      return;
-    }
-
-    console.log(`${playerName} wants to cook ${amount}x ${name}`);
-
-    const totalDuration = amount * duration * 10; // TODO should be 1000
+    const totalDuration = amount * duration * 100; // TODO should be 1000
 
     const skill = SkillNames.cooking;
     const type = "CookingTask";
@@ -117,7 +101,6 @@ export default class CookingTask {
       name,
       amount,
     };
-    const reward = this.calculateRewards();
 
     const taskObj = {
       playerID,
@@ -128,6 +111,6 @@ export default class CookingTask {
       reward,
     };
 
-    store.dispatch(task(taskObj));
+    return taskObj;
   };
 }
