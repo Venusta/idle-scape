@@ -138,12 +138,14 @@ const taskSlice = createSlice({
 
       if (task === false) {
         console.log("Task doesn't exist or reqs not met");
+        state[playerID].activeTask = false;
         queue.shift();
         return;
       }
 
       if (active === true) {
         console.error("This really shouldn't happen ever, what the fuck did you do?!");
+        state[playerID].activeTask = false;
         queue.shift();
         return;
       }

@@ -177,7 +177,7 @@ const App = (): JSX.Element => {
     //   reqItem: [2138, 2],
     //   rewardItem: [[2140, 30]],
     //   rewardExp: [SkillNames.cooking, 10],
-    //   failItem: [[2144], [2438], [1823, 45]],
+    //   failItem: [[2144, 1], [2438, 1], [1823, 45]],
     //   duration: 11,
     // },
     // {
@@ -188,11 +188,11 @@ const App = (): JSX.Element => {
     // const y = taskBuilder2({
     //   name: "Raw Chicken",
     //   type: "Cooking",
-    //   reqSkills: [[SkillNames.cooking, 1], [SkillNames.slayer, 20], [SkillNames.strength, 2]],
-    //   reqItem: [[2138, 1]],
+    //   reqSkills: [[SkillNames.cooking, 1], [SkillNames.slayer, 20], [SkillNames.agility, 2]],
+    //   reqItem: [2138, 1],
     //   rewardItem: [[2140, 30]],
     //   rewardExp: [[SkillNames.cooking, 30], [SkillNames.strength, 30]],
-    //   failItem: [[2144], [2438], [1823, 45]],
+    //   failItem: [[2144, 1], [2438, 1], [1823, 45]],
     //   duration: 11,
     // },
     // {
@@ -204,10 +204,10 @@ const App = (): JSX.Element => {
     //   name: "Raw Chicken",
     //   type: "Cooking",
     //   reqSkills: [SkillNames.cooking, 1],
-    //   reqItem: [[2138, 1], [2144, 20], [2144]],
+    //   reqItem: [[2138, 1], [2144, 20], [2144, 15]],
     //   rewardItem: [[2140, 30]],
     //   rewardExp: [SkillNames.cooking, 50],
-    //   failItem: [[2144], [2438], [1823, 45]],
+    //   failItem: [[2144, 1], [2438, 1], [1823, 45]],
     //   // duration: 10,
     // });
     // console.log(x);
@@ -226,40 +226,25 @@ const App = (): JSX.Element => {
     );
     dispatch(
       newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 500,
       }),
     );
     dispatch(
       newTask({
-        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 50,
       }),
     );
-    dispatch(
-      newTask({
-        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-      }),
-    );
-    dispatch(
-      newTask({
-        playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-      }),
-    );
+    // dispatch(
+    //   newTask({
+    //     playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+    //   }),
+    // );
+    // dispatch(
+    //   newTask({
+    //     playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+    //   }),
+    // );
     console.log("Rendered");
-    // console.log(charactersInitialState({}));
-
-    // new Laps({ playerID: "3", name: "Barb", amount: 1 }).start();
-    // new Laps({ playerID: "3", name: "Gnome", amount: 2 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 20 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    // new CookingTask({ playerID: "3", taskName: "Raw Chicken", amount: 10 }).start();
-    // new Laps({ playerID: "3", name: "Gnome", amount: 5 }).start();
-    // new Laps({ playerID: "3", name: "Gnome", amount: 10 }).start();
-    // new Laps({ playerID: "3", name: "Gnome", amount: 1 }).start();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

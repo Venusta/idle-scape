@@ -39,14 +39,14 @@ export default class CookingTask {
       return false;
     }
 
+    // todo fix item req amounts
     const {
       name, requirements, duration, rewards, stopBurnLevel,
-
     } = selectedTask;
 
     console.log(selectedTask);
 
-    const doesPlayer = new Requirements(playerID, requirements);
+    const doesPlayer = new Requirements(playerID, requirements, amount);
 
     if (!doesPlayer.haveReqs()) {
       console.log(`${playerName} sucks and misses reqs for ${name}`);

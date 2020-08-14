@@ -13,7 +13,7 @@ const rawChicken = new CookingTaskBuilder({ name: "Raw Chicken" })
 
   .stopBurn(24)
 
-  .finalise(10);
+  .finalise(1);
 
 const lobster = new CookingTaskBuilder({ name: "Raw Lobster" })
 

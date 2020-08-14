@@ -8,9 +8,9 @@
   /* max-height: 300px;
   min-height: 300px; */
   /* background-color: brown; */
-  min-width: 250px;
-  max-width: 300px;
-  max-height: 500px;
+  min-width: 550px;
+  max-width: 550px;
+  max-height: 350px;
 }
 
 .log-title {
@@ -61,5 +61,18 @@
 
 .log-item:hover {
   /* background-color: rgba(16, 172, 183); */
-  background-color: rgb(100, 177, 201);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+.name-colour { 
+  color: hotpink;
+}
+
+.name-colour2 {
+  color: sandybrown;
+}
+
+.name-colour3 {
+  color: #7de8e8;
 }
