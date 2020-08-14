@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-param-reassign */
@@ -10,7 +11,7 @@ import logger from "redux-logger";
 import { useDispatch } from "react-redux";
 import { SkillName, TaskReward } from "./types/types";
 import charactersInitialState from "./model/CharacterBuilder";
-import { addBankToBank } from "./util";
+import { addBankToBank } from "./util/Bank";
 
 interface RewardPayload {
   payload: {

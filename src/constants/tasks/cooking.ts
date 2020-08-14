@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { getRandomInt, expToLevel } from "../../util";
-import { CookingTaskOptions, SkillName, TaskReward } from "../../types/types";
+import { SkillName } from "../../types/types";
 import Cooking from "../skills/cooking";
-import store, { TaskInfo, TaskDerpThing } from "../../redux-stuff";
+import store, { TaskDerpThing } from "../../redux-stuff";
 import { SkillNames } from "../data";
-import Requirements from "./Requirements";
+import { hasReqs } from "../../util/Requirements";
 
 interface LapOptions {
   playerID: string;
@@ -33,7 +33,7 @@ export default class CookingTask {
       playerID, taskName, amount, playerName,
     } = this;
 
-    const selectedTask: CookingTaskOptions | undefined = Cooking.cookables.find((taskType) => taskType.name === taskName);
+    const selectedTask = Cooking.cookables.find((taskType) => taskType.name === taskName);
     if (!selectedTask) {
       console.log("Cooking task not found");
       return false;
@@ -44,11 +44,12 @@ export default class CookingTask {
       name, requirements, duration, rewards, stopBurnLevel,
     } = selectedTask;
 
-    console.log(selectedTask);
+    // console.log(hasSkills(playerID, requirements.skills));
+    // console.log(hasEquipment(playerID, requirements.equipment));
+    // console.log(hasItems(playerID, requirements.items, amount));
+    console.log(hasReqs(playerID, requirements, amount));
 
-    const doesPlayer = new Requirements(playerID, requirements, amount);
-
-    if (!doesPlayer.haveReqs()) {
+    if (!hasReqs(playerID, requirements, amount)) {
       console.log(`${playerName} sucks and misses reqs for ${name}`);
       return false;
     }

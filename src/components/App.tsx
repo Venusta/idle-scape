@@ -9,23 +9,14 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
-import { SkillNames } from "../constants/data";
-import TaskBuilder from "../model/TaskBuilder";
-import { RootState, useAppDispatch, newTask } from "../redux-stuff";
-import CombatSimulator from "../model/CombatSimulator";
-import Equipment from "../model/Equipment";
-
+import { newTask, RootState, useAppDispatch } from "../redux-stuff";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
 import { NameState } from "../model/CharacterBuilder";
 import TaskList from "./TaskList/TaskList";
-import { AttackStyle, EquipmentSlotNames } from "../types/types";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
-import Requirements from "../constants/tasks/Requirements";
-import RewardBuilder from "../model/RewardBuilder";
-import { taskBuilder2 } from "../model/TaskBuilderFP";
 // import CookingTask from "../constants/tasks/cooking";
 
 // const selectBanks = createSelector(
