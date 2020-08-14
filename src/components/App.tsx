@@ -38,10 +38,6 @@ import { taskBuilder2 } from "../model/TaskBuilderFP";
 //   (names) => names,
 // );
 
-interface MatchParams {
-  playerID: string;
-}
-
 const Banks = () => { // todo extract component
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
   console.log("Don't re-render me!");
