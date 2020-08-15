@@ -16,6 +16,7 @@ const CharacterPanel = (): JSX.Element => {
     Object.entries(names).forEach(([playerID, name]) => {
       sortedTaskData.push(
         <Link
+          key={playerID}
           className={`character-panel-item selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
           to={`/player/${playerID}`}
         >

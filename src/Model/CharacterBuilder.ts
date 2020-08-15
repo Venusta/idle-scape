@@ -41,7 +41,7 @@ const startingItems: ItemData[] = [
   { item: 2138, amount: 100 },
   { item: 2140, amount: 0 },
   { item: 2144, amount: 0 },
-  { item: 1511, amount: 100 },
+  { item: 1511, amount: 10000000 },
   { item: 50, amount: 5 },
   { item: 101, amount: 300 },
   { item: 201, amount: 40 },

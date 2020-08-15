@@ -9,7 +9,7 @@ import { getIcon } from "../../model/Icon";
 
 interface ItemProps {
   itemID: number;
-  amount: number;
+  amount: string;
   onDragEnter: (e: React.DragEvent) => void;
   onDragLeave: (e: React.DragEvent) => void;
   onDragOver: (e: React.DragEvent) => void;

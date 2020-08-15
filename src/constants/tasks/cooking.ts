@@ -3,9 +3,10 @@
 import { getRandomInt, expToLevel } from "../../util";
 import { SkillName } from "../../types/types";
 import Cooking from "../skills/cooking";
-import store, { TaskDerpThing } from "../../redux-stuff";
+import store from "../../redux-stuff";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
+import { TaskDerpThing } from "../../slices/task";
 
 interface LapOptions {
   playerID: string;
@@ -39,7 +40,6 @@ export default class CookingTask {
       return false;
     }
 
-    // todo fix item req amounts
     const {
       name, requirements, duration, rewards, stopBurnLevel,
     } = selectedTask;

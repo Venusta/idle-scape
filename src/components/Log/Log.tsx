@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from "react";
+import { v1 as uuid } from "uuid";
 
 import "./Log.css";
 
@@ -13,7 +14,7 @@ const Log = (): JSX.Element => {
   const [msgs, setMsgs] = useState(initialState);
 
   useEffect(() => {
-    console.log("Rendered");
+    console.log("Rendered log");
     setMsgs([...msgs, "extra msg"]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,7 +28,7 @@ const Log = (): JSX.Element => {
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
     msgs.forEach((msg, index) => {
-      sortedTaskData.push(<div key={index} className="log-item">{msg}</div>);
+      sortedTaskData.push(<div key={uuid()} className="log-item">{msg}</div>);
     });
 
     return (

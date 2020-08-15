@@ -45,7 +45,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     e.stopPropagation();
   };
 
-  const renderItem = (itemID: number, amount: number): JSX.Element => (
+  const renderItem = (itemID: number, amount: string): JSX.Element => (
     <Item
       key={`bankItem-${itemID}-${getRandomInt(0, 10000000)}`} // TODO remove random number
       itemID={itemID}
@@ -58,13 +58,28 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     />
   );
 
+  function round(number: number): string { // stolen from osbot
+    return (Math.round(number * 100) / 100).toString();
+  }
+
+  function toKMB(number: number): string { // stolen from osbot, buggy needs doing properly
+    if (number > 999999999 || number < -999999999) {
+      return `${round(number / 1000000000)}b`;
+    } if (number > 999999 || number < -999999) {
+      return `${round(number / 1000000)}m`;
+    } if (number > 999 || number < -999) {
+      return `${round(number / 1000)}k`;
+    }
+    return round(number);
+  }
+
   const renderBank2 = () => { // todo add some error checks and shit
     console.log(`${name} Bank Rendered`);
 
     const bankGrid: JSX.Element[] = [];
 
     bank.forEach((itemInBank) => {
-      bankGrid.push(renderItem(itemInBank.item, itemInBank.amount));
+      bankGrid.push(renderItem(itemInBank.item, toKMB(itemInBank.amount)));
     });
 
     return bankGrid;

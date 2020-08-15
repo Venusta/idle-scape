@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable react/prop-types */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from "react";
@@ -9,7 +8,7 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
-import { newTask, RootState, useAppDispatch } from "../redux-stuff";
+import { RootState, useAppDispatch } from "../redux-stuff";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
@@ -17,7 +16,6 @@ import { NameState } from "../model/CharacterBuilder";
 import TaskList from "./TaskList/TaskList";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
-// import CookingTask from "../constants/tasks/cooking";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -201,26 +199,26 @@ const App = (): JSX.Element => {
     // console.log(y);
     // console.log(z);
 
-    dispatch(
-      newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-      }),
-    );
-    dispatch(
-      newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-      }),
-    );
-    dispatch(
-      newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 500,
-      }),
-    );
-    dispatch(
-      newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 50,
-      }),
-    );
+    // dispatch(
+    //   newTask({
+    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+    //   }),
+    // );
+    // dispatch(
+    //   newTask({
+    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+    //   }),
+    // );
+    // dispatch(
+    //   newTask({
+    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 500,
+    //   }),
+    // );
+    // dispatch(
+    //   newTask({
+    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 50,
+    //   }),
+    // );
     // dispatch(
     //   newTask({
     //     playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,

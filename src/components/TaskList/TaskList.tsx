@@ -2,10 +2,11 @@
 import { useSelector, shallowEqual } from "react-redux";
 import React from "react";
 import { v1 as uuid } from "uuid";
-import { RootState, TaskState, QueuedTask } from "../../redux-stuff";
+import { RootState } from "../../redux-stuff";
 
 import "./TaskList.css";
 import { NameState } from "../../model/CharacterBuilder";
+import { QueuedTask, TaskState } from "../../slices/task";
 
 interface TaskData extends QueuedTask {
   playerName: string
