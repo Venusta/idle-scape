@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
-import React from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import { v1 as uuid } from "uuid";
 
 import "./Log.css";
@@ -9,6 +9,14 @@ import { RootState } from "../../redux-stuff";
 
 const Log = (): JSX.Element => {
   const items = useSelector((state: RootState) => state.log.items, shallowEqual);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (ref.current !== null) {
+      ref.current.scrollTop = ref.current.scrollHeight;
+    }
+  }, [items]);
 
   const playerName = <span className="name-colour">Maximus</span>;
   const playerexp = <span className="name-colour">24,480</span>;
@@ -24,7 +32,7 @@ const Log = (): JSX.Element => {
     return (
       <div className="log-window">
         <div className="log-title">Character Log!</div>
-        <div className="log-inner">
+        <div ref={ref} className="log-inner">
           <div className="log-inner-inner">
             <div className="log-item">[17:55:34] {playerName} finished their task of {taskAmount} {taskName} and received {playerexp} woodcutting experience!</div>
             {sortedTaskData}
