@@ -202,22 +202,22 @@ const App = (): JSX.Element => {
 
     dispatch(
       newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 15,
       }),
     );
     dispatch(
       newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 25,
       }),
     );
     dispatch(
       newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 10,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 30,
       }),
     );
     dispatch(
       newTask({
-        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 10,
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 50,
       }),
     );
     // dispatch(
