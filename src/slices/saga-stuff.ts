@@ -2,24 +2,21 @@
 import { takeEvery, all, put } from "redux-saga/effects";
 
 import { addReward } from "./character";
-import { handleReward } from "./task";
-import { TaskReward } from "../types/types";
+import { handleActiveTask, TaskPayloadData } from "./task";
+import { addMsg } from "./log";
 
-interface RewardPayload {
-  payload: {
-    playerID: string,
-    reward: TaskReward,
-  }
-}
-
-export function* handleRewardRequest(action: RewardPayload) {
+export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   const { playerID, reward } = action.payload;
+  console.log(action.payload);
+  console.log("@@@@@@@@@@@@@@@@@@@@@");
+
   yield put(addReward({ playerID, reward }));
+  yield put(addMsg({ ...action.payload }));
 }
 
 export function* taskSagas() {
   yield all([
-    takeEvery(handleReward, handleRewardRequest),
+    takeEvery(handleActiveTask, handleRewardRequest),
   ]);
 }
 

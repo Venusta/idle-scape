@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 /* eslint-disable object-curly-newline */
 import { createSlice } from "@reduxjs/toolkit";
@@ -12,7 +13,7 @@ export type QueuedTask = {
 
 export interface TaskInfo {
   name: string,
-  amount?: number
+  amount: number
 }
 
 type ProcessQueueTaskPayload = {
@@ -26,13 +27,13 @@ type NewTaskPayload = {
   payload: QueuedTask
 };
 
-interface HandleRewardPayload {
-  payload: {
-    playerID: string,
-    reward: TaskReward,
-    type: string,
-  }
-}
+// interface HandleRewardPayload {
+//   payload: {
+//     playerID: string,
+//     reward: TaskReward,
+//     type: string,
+//   }
+// }
 
 export interface TaskDerpThing {
   playerID: string
@@ -42,7 +43,7 @@ export interface TaskDerpThing {
   skill: SkillName
   reward: TaskReward
 }
-export interface TaskDerpThingWithWhen extends TaskDerpThing {
+export interface TaskPayloadData extends TaskDerpThing {
   when: number
 }
 
@@ -50,7 +51,7 @@ export type TaskState = {
   [characterID: string]: {
     queue: Array<QueuedTask>
     active: boolean
-    activeTask: TaskDerpThingWithWhen | false;
+    activeTask: TaskPayloadData | false;
   }
 };
 
@@ -105,7 +106,7 @@ export const taskSlice = createSlice({
       };
       queue.shift();
     },
-    handleReward: (state, { payload: { playerID, reward, type } }: HandleRewardPayload) => {
+    handleActiveTask: (state, { payload: { playerID, reward, type } }: { payload: TaskPayloadData }) => {
       console.log("reward:");
       console.log(reward);
 
@@ -118,7 +119,7 @@ export const taskSlice = createSlice({
 });
 
 export const {
-  handleReward,
+  handleActiveTask,
   newTask,
   processQueue,
 } = taskSlice.actions;

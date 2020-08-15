@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
 import CookingTask from "../../constants/tasks/cooking";
 import { RootState, useAppDispatch } from "../../redux-stuff";
-import { TaskState, processQueue, handleReward } from "../../slices/task";
+import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
 
 const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ const TaskTimer = (): JSX.Element => {
 
         if (time.valueOf() > when) {
           console.log("TASK COMPLETE!!!!!!!!");
-          dispatch(handleReward(task));
+          dispatch(handleActiveTask(task));
         }
       }
     });

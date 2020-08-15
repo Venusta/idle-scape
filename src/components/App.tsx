@@ -16,6 +16,7 @@ import { NameState } from "../model/CharacterBuilder";
 import TaskList from "./TaskList/TaskList";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";
+import { newTask } from "../slices/task";
 
 // const selectBanks = createSelector(
 //   (state: RootState) => state.players.banks,
@@ -199,26 +200,26 @@ const App = (): JSX.Element => {
     // console.log(y);
     // console.log(z);
 
-    // dispatch(
-    //   newTask({
-    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-    //   }),
-    // );
-    // dispatch(
-    //   newTask({
-    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
-    //   }),
-    // );
-    // dispatch(
-    //   newTask({
-    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 500,
-    //   }),
-    // );
-    // dispatch(
-    //   newTask({
-    //     playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 50,
-    //   }),
-    // );
+    dispatch(
+      newTask({
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 10,
+      }),
+    );
+    dispatch(
+      newTask({
+        playerID: "3", taskName: "Raw Chicken", taskType: "Cooking", amount: 10,
+      }),
+    );
     // dispatch(
     //   newTask({
     //     playerID: "9", taskName: "Raw Chicken", taskType: "Cooking", amount: 5,
