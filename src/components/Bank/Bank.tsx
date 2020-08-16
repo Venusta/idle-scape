@@ -45,11 +45,12 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     e.stopPropagation();
   };
 
-  const renderItem = (itemID: number, amount: string): JSX.Element => (
+  const renderItem = (itemID: number, { amount, colour }: {amount: string, colour: string}): JSX.Element => (
     <Item
       key={`bankItem-${itemID}-${getRandomInt(0, 10000000)}`} // TODO remove random number
       itemID={itemID}
       amount={amount}
+      colour={colour}
       onDragEnter={(e: React.DragEvent) => handleDragEnter(e)}
       onDragLeave={(e: React.DragEvent) => handleDragLeave(e)}
       onDragOver={(e: React.DragEvent) => handleDragOver(e)}
@@ -59,7 +60,8 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
   );
 
   const help2 = (number: number) => {
-    const suffix: string[] = ["", "k", "m", "b", "t", "q"];
+    const suffix: string[] = ["", "K", "M", "B", "T", "Q"];
+    const colours: string[] = ["yellow", "", "green", "cyan", "orange", "pink"];
     let size = number.toString().length;
 
     let index = 0;
@@ -71,7 +73,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
         // console.log(`size: ${size} index: ${index}`);
       }
     }
-    return `${number.toString().slice(0, size)}${suffix[index]}`;
+    return { amount: `${number.toString().slice(0, size)}${suffix[index]}`, colour: colours[index] };
   };
   /*
   length  needTo      digitsToSlice
@@ -104,7 +106,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     const bankGrid: JSX.Element[] = [];
 
     bank.forEach((itemInBank) => {
-      bankGrid.push(renderItem(itemInBank.item, help2(itemInBank.amount)));
+      bankGrid.push(renderItem(itemInBank.item, { ...help2(itemInBank.amount) }));
     });
 
     return bankGrid;

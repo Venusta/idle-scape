@@ -10,6 +10,7 @@ import { getIcon } from "../../model/Icon";
 interface ItemProps {
   itemID: number;
   amount: string;
+  colour: string;
   onDragEnter: (e: React.DragEvent) => void;
   onDragLeave: (e: React.DragEvent) => void;
   onDragOver: (e: React.DragEvent) => void;
@@ -18,7 +19,7 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({
-  itemID, amount, onDragEnter, onDragLeave, onDragOver, onDrop, onDragStart,
+  itemID, amount, onDragEnter, onDragLeave, onDragOver, onDrop, onDragStart, colour,
 }) => {
   const [coords, setCoords] = useState([0, 0]);
   const [visible, setVisible] = useState(false);
@@ -48,10 +49,14 @@ const Item: React.FC<ItemProps> = ({
       </ul>
     </div>
   );
+  let extra = "";
+  if (amount === "0") {
+    extra = "itemImage-placeholder";
+  }
 
   return (
     <div
-      className="itemInBank"
+      className={`itemInBank ${colour} ${extra}`}
       draggable="true"
       title={`${itemID}`}
       onDragEnter={onDragEnter}

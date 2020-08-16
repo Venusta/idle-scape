@@ -69,7 +69,34 @@
   pointer-events: none;
 }
 
+.itemImage-placeholder {
+  opacity: 30%;
+}
+
 .itemAmount {
   pointer-events: none;
   position: absolute;
 }
+
+.yellow {
+  color: rgb(224, 224, 77);
+  /* color: #fefe00 */
+}
+
+.green {
+  color: #53ff7a
+}
+
+.cyan {
+  color: rgb(71, 216, 216);
+}
+
+.orange {
+  color: #f79700
+  /* color: rgb(238, 171, 45); */
+}
+
+.pink {
+  color: rgb(224, 92, 165);
+}
+
