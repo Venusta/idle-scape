@@ -8,5 +8,5 @@ export const getIcon = (id: number): string => { // TODO record imgs not found
     return iconData[id];
   }
   // console.log(`img with id ${id} not found.`);
-  return iconData[0];
+  return iconData[4151];
 };

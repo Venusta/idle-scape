@@ -54,7 +54,7 @@
   font-size: 12px;
   margin-top: 0px;
   padding: 0px;
-  max-height: 45px;
+  /* max-height: 45px; */
   /* cursor: move; */
   /* background-color: rgb(145, 145, 33); */
   position: relative;
@@ -65,7 +65,7 @@
 }
 
 .itemImage {
-  margin-top: 5px;
+  margin-top: 8px;
   pointer-events: none;
 }
 

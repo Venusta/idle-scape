@@ -58,20 +58,45 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     />
   );
 
-  function round(number: number): string { // stolen from osbot
-    return (Math.round(number * 100) / 100).toString();
-  }
+  const help2 = (number: number) => {
+    const suffix: string[] = ["", "k", "m", "b", "t", "q"];
+    let size = number.toString().length;
 
-  function toKMB(number: number): string { // stolen from osbot, buggy needs doing properly
-    if (number > 999999999 || number < -999999999) {
-      return `${round(number / 1000000000)}b`;
-    } if (number > 999999 || number < -999999) {
-      return `${round(number / 1000000)}m`;
-    } if (number > 999 || number < -999) {
-      return `${round(number / 1000)}k`;
+    let index = 0;
+
+    if (size >= 6) {
+      while (size >= 5) {
+        size -= 3;
+        index += 1;
+        // console.log(`size: ${size} index: ${index}`);
+      }
     }
-    return round(number);
-  }
+    return `${number.toString().slice(0, size)}${suffix[index]}`;
+  };
+  /*
+  length  needTo      digitsToSlice
+  5     = 10000       -0
+  6     = 100k        -3
+  7     = 1000k       -3
+  8     = 10m         -6
+  9     = 100m        -6
+  10    = 1000m       -6
+  11    = 10b         -9
+  12    = 100b        -9
+  13    = 1000b       -9
+
+  */
+
+  /*
+    99,999 => 99999
+    100,000 => 100k
+    1,000,000 => 1000k
+    10,000,000 => 10m
+    100,000,000 => 100m
+    1,000,000,000 => 1000m
+    10,000,000,000 => 10b
+
+  */
 
   const renderBank2 = () => { // todo add some error checks and shit
     console.log(`${name} Bank Rendered`);
@@ -79,7 +104,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     const bankGrid: JSX.Element[] = [];
 
     bank.forEach((itemInBank) => {
-      bankGrid.push(renderItem(itemInBank.item, toKMB(itemInBank.amount)));
+      bankGrid.push(renderItem(itemInBank.item, help2(itemInBank.amount)));
     });
 
     return bankGrid;
