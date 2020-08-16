@@ -2,7 +2,7 @@
   box-sizing: border-box;
   background-color: rgb(39, 39, 39);
   box-shadow: 0 0px 8px 0 rgb(0, 0, 0);
-  margin: 0px 20px 0px 20px;
+  margin: 10px;
   display: inline-flex;
   flex-direction: column;
 

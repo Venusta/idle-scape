@@ -106,6 +106,7 @@ export const taskSlice = createSlice({
       };
       queue.shift();
     },
+
     handleActiveTask: (state, { payload: { playerID, reward, type } }: { payload: TaskPayloadData }) => {
       console.log("reward:");
       console.log(reward);

@@ -19,7 +19,7 @@ const TaskList = (): JSX.Element => {
 
   const MakeList = (): JSX.Element => {
     console.log("Task list re-render");
-    console.log(tasks);
+    // console.log(tasks);
 
     const characterData = Object.entries(tasks);
     // const taskListData: Array<JSX.Element> = [];
@@ -27,7 +27,7 @@ const TaskList = (): JSX.Element => {
 
     characterData.forEach((character) => { // todo save actives in an array and display it first
       const [id, data] = character;
-      console.log(data.activeTask);
+      // console.log(data.activeTask);
       if (data.activeTask) {
         const { when, type, info: { name, amount = 0 } } = data.activeTask;
         taskData.push(

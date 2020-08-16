@@ -25,7 +25,7 @@ const Log = (): JSX.Element => {
 
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
-    items.forEach((msg, index) => {
+    items.forEach(({ msg }) => {
       sortedTaskData.push(<div key={uuid()} className="log-item">{msg}</div>);
     });
 

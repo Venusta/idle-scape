@@ -1,10 +1,15 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-/* eslint-disable import/prefer-default-export */
 import { createSlice } from "@reduxjs/toolkit";
-import { TaskPayloadData } from "./task";
 
-const initialState: { items: Array<string> } = {
+interface InitialState {
+  playerID: string;
+  msg: string;
+}
+
+const initialState: {
+  items: InitialState[]
+} = {
   items: [
     // "17:52:13 Marcus finished killing 50 Chickens and received 1245 attack and 348 hitpoints experience! More Details",
     // "17:55:34 Maximus finished woodcutting Magic Trees and received 24480 woodcutting experience!",
@@ -17,14 +22,13 @@ export const logSlice = createSlice({
   name: "log",
   initialState,
   reducers: {
-    addMsg: (state, {
-      payload: {
-        playerID, when, info: { name, amount }, type, reward,
-      },
-    }: { payload: TaskPayloadData }) => {
-      console.log("hmmm");
-      const stringBuilder = `${when} player: ${playerID} finished ${type} ${amount} ${name} and gained ${reward.exp[0].amount} ${reward.exp[0].skill} exp`;
-      state.items.push(stringBuilder);
+    addMsg: ({ items }, { payload: { playerID, msg } }: {payload: InitialState }) => {
+      if (items.length > 100) items.shift(); // 100 entires should be enough
+
+      // this reducer should probably recieve the already built string
+      // no idea how to handle this shit, save me please
+      // const stringBuilder = `${when} player: ${playerID} finished ${type} ${amount} ${name} and gained ${reward.exp[0].amount} ${reward.exp[0].skill} exp`;
+      items.push({ playerID, msg });
     },
   },
 });

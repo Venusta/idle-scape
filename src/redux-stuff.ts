@@ -9,7 +9,11 @@ import reducer from "./slices/index";
 import { rootSaga } from "./slices/saga-stuff";
 
 const sagaMiddleware = createSagaMiddleware();
-const middleware = [...getDefaultMiddleware(), sagaMiddleware, logger];
+const middleware = [
+  ...getDefaultMiddleware(),
+  sagaMiddleware,
+  logger,
+];
 const store = configureStore({
   reducer,
   middleware,

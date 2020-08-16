@@ -88,10 +88,12 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
   return (
     <div className="bank-window">
       <div className="bank-title">
-        <span>{`${name}'s Bank`}</span>
+        {`${name}'s Bank`}
       </div>
       <div className="bank-inner">
-        {renderBank2()}
+        <div className="bank-wrapper">
+          {renderBank2()}
+        </div>
       </div>
     </div>
   );

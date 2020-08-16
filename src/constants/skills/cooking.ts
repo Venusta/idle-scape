@@ -1,7 +1,7 @@
 import { SkillNames } from "../data";
 import CookingTaskBuilder from "../../model/CookingTaskBuilder";
 
-const rawChicken = new CookingTaskBuilder({ name: "Raw Chicken" })
+const chicken = new CookingTaskBuilder({ name: "chicken" })
 
   .reqSkill(SkillNames.cooking, 1)
 
@@ -15,7 +15,7 @@ const rawChicken = new CookingTaskBuilder({ name: "Raw Chicken" })
 
   .finalise(3);
 
-const lobster = new CookingTaskBuilder({ name: "Raw Lobster" })
+const lobster = new CookingTaskBuilder({ name: "lobster" })
 
   .reqSkill(SkillNames.cooking, 40)
 
@@ -31,7 +31,7 @@ const lobster = new CookingTaskBuilder({ name: "Raw Lobster" })
   .finalise(10);
 
 const cookables = [
-  rawChicken,
+  chicken,
   lobster,
 ];
 

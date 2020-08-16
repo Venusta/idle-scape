@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+import { addMsg } from "../../slices/log";
 import { getRandomInt, expToLevel } from "../../util";
 import { SkillName } from "../../types/types";
 import Cooking from "../skills/cooking";
@@ -51,6 +52,7 @@ export default class CookingTask {
 
     if (!hasReqs(playerID, requirements, amount)) {
       console.log(`${playerName} sucks and misses reqs for ${name}`);
+      store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${name}` }));
       return false;
     }
 
@@ -94,7 +96,7 @@ export default class CookingTask {
       ], // todo reward builder this
     };
 
-    const totalDuration = amount * duration * 100; // TODO should be 1000
+    const totalDuration = amount * duration * 1000; // TODO should be 1000
 
     const skill = SkillNames.cooking;
     const type = "CookingTask";
