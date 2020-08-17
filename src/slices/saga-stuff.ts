@@ -5,8 +5,11 @@ import {
 
 import { RootState } from "src/redux-stuff";
 import { addReward } from "./character";
-import { handleActiveTask, TaskPayloadData } from "./task";
+import {
+  handleActiveTask, TaskPayloadData, QueuedTask, newTask,
+} from "./task";
 import { addMsg } from "./log";
+import format from "../model/LogFormatter";
 
 export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   const { playerID, reward } = action.payload;
@@ -18,12 +21,24 @@ export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   console.log("??????????????????????????????????????????????");
 
   yield put(addReward({ playerID, reward }));
-  yield put(addMsg({ playerID, msg: "Task done :)" }));
+  yield put(addMsg({ playerID, msg: "cooking task of chickens completed" }));
+}
+
+export function* newTaskMsg(action: { payload: QueuedTask }) {
+  const { playerID } = action.payload;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const state: RootState = yield select();
+  const playerName = state.characters.names[playerID];
+  const msg = format("QueuedTask", playerName, action.payload);
+
+  yield put(addMsg({ playerID, msg }));
 }
 
 export function* taskSagas() {
   yield all([
     takeEvery(handleActiveTask, handleRewardRequest),
+    takeEvery(newTask, newTaskMsg),
   ]);
 }
 
