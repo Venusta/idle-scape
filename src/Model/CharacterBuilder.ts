@@ -37,7 +37,7 @@ const startingIDs = ["3", "9", "11", "15", "18"];
 const startingNames = ["Maximus Decimus Meridius", "Marcus Aurelius", "Character 3", "Character 4", "Character 5"];
 
 const startingItems: ItemData[] = [
-  { item: 995, amount: 100000 },
+  { item: 995, amount: 6000, placeholder: true },
   { item: 2138, amount: 100 },
   { item: 2140, amount: 0 },
   { item: 2144, amount: 0 },

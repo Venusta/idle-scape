@@ -59,19 +59,19 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     />
   );
 
-  const help2 = (number: number) => {
+  const formatStackNumbers = (number: number) => {
     const suffix: string[] = ["", "K", "M", "B", "T", "Q"];
     const colours: string[] = ["yellow", "", "green", "cyan", "orange", "pink"];
     let size = number.toString().length;
 
     let index = 0;
 
-    if (size >= 6) {
+    if (size >= 5) {
       while (size >= 5) {
         size -= 3;
         index += 1;
-        // console.log(`size: ${size} index: ${index}`);
       }
+      // console.log(`number: ${number} (${number.toString().length})- size: ${size} index: ${index}`);
     }
     return { amount: `${number.toString().slice(0, size)}${suffix[index]}`, colour: colours[index] };
   };
@@ -87,9 +87,6 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
   12    = 100b        -9
   13    = 1000b       -9
 
-  */
-
-  /*
     99,999 => 99999
     100,000 => 100k
     1,000,000 => 1000k
@@ -106,7 +103,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     const bankGrid: JSX.Element[] = [];
 
     bank.forEach((itemInBank) => {
-      bankGrid.push(renderItem(itemInBank.item, { ...help2(itemInBank.amount) }));
+      bankGrid.push(renderItem(itemInBank.item, { ...formatStackNumbers(itemInBank.amount) }));
     });
 
     return bankGrid;

@@ -96,7 +96,7 @@ export default class CookingTask {
       ], // todo reward builder this
     };
 
-    const totalDuration = amount * duration * 1000; // TODO should be 1000
+    const totalDuration = amount * duration * 100; // TODO should be 1000
 
     const skill = SkillNames.cooking;
     const type = "CookingTask";

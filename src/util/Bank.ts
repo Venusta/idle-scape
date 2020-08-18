@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { ItemData } from "../types/types";
 
 const parseItem = (singleItem: [string, number]): ItemData => {
@@ -27,8 +28,39 @@ export const addToItemBank = (bank: ItemData[], itemToBeAdded: ItemData): ItemDa
  * @param bank - the bank of which you want to preserve the order
  * @param bankToAdd - the bank you want to add to the first bank
  */
+export const addBankToBank2 = (bank: ItemData[], bankToAdd: ItemData[]): ItemData[] => {
+  let tempBank = [...bank];
+
+  bankToAdd.forEach((itemToBeAdded) => {
+    tempBank = addToItemBank(tempBank, itemToBeAdded);
+  });
+
+  return tempBank;
+};
+
+// interface Entry {
+//   item: number
+// }
+
+// interface Hmm {
+//   [id: string]: number
+// }
+
+// const addItemAtIndex = (bank, item, index) => {
+
+// };
+
 export const addBankToBank = (bank: ItemData[], bankToAdd: ItemData[]): ItemData[] => {
   let tempBank = [...bank];
+  // todo store index and access the item directly
+
+  // const bankCache = tempBank.reduce((accum: Hmm, item, index) => {
+  //   accum[item.item] = index;
+  //   return accum;
+  // }, {});
+  // console.log("here!!!!!!!!!!!!!!@@@@@@@@@@");
+
+  // console.log(bankCache);
 
   bankToAdd.forEach((itemToBeAdded) => {
     tempBank = addToItemBank(tempBank, itemToBeAdded);

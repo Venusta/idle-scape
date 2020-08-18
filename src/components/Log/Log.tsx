@@ -14,7 +14,6 @@ const Log = (): JSX.Element => {
 
   const regex = /<([\w-]+#)(.*?)>/gi;
   // const replace = "<span className=\"$1\">$2</span>";
-  const replace = "$1 $2";
 
   useLayoutEffect(() => {
     if (ref.current !== null) {
@@ -30,14 +29,13 @@ const Log = (): JSX.Element => {
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
     items.forEach(({ msg }) => {
-      const splitArray = msg.split(regex);
-      const finalResult = splitArray.map((thing, index, all) => {
+      const finalResult = msg.split(regex).map((thing, index, all) => {
         if (thing.endsWith("#")) {
-          return <span className={thing.slice(0, -1)}>{all[index + 1]}</span>;
+          return <span key={uuid()} className={thing.slice(0, -1)}>{all[index + 1]}</span>;
         }
         if (all[index - 1] && all[index - 1].endsWith("#")) return "";
-        return thing;
-      }).filter((item) => item);
+        return thing || "";
+      }).filter((item) => item !== "");
       sortedTaskData.push(<div key={uuid()} className="log-item">{finalResult}</div>);
     });
 
@@ -46,7 +44,7 @@ const Log = (): JSX.Element => {
         <div className="log-title">Character Log</div>
         <div ref={ref} className="log-inner">
           <div className="log-inner-inner">
-            <div className="log-item">[17:55:34] {playerName} finished their task of {taskAmount} {taskName} and received {playerexp} woodcutting experience!</div>
+            {/* <div className="log-item">[17:55:34] {playerName} finished their task of {taskAmount} {taskName} and received {playerexp} woodcutting experience!</div> */}
             {/* <div className="log-item"><span className="orange">Maximus Decimus Meridius</span> queued a cooking task of <span className="green">2x chickens</span></div> */}
             {sortedTaskData}
           </div>
