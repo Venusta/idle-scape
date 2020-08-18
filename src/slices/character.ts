@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createSlice } from "@reduxjs/toolkit";
 import charactersInitialState from "../model/CharacterBuilder";
-import { addBankToBank } from "../util";
+import { addBankToBank, expToLevel } from "../util";
 import { TaskReward } from "../types/types";
 
 interface RewardPayload {
@@ -24,6 +24,7 @@ export const characterSlice = createSlice({
         exp.forEach((expReward) => {
           const { skill, amount } = expReward;
           skills[skill].exp += amount;
+          skills[skill].level = expToLevel(skills[skill].exp);
         });
       }
 
