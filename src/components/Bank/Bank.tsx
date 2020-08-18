@@ -5,7 +5,7 @@ import React from "react";
 
 import "./Bank.css";
 import { useSelector, shallowEqual } from "react-redux";
-import { getRandomInt } from "../../util";
+import { v1 as uuid } from "uuid";
 import { ItemData } from "../../types/types";
 import Item from "./Item";
 import { RootState } from "../../redux-stuff";
@@ -47,7 +47,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
 
   const renderItem = (itemID: number, { amount, colour }: {amount: string, colour: string}): JSX.Element => (
     <Item
-      key={`bankItem-${itemID}-${getRandomInt(0, 10000000)}`} // TODO remove random number
+      key={`bankItem-${uuid()}`}
       itemID={itemID}
       amount={amount}
       colour={colour}

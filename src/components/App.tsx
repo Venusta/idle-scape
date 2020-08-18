@@ -19,6 +19,10 @@ import Log from "./Log/Log";
 import { newTask } from "../slices/task";
 import Banks from "./Bank/Banks";
 
+import rawItem_id_name from "../assets/item_id_name.json";
+
+const itemIdName = rawItem_id_name as Record<string, string>;
+
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
   const { playerID } = useParams<{playerID: string}>();
@@ -46,6 +50,8 @@ const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log(itemIdName[4151]);
+
     // const tests = ["1", "999", "1000", "1001", "99999", "100000", "100001", "999999", "1000000", "1000001", "9999999", "10000000", "10000001", "100000000", "1000000000", "10000000000", "10000000001"];
     // const answers = ["1", "999", "1000", "1001", "99999", "100k", "100k", "999k", "1000k", "1000k", "9999k", "10m", "10m", "100m", "1000m", "10b", "10b"];
 
@@ -61,7 +67,7 @@ const App = (): JSX.Element => {
       playerID: "3", taskName: "chicken", taskType: "cooking", amount: 10,
     }));
     dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 2,
+      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 10,
     }));
     // dispatch(newTask({
     //   playerID: "9", taskName: "chicken", taskType: "cooking", amount: 3,

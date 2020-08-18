@@ -8,6 +8,7 @@ import store from "../../redux-stuff";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import { TaskDerpThing } from "../../slices/task";
+import format from "../../model/LogFormatter";
 
 interface LapOptions {
   playerID: string;
@@ -21,6 +22,7 @@ export default class CookingTask {
   private amount: number;
   private playerName: string;
   private cookingExp: number;
+  private startingLevel: number;
 
   constructor({ playerID, taskName, amount }: LapOptions) {
     this.playerID = playerID;
@@ -28,6 +30,7 @@ export default class CookingTask {
     this.amount = amount;
     this.playerName = store.getState().characters.names[playerID];
     this.cookingExp = store.getState().characters.skills[playerID].cooking.exp;
+    this.startingLevel = expToLevel(this.cookingExp);
   }
 
   start = ():TaskDerpThing | false => {
@@ -37,7 +40,7 @@ export default class CookingTask {
 
     const selectedTask = Cooking.cookables.find((taskType) => taskType.name === taskName);
     if (!selectedTask) {
-      console.log("Cooking task not found");
+      console.error(`Cooking task not found: ${taskName}`);
       return false;
     }
 
@@ -48,20 +51,20 @@ export default class CookingTask {
     // console.log(hasSkills(playerID, requirements.skills));
     // console.log(hasEquipment(playerID, requirements.equipment));
     // console.log(hasItems(playerID, requirements.items, amount));
-    console.log(hasReqs(playerID, requirements, amount));
+    // console.log(hasReqs(playerID, requirements, amount));
 
-    if (!hasReqs(playerID, requirements, amount)) {
+    if (!hasReqs(playerID, requirements, amount)) { // todo get req msg
       console.log(`${playerName} sucks and misses reqs for ${name}`);
       store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${name}` }));
       return false;
     }
 
-    console.log(`${playerName} wants to cook ${amount}x ${name}`);
+    // console.log(`${playerName} wants to cook ${amount}x ${name}`);
 
-    const findReward = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
-    const cookingReward = findReward(SkillNames.cooking);
+    const findRewardSkill = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
+    const cookingReward = findRewardSkill(SkillNames.cooking);
     if (!cookingReward) {
-      console.error("somehow you fucked up");
+      console.error(`skillName not found: ${SkillNames.cooking}`);
       return false;
     }
 
@@ -98,8 +101,19 @@ export default class CookingTask {
 
     const totalDuration = amount * duration * 100; // TODO should be 1000
 
+    // todo return this in the task object
+    let taskFinishMsg = `[Test] <orange#${this.playerName}> finished cooking <green#${amount} ${name}s>`;
+    taskFinishMsg += ` and gained <cyan#${cookingReward.amount * cooked}> cooking xp`;
+    if (expToLevel(this.cookingExp) > this.startingLevel) { // todo make this universal maybe
+      taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(this.cookingExp)}>`;
+    }
+    taskFinishMsg += ".";
+    // todo build the final string for the task complete, calc the level up and xp gain internally so we can display it from one place
+    console.log(taskFinishMsg);
+    store.dispatch(addMsg({ playerID, msg: format("None", this.playerID, { msg: taskFinishMsg }) }));
+
     const skill = SkillNames.cooking;
-    const type = "CookingTask";
+    const type = "cooking";
     const info = {
       name,
       amount,

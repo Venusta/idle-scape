@@ -14,7 +14,7 @@ export default class CookingTaskBuilder extends TaskBuilder {
   constructor(options: TaskBuilderOptions) {
     super(options);
     this.stopBurnLevel = 1;
-    this.stopBurnGauntlets = 1;
+    this.stopBurnGauntlets = this.stopBurnLevel;
   }
 
   /**
@@ -35,10 +35,12 @@ export default class CookingTaskBuilder extends TaskBuilder {
 
   /**
  * finalises and returns a task
- * @param duration how long the task should take in seconds
+ * @param ticks how many ticks to cook 1 item (600ms per tick), default = 5
  */
 
-  finalise = (duration = 0): CookingTaskOptions => {
+  finalise = (ticks = 5): CookingTaskOptions => {
+    const duration = ticks * 600;
+
     const {
       name, requirements, rewards, fails, stopBurnLevel, stopBurnGauntlets,
     } = this;

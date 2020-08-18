@@ -21,7 +21,9 @@ export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   console.log("??????????????????????????????????????????????");
 
   yield put(addReward({ playerID, reward }));
-  yield put(addMsg({ playerID, msg: "cooking task of chickens completed" }));
+  const msg = format("CompletedTask", playerName, action.payload);
+
+  yield put(addMsg({ playerID, msg }));
 }
 
 export function* newTaskMsg(action: { payload: QueuedTask }) {

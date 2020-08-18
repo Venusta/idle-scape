@@ -18,17 +18,13 @@ export const characterSlice = createSlice({
   reducers: {
     addReward: (state, { payload: { playerID, reward } }: RewardPayload) => {
       const skills = state.skills[playerID];
-      const name = state.names[playerID];
       const bank = state.banks[playerID];
       const { exp, items } = reward;
       if (exp.length > 0) {
-        let expMsg = `${name} gained `;
         exp.forEach((expReward) => {
           const { skill, amount } = expReward;
           skills[skill].exp += amount;
-          expMsg = expMsg.concat(`${amount} ${skill}, `);
         });
-        console.log(`${expMsg.trim().slice(0, -1)} exp`);
       }
 
       if (items.length > 0) {
