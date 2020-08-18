@@ -66,7 +66,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
 
     let index = 0;
 
-    if (size >= 5) {
+    if (size >= 6) {
       while (size >= 5) {
         size -= 3;
         index += 1;

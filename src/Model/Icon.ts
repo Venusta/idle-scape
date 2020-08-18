@@ -1,5 +1,5 @@
-// import rawIconData from "../assets/icons/icons-items-complete.json"; // be prepared for lag
-import rawIconData from "../assets/icons/icons-items-mini.json";
+import rawIconData from "../assets/icons/icons-items-complete.json"; // be prepared for lag
+// import rawIconData from "../assets/icons/icons-items-mini.json";
 
 export const iconData = rawIconData as { [id: number]: string };
 

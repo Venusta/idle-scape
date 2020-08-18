@@ -3,6 +3,7 @@
 import {
   SkillName, EquipmentSlotName, TaskRequirements, TaskEquipmentData, ItemData, SkillData, ExpReward, TaskReward, TaskOptions, TaskFail,
 } from "../types/types";
+import nameToId from "../util/nameToId";
 
 interface TaskBuilderOptions {
   name: string;
@@ -48,6 +49,12 @@ export default class TaskBuilder {
     };
   }
 
+  /**
+   * Required skill level for a task
+   * @param skill name of a skill e.g. "cooking"
+   * @param level required level for the task
+   */
+
   reqSkill = (skill: SkillName, level: number): this => {
     if (skillExists(skill, this.requirements.skills)) {
       console.error(`${skill} already exists as a requirement`);
@@ -57,23 +64,44 @@ export default class TaskBuilder {
     return this;
   };
 
-  reqEquip = (slot: EquipmentSlotName, item: number, amount = 1): this => {
+  /**
+   * Required equipment
+   * @param slot item slot such e.g. "weapon"
+   * @param item id or name. 4151 or "Abyssal whip"
+   * @param amount required amount for one task, default 1
+   */
+
+  reqEquip = (slot: EquipmentSlotName, item: number | string, amount = 1): this => {
+    const id = nameToId(item);
     if (equipmentExists(slot, this.requirements.equipment)) {
       console.error(`${slot} already exists as a requirement`);
       return this;
     }
-    this.requirements.equipment.push({ slot, item, amount });
+    this.requirements.equipment.push({ slot, item: id, amount });
     return this;
   };
 
-  reqItem = (item: number, amount = 1): this => {
-    if (itemExists(item, this.requirements.items)) {
-      console.error(`${item} already exists as a requirement`);
+  /**
+   * Required item for task
+   * @param item id or name. 4151 or "Abyssal whip"
+   * @param amount required amount for one task, default 1
+   */
+
+  reqItem = (item: number | string, amount = 1): this => {
+    const id = nameToId(item);
+    if (itemExists(id, this.requirements.items)) {
+      console.error(`${id} already exists as a requirement`);
       return this;
     }
-    this.requirements.items.push({ item, amount });
+    this.requirements.items.push({ item: id, amount });
     return this;
   };
+
+  /**
+   * Exp reward for completing a task
+   * @param skill name of a skill e.g. "cooking"
+   * @param amount how much exp to give
+   */
 
   rewardExp = (skill: SkillName, amount: number): this => {
     if (skillExists(skill, this.rewards.exp)) {
@@ -84,21 +112,35 @@ export default class TaskBuilder {
     return this;
   };
 
-  rewardItem = (item: number, amount = 1): this => {
-    if (itemExists(item, this.rewards.items)) {
-      console.error(`${item} already exists as a reward`);
+  /**
+   * Item you get if you complete the task
+   * @param item id or name. 4151 or "Abyssal whip"
+   * @param amount reward amount for one task, default 1
+   */
+
+  rewardItem = (item: number | string, amount = 1): this => {
+    const id = nameToId(item);
+    if (itemExists(id, this.rewards.items)) {
+      console.error(`${id} already exists as a reward`);
       return this;
     }
-    this.rewards.items.push({ item, amount });
+    this.rewards.items.push({ item: id, amount });
     return this;
   };
 
-  failItem = (item: number, amount = 1): this => {
-    if (itemExists(item, this.fails.items)) {
-      console.error(`${item} already exists as a fail`);
+  /**
+   * Item you get if you fail a task such as burnt food
+   * @param item id or name. 4151 or "Abyssal whip"
+   * @param amount required amount for one task, default 1
+   */
+
+  failItem = (item: number | string, amount = 1): this => {
+    const id = nameToId(item);
+    if (itemExists(id, this.fails.items)) {
+      console.error(`${id} already exists as a fail`);
       return this;
     }
-    this.fails.items.push({ item, amount });
+    this.fails.items.push({ item: id, amount });
     return this;
   };
 

@@ -60,13 +60,16 @@ const App = (): JSX.Element => {
     // });
 
     dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 100,
+      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
     }));
     dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 100,
+      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
     }));
     dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 100,
+      playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
+    }));
+    dispatch(newTask({
+      playerID: "3", taskName: "salmon", taskType: "cooking", amount: 300,
     }));
     dispatch(newTask({
       playerID: "3", taskName: "lobster", taskType: "cooking", amount: 100,
