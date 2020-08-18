@@ -41,9 +41,6 @@ import store from "../redux-stuff";
 // };
 export const hasSkills = (playerID: string, skills: SkillData[]): boolean => {
   const playerSkills = store.getState().characters.skills[playerID];
-  console.log("HHHHHHHHAAAAAAAAAAAAAA");
-  console.log(playerSkills.cooking);
-
   return skills.map(({ skill, level }) => playerSkills[skill].level >= level).every((b) => b);
 };
 

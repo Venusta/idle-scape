@@ -21,7 +21,7 @@ const TaskTimer = (): JSX.Element => {
       if (queue.length > 0 && active === false) {
         const task = queue[0];
         const { playerID, taskName, amount } = task;
-        /*
+        /* // TODO
          * switch statement here for the task type
         */
         const x = new CookingTask({ playerID, taskName, amount }).start();

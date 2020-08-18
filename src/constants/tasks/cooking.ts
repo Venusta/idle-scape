@@ -78,7 +78,7 @@ export default class CookingTask {
       }
       const rng = getRandomInt(1, 100);
       if (rng > stopBurnLevel - expToLevel(this.cookingExp)) {
-        console.log(`Level: ${expToLevel(this.cookingExp)}`);
+        // console.log(`Level: ${expToLevel(this.cookingExp)}`);
         this.cookingExp += cookingReward.amount;
         cooked += 1;
         // console.log(`${burned}x Burned food! ${rng} < ${stopBurnLevel - cooking.level}`);
