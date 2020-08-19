@@ -5,5 +5,3 @@ export const levelToExp = (lvl: number): number => {
   }
   return Math.floor(exp / 4);
 };
-
-export default levelToExp;

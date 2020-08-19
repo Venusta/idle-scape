@@ -2,7 +2,7 @@ import rawSearchData from "../assets/mini-item-search-data.json";
 
 const searchData = rawSearchData as Record<string, number>;
 
-const nameToId = (item: string | number): number => {
+export const nameToId = (item: string | number): number => {
   if (typeof item === "number") {
     return item;
   }
@@ -13,5 +13,3 @@ const nameToId = (item: string | number): number => {
   console.error(`${item} not found, check your spelling or that the item exists`);
   return 0;
 };
-
-export default nameToId;

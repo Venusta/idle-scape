@@ -6,7 +6,7 @@ import "./Log.css";
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../redux-stuff";
 
-const Log = (): JSX.Element => {
+export const Log = (): JSX.Element => {
   const items = useSelector((state: RootState) => state.log.items, shallowEqual);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,5 +48,3 @@ const Log = (): JSX.Element => {
     <MakeList />
   );
 };
-
-export default Log;

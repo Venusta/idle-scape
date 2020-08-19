@@ -18,7 +18,7 @@ type Derp = LogPayload | TaskPayloadData;
 }
 */
 
-const format = (type: string, playerName: string, payload: LogPayload): string => {
+export const format = (type: string, playerName: string, payload: LogPayload): string => {
   if (type === "QueuedTask") {
     const {
       taskType, taskName, amount,
@@ -45,5 +45,3 @@ const format = (type: string, playerName: string, payload: LogPayload): string =
   }
   return "false";
 };
-
-export default format;

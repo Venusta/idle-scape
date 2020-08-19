@@ -3,7 +3,7 @@
 import {
   SkillData, TaskEquipmentData, ItemData, TaskRequirements,
 } from "../types/types";
-import store from "../redux-stuff";
+import { store } from "../redux-stuff";
 
 // export const haveSkills = (playerID: string, skills: SkillData[]): (boolean | SkillName)[][] => {
 //   const playerSkills = store.getState().characters.skills[playerID];

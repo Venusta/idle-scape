@@ -13,7 +13,7 @@ interface LapOptions {
   name: string;
   amount: number
 }
-export default class Laps {
+export class Laps {
   private playerID: string;
   private name: string;
   private amount: number;

@@ -4,11 +4,11 @@ import { addMsg } from "../../slices/log";
 import { getRandomInt, expToLevel } from "../../util";
 import { SkillName } from "../../types/types";
 import { Cooking } from "../taskData/cooking";
-import store from "../../redux-stuff";
+import { store } from "../../redux-stuff";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import { TaskDerpThing } from "../../slices/task";
-import format from "../../model/LogFormatter";
+import { format } from "../../model/LogFormatter";
 import { RewardBuilder } from "../builders/RewardBuilder";
 
 interface LapOptions {
@@ -59,6 +59,8 @@ export class CookingTask {
       store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${name}` }));
       return false;
     }
+    // todo remove the req items from bank and put it on the
+    // todo task object so it can be returned if the task is cancelled
 
     // console.log(`${playerName} wants to cook ${amount}x ${name}`);
 

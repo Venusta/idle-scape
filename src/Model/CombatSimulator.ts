@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
-import store from "../redux-stuff";
+import { store } from "../redux-stuff";
 import {
   AttackStyle, AttackType, SkillsStats, EquipmentSlots, EquipmentBonuses,
 } from "../types/types";
-import SimpleMonster from "./SimpleMonster";
-import TestMonster from "../constants/monsters/TestMonster";
+import { SimpleMonster } from "./SimpleMonster";
+import { testMonster } from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
-import Equipment from "./Equipment";
+import { Equipment } from "./Equipment";
 
 type EffectiveLevels = {
   attack: number,
@@ -97,7 +97,7 @@ const getBoostedCombatStats = (stats: SkillsStats): CombatStats => {
   };
 };
 
-export default class CombatSimulator {
+export class CombatSimulator {
   private monster: SimpleMonster;
   private timeLimit: number;
   private supplies: any;
@@ -124,7 +124,7 @@ export default class CombatSimulator {
     this.attackType = equipment.getAttackType(this.attackStyle);
     this.attackSpeed = equipment.getAttackSpeed(this.attackStyle);
 
-    this.monster = TestMonster; // getMonsterByID(monsterID)
+    this.monster = testMonster; // getMonsterByID(monsterID)
   }
 
   private calculateAccuracy = (

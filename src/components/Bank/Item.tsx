@@ -18,7 +18,7 @@ interface ItemProps {
   onDragStart: (e: React.DragEvent) => void;
 }
 
-const Item: React.FC<ItemProps> = ({
+export const Item: React.FC<ItemProps> = ({
   itemID, amount, onDragEnter, onDragLeave, onDragOver, onDrop, onDragStart, colour,
 }) => {
   const [coords, setCoords] = useState([0, 0]);
@@ -77,5 +77,3 @@ const Item: React.FC<ItemProps> = ({
     </div>
   );
 };
-
-export default Item;

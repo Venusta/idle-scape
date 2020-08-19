@@ -19,7 +19,7 @@ interface OneInXDropTableItems extends DropTableItemData {
   chance: number;
 }
 
-export default class DropTable {
+export class DropTable {
   alwaysItems: DropTableItemData[];
   secondaryItems: SecondaryDropTableItems[];
   tertiaryItems: OneInXDropTableItems[];

@@ -2,7 +2,7 @@
 import {
   SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail,
 } from "../../types/types";
-import nameToId from "../../util/nameToId";
+import { nameToId } from "../../util/nameToId";
 
 interface TaskBuilderOptions {
   name: string;

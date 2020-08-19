@@ -7,7 +7,7 @@ import { RootState } from "../../redux-stuff";
 import "./CharacterPanel.css";
 import { NameState } from "../../constants/builders/CharacterBuilder";
 
-const CharacterPanel = (): JSX.Element => {
+export const CharacterPanel = (): JSX.Element => {
   const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
   const location = useLocation();
 
@@ -38,5 +38,3 @@ const CharacterPanel = (): JSX.Element => {
     </div>
   );
 };
-
-export default CharacterPanel;

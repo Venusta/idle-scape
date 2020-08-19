@@ -1,11 +1,11 @@
-import DropTable from "../../model/DropTable";
-import HerbDropTable from "../subtables/HerbDropTable";
-import SimpleMonster from "../../model/SimpleMonster";
+import { DropTable } from "../../model/DropTable";
+import { herbDropTable } from "../subtables/HerbDropTable";
+import { SimpleMonster } from "../../model/SimpleMonster";
 
 const TestMonsterHerbTable = new DropTable()
-  .add(HerbDropTable, 1, 11)
-  .add(HerbDropTable, 2, 11)
-  .add(HerbDropTable, 3, 4);
+  .add(herbDropTable, 1, 11)
+  .add(herbDropTable, 2, 11)
+  .add(herbDropTable, 3, 4);
 
 const dropTable = new DropTable(({ limit: 6 }))
   .always(526, [1, 11])
@@ -24,7 +24,7 @@ const dropTable = new DropTable(({ limit: 6 }))
   .tertiary(999, 1, 10)
   .tertiary(333, 1, 10);
 
-export default new SimpleMonster({
+export const testMonster = new SimpleMonster({
   id: 1,
   name: "Test Monster",
   dropTable,

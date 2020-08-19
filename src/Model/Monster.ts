@@ -2,7 +2,7 @@ import {
   MonsterOptions, MonsterData, AttackType,
 } from "../types/types";
 
-export default abstract class Monster {
+export abstract class Monster {
   public id: number;
   public name: string;
   public data: MonsterData;

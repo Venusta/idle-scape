@@ -3,5 +3,3 @@ export function getRandomInt(min: number, max: number): number {
   const tmax = Math.floor(max) + 1;
   return Math.floor(Math.random() * (tmax - tmin)) + tmin;
 }
-
-export default getRandomInt;

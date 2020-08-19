@@ -18,7 +18,7 @@ interface ItemProps {
   exp: number;
 }
 
-const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
+export const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
   const handleClick = () => {
     console.log(`Clicked ${skillName}`);
     // if (skillName === "agility") {
@@ -40,7 +40,7 @@ interface SkillsProps {
   id: string;
 }
 
-const Skills = ({ id }: SkillsProps): JSX.Element => {
+export const Skills = ({ id }: SkillsProps): JSX.Element => {
   const playerData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
     name: state.characters.names[id],
     skills: state.characters.skills[id],
@@ -83,5 +83,3 @@ const Skills = ({ id }: SkillsProps): JSX.Element => {
     </div>
   );
 };
-
-export default Skills;

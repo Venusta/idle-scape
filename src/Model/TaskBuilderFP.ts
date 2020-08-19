@@ -3,7 +3,7 @@
 import {
   SkillName, ItemData,
 } from "../types/types";
-import store from "../redux-stuff";
+import { store } from "../redux-stuff";
 import { Skills } from "./Skills";
 // todo trash
 type SkillArray = [SkillName, number];

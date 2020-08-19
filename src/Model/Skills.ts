@@ -1,4 +1,4 @@
-import skill, { Skill } from "./Skill";
+import { skill, Skill } from "./Skill";
 import { levelToExp } from "../util";
 
 export interface Skills {
@@ -27,7 +27,7 @@ export interface Skills {
   construction: Skill;
 }
 
-const skills = (): Skills => ({
+export const skills = (): Skills => ({
   attack: skill(levelToExp(70)),
   defence: skill(levelToExp(70)),
   strength: skill(levelToExp(70)),
@@ -52,5 +52,3 @@ const skills = (): Skills => ({
   hunter: skill(),
   construction: skill(),
 });
-
-export default skills;

@@ -1,10 +1,10 @@
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../redux-stuff";
-import Bank from "./Bank";
+import { Bank } from "./Bank";
 import { IDsState } from "../../constants/builders/CharacterBuilder";
 
-const Banks = (): JSX.Element => {
+export const Banks = (): JSX.Element => {
   const ids: IDsState = useSelector((state: RootState) => state.characters.ids, shallowEqual);
   console.log("Don't re-render me!");
 
@@ -14,5 +14,3 @@ const Banks = (): JSX.Element => {
     </div>
   );
 };
-
-export default Banks;

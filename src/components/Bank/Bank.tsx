@@ -7,14 +7,14 @@ import "./Bank.css";
 import { useSelector, shallowEqual } from "react-redux";
 import { v1 as uuid } from "uuid";
 import { ItemData } from "../../types/types";
-import Item from "./Item";
+import { Item } from "./Item";
 import { RootState } from "../../redux-stuff";
 
 interface BankProps {
   id: string;
 }
 
-const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in props
+export const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in props
   const name: string = useSelector((state: RootState) => state.characters.names[id], shallowEqual);
   const bank: ItemData[] = useSelector((state: RootState) => state.characters.banks[id], shallowEqual);
 
@@ -122,5 +122,3 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
     </div>
   );
 };
-
-export default Bank;

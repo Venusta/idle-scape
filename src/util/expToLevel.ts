@@ -6,5 +6,3 @@ export const expToLevel = (exp: number): number => {
   }
   return 99;
 };
-
-export default expToLevel;

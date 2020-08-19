@@ -1,7 +1,7 @@
 import { ItemData } from "../types/types";
 import { addToItemBank } from "../util";
 
-export default class Loot {
+export class Loot {
   loot: ItemData[] = [];
 
   add = (itemData: ItemData | ItemData[]): void => {

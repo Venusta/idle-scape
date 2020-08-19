@@ -9,7 +9,7 @@ import {
   handleActiveTask, TaskPayloadData, QueuedTask, newTask,
 } from "./task";
 import { addMsg } from "./log";
-import format from "../model/LogFormatter";
+import { format } from "../model/LogFormatter";
 
 export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   const { playerID, reward } = action.payload;

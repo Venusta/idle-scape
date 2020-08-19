@@ -1,6 +1,6 @@
-import DropTable from "../../model/DropTable";
+import { DropTable } from "../../model/DropTable";
 
-export default new DropTable()
+export const herbDropTable = new DropTable()
   .add(199, 1, 32)
   .add(201, 1, 24)
   .add(203, 1, 18)

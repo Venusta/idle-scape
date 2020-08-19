@@ -1,4 +1,4 @@
-import skills from "./Skills";
+import { skills } from "./Skills";
 
 // eslint-disable-next-line object-curly-newline
 // const loadPlayer = ({ id, name, equipment }: PlayerOptions) => {

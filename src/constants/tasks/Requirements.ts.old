@@ -6,7 +6,7 @@ import {
 } from "../../types/types";
 import store from "../../redux-stuff";
 
-export default class Requirements {
+export class Requirements {
   private requirements: TaskRequirements;
   private playerEquipment: EquipmentSlots;
   private playerSkills: SkillsStats;

@@ -7,7 +7,7 @@ import { CookingTask } from "../../constants/tasks/cooking";
 import { RootState, useAppDispatch } from "../../redux-stuff";
 import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
 
-const TaskTimer = (): JSX.Element => {
+export const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(new Date());
   const tasks: TaskState = useSelector((state: RootState) => state.tasks);
@@ -59,5 +59,3 @@ const TaskTimer = (): JSX.Element => {
     <div />
   );
 };
-
-export default TaskTimer;

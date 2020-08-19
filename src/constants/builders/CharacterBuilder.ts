@@ -128,7 +128,7 @@ export const charactersInitialState = ({ ids = startingIDs }: StateOptions): Pla
   console.log("Character State Remake!");
 
   const banks: ItemBankState = mapDataToId(ids, startingItems);
-  const skills: SkillsState = mapDataToId(ids, startingSkills.default());
+  const skills: SkillsState = mapDataToId(ids, startingSkills.skills());
   const names: NameState = {
     [ids[0]]: startingNames[0],
     [ids[1]]: startingNames[1],

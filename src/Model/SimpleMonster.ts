@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { MonsterOptions, ItemData } from "../types/types";
-import Monster from "./Monster";
-import Loot from "./Loot";
-import DropTable from "./DropTable";
+import { Monster } from "./Monster";
+import { Loot } from "./Loot";
+import { DropTable } from "./DropTable";
 
 interface SimpleMonsterOptions extends MonsterOptions {
   dropTable: DropTable;
 }
 
-export default class SimpleMonster extends Monster {
+export class SimpleMonster extends Monster {
   dropTable: DropTable;
 
   constructor(options: SimpleMonsterOptions) {

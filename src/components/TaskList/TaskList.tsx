@@ -13,7 +13,7 @@ interface TaskData extends QueuedTask {
   classes: string
 }
 
-const TaskList = (): JSX.Element => {
+export const TaskList = (): JSX.Element => {
   const tasks: TaskState = useSelector((state: RootState) => state.tasks, shallowEqual);
   const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
 
@@ -78,5 +78,3 @@ const TaskList = (): JSX.Element => {
     <MakeList />
   );
 };
-
-export default TaskList;

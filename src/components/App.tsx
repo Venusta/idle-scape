@@ -9,15 +9,15 @@ import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
 import { RootState, useAppDispatch } from "../redux-stuff";
-import Bank from "./Bank/Bank";
-import Skills from "./Skills/Skills";
-import TaskTimer from "./TaskTimer/TaskTimer";
+import { Bank } from "./Bank/Bank";
+import { Skills } from "./Skills/Skills";
+import { TaskTimer } from "./TaskTimer/TaskTimer";
 import { NameState } from "../constants/builders/CharacterBuilder";
-import TaskList from "./TaskList/TaskList";
-import CharacterPanel from "./CharacterPanel/CharacterPanel";
-import Log from "./Log/Log";
+import { TaskList } from "./TaskList/TaskList";
+import { CharacterPanel } from "./CharacterPanel/CharacterPanel";
+import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
-import Banks from "./Bank/Banks";
+import { Banks } from "./Bank/Banks";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -42,7 +42,7 @@ const SingleCharacterView = () => {
   );
 };
 
-const App = (): JSX.Element => {
+export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -118,5 +118,3 @@ const App = (): JSX.Element => {
     </div>
   );
 };
-
-export default App;

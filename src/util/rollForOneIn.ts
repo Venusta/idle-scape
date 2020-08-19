@@ -7,5 +7,3 @@ import { getRandomInt } from "./getRandomInt";
 export function rollForOneIn(upperLimit: number): boolean {
   return getRandomInt(1, upperLimit) === 1;
 }
-
-export default rollForOneIn;

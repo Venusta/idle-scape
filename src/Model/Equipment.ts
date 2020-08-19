@@ -52,7 +52,7 @@ const weaponSlotData = rawWeaponSlotData as { [id: string]: MinifiedItemData };
 const twoHandedSlotData = rawTwoHandedSlotData as { [id: string]: MinifiedItemData };
 const stanceData = rawStanceData as { [id: string]: WeaponStance[] };
 
-export default class Equipment {
+export class Equipment {
   private playerEquipment: EquipmentSlots;
   public equipmentBonuses: EquipmentBonuses;
 

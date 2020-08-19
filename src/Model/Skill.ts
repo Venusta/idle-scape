@@ -7,7 +7,7 @@ export interface Skill {
   boost: number;
 }
 
-const skill = (exp = 0, boost = 0): Skill => ({
+export const skill = (exp = 0, boost = 0): Skill => ({
   exp,
   level: expToLevel(exp),
   boost,
@@ -28,5 +28,3 @@ export const decide = (payload: { playerID: number; duration: number; skill: str
   console.log(payload);
   console.log("yeeeeeeeeet");
 };
-
-export default skill;
