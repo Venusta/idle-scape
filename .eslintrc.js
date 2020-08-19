@@ -56,5 +56,7 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "lines-between-class-members": "off",
     "no-console": "off",
+    "import/prefer-default-export": "off"
+
   },
 };

@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
-import * as startingSkills from "./Skills";
-import { EquipmentSlots, ItemData } from "../types/types";
+import * as startingSkills from "../../model/Skills";
+import { EquipmentSlots, ItemData } from "../../types/types";
 
 export type IDsState = string[];
 
@@ -124,7 +124,7 @@ const mapDataToId = (ids: string[], data: ItemData[] | startingSkills.Skills | E
   }), {});
 };
 
-const charactersInitialState = ({ ids = startingIDs }: StateOptions): PlayerState => {
+export const charactersInitialState = ({ ids = startingIDs }: StateOptions): PlayerState => {
   console.log("Character State Remake!");
 
   const banks: ItemBankState = mapDataToId(ids, startingItems);
@@ -146,5 +146,3 @@ const charactersInitialState = ({ ids = startingIDs }: StateOptions): PlayerStat
     equipment,
   };
 };
-
-export default charactersInitialState;

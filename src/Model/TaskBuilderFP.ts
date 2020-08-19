@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable import/prefer-default-export */
 import {
-  SkillName, TaskRequirements, SkillData, ExpReward, ItemData,
+  SkillName, ItemData,
 } from "../types/types";
 import store from "../redux-stuff";
 import { Skills } from "./Skills";
-
+// todo trash
 type SkillArray = [SkillName, number];
 type ItemArray = [number, number];
 type BuilderItems = ItemArray | Array<ItemArray>;

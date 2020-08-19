@@ -1,5 +1,5 @@
 import { SkillNames } from "../data";
-import TaskBuilder from "../../model/TaskBuilder";
+import { TaskBuilder } from "../builders/TaskBuilder";
 
 const gnome = new TaskBuilder({ name: "Gnome" })
 
@@ -35,9 +35,7 @@ const courses = [
   barb,
 ];
 
-const Agility = {
+export const Agility = {
   courses,
   id: SkillNames.agility,
 };
-
-export default Agility;

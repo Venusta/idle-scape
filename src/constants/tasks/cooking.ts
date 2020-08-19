@@ -3,12 +3,13 @@
 import { addMsg } from "../../slices/log";
 import { getRandomInt, expToLevel } from "../../util";
 import { SkillName } from "../../types/types";
-import Cooking from "../skills/cooking";
+import { Cooking } from "../taskData/cooking";
 import store from "../../redux-stuff";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import { TaskDerpThing } from "../../slices/task";
 import format from "../../model/LogFormatter";
+import { RewardBuilder } from "../builders/RewardBuilder";
 
 interface LapOptions {
   playerID: string;
@@ -16,7 +17,7 @@ interface LapOptions {
   amount: number
 }
 
-export default class CookingTask {
+export class CookingTask {
   private playerID: string;
   private taskName: string;
   private amount: number;
@@ -88,18 +89,13 @@ export default class CookingTask {
     }
     console.log(`${burned + cooked === this.amount} ${burned}x burned ${cooked}x cooked food! level: ${expToLevel(this.cookingExp)}`);
 
-    // const reward = new RewardBuilder(rewards).amount(amount);
-    const reward = {
-      exp: [
-        { skill: SkillNames.cooking, amount: cookingReward.amount * cooked },
-      ],
-      items: [
-        { item: selectedTask.rewards.items[0].item, amount: cooked },
-        { item: selectedTask.fails.items[0].item, amount: this.amount - cooked },
-      ], // todo reward builder this
-    };
+    const reward = new RewardBuilder()
+      .rewardItem(selectedTask.rewards.items[0], cooked)
+      .rewardExp(selectedTask.rewards.exp[0], cooked)
+      .rewardItem(selectedTask.fails.items[0], this.amount - cooked)
+      .finalise();
 
-    const totalDuration = amount * duration * 100; // TODO should be 1
+    const totalDuration = amount * duration * 0.01; // TODO should be 1
 
     // todo return this in the task object
     let taskFinishMsg = `[Test] <orange#${this.playerName}> finished cooking <green#${amount} ${name}s>`;

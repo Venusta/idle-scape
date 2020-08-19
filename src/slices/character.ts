@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/prefer-default-export */
 import { createSlice } from "@reduxjs/toolkit";
-import charactersInitialState from "../model/CharacterBuilder";
+import { charactersInitialState } from "../constants/builders/CharacterBuilder";
 import { addBankToBank, expToLevel } from "../util";
 import { TaskReward } from "../types/types";
 

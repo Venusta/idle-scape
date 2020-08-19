@@ -33,6 +33,7 @@ export interface TaskReward {
   exp: ExpReward[]
   items: ItemData[]
 }
+
 export interface TaskFail {
   items: ItemData[]
 }

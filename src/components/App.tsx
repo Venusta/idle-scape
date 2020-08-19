@@ -12,7 +12,7 @@ import { RootState, useAppDispatch } from "../redux-stuff";
 import Bank from "./Bank/Bank";
 import Skills from "./Skills/Skills";
 import TaskTimer from "./TaskTimer/TaskTimer";
-import { NameState } from "../model/CharacterBuilder";
+import { NameState } from "../constants/builders/CharacterBuilder";
 import TaskList from "./TaskList/TaskList";
 import CharacterPanel from "./CharacterPanel/CharacterPanel";
 import Log from "./Log/Log";

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
 import React, { useRef, useLayoutEffect } from "react";
 import { v1 as uuid } from "uuid";
@@ -13,16 +12,11 @@ const Log = (): JSX.Element => {
 
   const regex = /<([\w-]+#)(.*?)>/gi;
 
-  useLayoutEffect(() => {
+  useLayoutEffect(() => { // todo only scroll if at the bottom of the list
     if (ref.current !== null) {
       ref.current.scrollTop = ref.current.scrollHeight;
     }
   }, [items]);
-
-  const playerName = <span className="name-colour">Maximus</span>;
-  const playerexp = <span className="name-colour">24,480</span>;
-  const taskName = <span className="name-colour2">Magic Trees</span>;
-  const taskAmount = <span className="name-colour3">50x</span>;
 
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
@@ -43,8 +37,6 @@ const Log = (): JSX.Element => {
         <div className="log-title panel-title">Character Log</div>
         <div ref={ref} className="log-inner">
           <div className="log-inner-inner">
-            {/* <div className="log-item">[17:55:34] {playerName} finished their task of {taskAmount} {taskName} and received {playerexp} woodcutting experience!</div> */}
-            {/* <div className="log-item"><span className="orange">Maximus Decimus Meridius</span> queued a cooking task of <span className="green">2x chickens</span></div> */}
             {sortedTaskData}
           </div>
         </div>

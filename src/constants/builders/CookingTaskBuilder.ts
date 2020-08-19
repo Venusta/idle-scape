@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
-import { CookingTaskOptions } from "../types/types";
-import TaskBuilder from "./TaskBuilder";
+import { CookingTaskOptions } from "../../types/types";
+import { TaskBuilder } from "./TaskBuilder";
 
 interface TaskBuilderOptions {
   name: string;
 }
 
-export default class CookingTaskBuilder extends TaskBuilder {
+export class CookingTaskBuilder extends TaskBuilder {
   private stopBurnLevel: number;
   private stopBurnGauntlets: number;
 
@@ -34,7 +34,7 @@ export default class CookingTaskBuilder extends TaskBuilder {
   };
 
   /**
- * finalises and returns a task
+ * finalises and returns a task object
  * @param ticks how many ticks to cook 1 item (600ms per tick), default = 5
  */
 

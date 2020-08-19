@@ -1,5 +1,5 @@
 import { SkillNames } from "../data";
-import CookingTaskBuilder from "../../model/CookingTaskBuilder";
+import { CookingTaskBuilder } from "../builders/CookingTaskBuilder";
 
 const chicken = new CookingTaskBuilder({ name: "chicken" })
   .reqSkill(SkillNames.cooking, 1)
@@ -35,9 +35,7 @@ const cookables = [
   lobster,
 ];
 
-const Cooking = {
+export const Cooking = {
   cookables,
   id: SkillNames.cooking,
 };
-
-export default Cooking;

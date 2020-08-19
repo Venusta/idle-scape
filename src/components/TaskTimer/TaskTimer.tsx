@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
-import CookingTask from "../../constants/tasks/cooking";
+import { CookingTask } from "../../constants/tasks/cooking";
 import { RootState, useAppDispatch } from "../../redux-stuff";
 import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
 

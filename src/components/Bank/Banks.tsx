@@ -2,7 +2,7 @@ import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../redux-stuff";
 import Bank from "./Bank";
-import { IDsState } from "../../model/CharacterBuilder";
+import { IDsState } from "../../constants/builders/CharacterBuilder";
 
 const Banks = (): JSX.Element => {
   const ids: IDsState = useSelector((state: RootState) => state.characters.ids, shallowEqual);

@@ -5,7 +5,7 @@ import { v1 as uuid } from "uuid";
 import { RootState } from "../../redux-stuff";
 
 import "./TaskList.css";
-import { NameState } from "../../model/CharacterBuilder";
+import { NameState } from "../../constants/builders/CharacterBuilder";
 import { QueuedTask, TaskState } from "../../slices/task";
 
 interface TaskData extends QueuedTask {
@@ -25,7 +25,7 @@ const TaskList = (): JSX.Element => {
     // const taskListData: Array<JSX.Element> = [];
     const taskData: Array<JSX.Element> = [];
 
-    characterData.forEach((character) => { // todo save actives in an array and display it first
+    characterData.forEach((character) => { // todo save actives in an array and display it first so all character active tasks are at the top
       const [id, data] = character;
       // console.log(data.activeTask);
       if (data.activeTask) {
@@ -64,7 +64,7 @@ const TaskList = (): JSX.Element => {
     return (
       <div className="task-list-window panel-window">
         <div className="task-list-title panel-title">
-          <div>Task List</div>
+          <div>Task Queue</div>
         </div>
         <div className="task-list-inner">
           {/* {sortedTaskData} */}

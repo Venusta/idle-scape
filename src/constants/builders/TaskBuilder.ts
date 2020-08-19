@@ -1,33 +1,14 @@
 /* eslint-disable max-len */
-/* eslint-disable arrow-body-style */
 import {
-  SkillName, EquipmentSlotName, TaskRequirements, TaskEquipmentData, ItemData, SkillData, ExpReward, TaskReward, TaskOptions, TaskFail,
-} from "../types/types";
-import nameToId from "../util/nameToId";
+  SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail,
+} from "../../types/types";
+import nameToId from "../../util/nameToId";
 
 interface TaskBuilderOptions {
   name: string;
 }
 
-const skillExists = (skill: SkillName, arrayToSearch: Array<SkillData | ExpReward>): boolean => {
-  return arrayToSearch.findIndex((obj) => {
-    return obj.skill === skill;
-  }) !== -1;
-};
-
-const itemExists = (item: number, arrayToSearch: Array<ItemData>): boolean => {
-  return arrayToSearch.findIndex((obj) => {
-    return obj.item === item;
-  }) !== -1;
-};
-
-const equipmentExists = (slot: EquipmentSlotName, arrayToSearch: Array<TaskEquipmentData>): boolean => {
-  return arrayToSearch.findIndex((obj) => {
-    return obj.slot === slot;
-  }) !== -1;
-};
-
-export default class TaskBuilder {
+export class TaskBuilder {
   public name: string;
   public requirements: TaskRequirements;
   public rewards: TaskReward;
@@ -56,10 +37,6 @@ export default class TaskBuilder {
    */
 
   reqSkill = (skill: SkillName, level: number): this => {
-    if (skillExists(skill, this.requirements.skills)) {
-      console.error(`${skill} already exists as a requirement`);
-      return this;
-    }
     this.requirements.skills.push({ skill, level });
     return this;
   };
@@ -73,10 +50,6 @@ export default class TaskBuilder {
 
   reqEquip = (slot: EquipmentSlotName, item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    if (equipmentExists(slot, this.requirements.equipment)) {
-      console.error(`${slot} already exists as a requirement`);
-      return this;
-    }
     this.requirements.equipment.push({ slot, item: id, amount });
     return this;
   };
@@ -89,10 +62,6 @@ export default class TaskBuilder {
 
   reqItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    if (itemExists(id, this.requirements.items)) {
-      console.error(`${id} already exists as a requirement`);
-      return this;
-    }
     this.requirements.items.push({ item: id, amount });
     return this;
   };
@@ -104,10 +73,6 @@ export default class TaskBuilder {
    */
 
   rewardExp = (skill: SkillName, amount: number): this => {
-    if (skillExists(skill, this.rewards.exp)) {
-      console.error(`${skill} already exists as a reward`);
-      return this;
-    }
     this.rewards.exp.push({ skill, amount });
     return this;
   };
@@ -120,10 +85,6 @@ export default class TaskBuilder {
 
   rewardItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    if (itemExists(id, this.rewards.items)) {
-      console.error(`${id} already exists as a reward`);
-      return this;
-    }
     this.rewards.items.push({ item: id, amount });
     return this;
   };
@@ -136,16 +97,12 @@ export default class TaskBuilder {
 
   failItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    if (itemExists(id, this.fails.items)) {
-      console.error(`${id} already exists as a fail`);
-      return this;
-    }
     this.fails.items.push({ item: id, amount });
     return this;
   };
 
   /**
- * finalises and returns a task
+ * finalises and returns a task object
  * @param duration how long the task should take in seconds
  */
 
