@@ -31,14 +31,14 @@ const TaskList = (): JSX.Element => {
       if (data.activeTask) {
         const { when, type, info: { name, amount = 0 } } = data.activeTask;
         taskData.push(
-          <div className="task-list-item task-list-active" key={uuid()}>{`${names[id]}: ${type} ${amount}x ${name} ${when}`}</div>,
+          <div className="task-list-item item-bubble task-list-active" key={uuid()}>{`${names[id]}: ${type} ${amount}x ${name} ${when}`}</div>,
         );
       }
       data.queue.forEach((item) => {
         // console.log(item);
         const { taskType, taskName, amount } = item;
         taskData.push(
-          <div className="task-list-item" key={uuid()}>{`${names[id]}: ${taskType} ${amount}x ${taskName}`}</div>,
+          <div className="task-list-item item-bubble" key={uuid()}>{`${names[id]}: ${taskType} ${amount}x ${taskName}`}</div>,
         );
       });
       // data.queue.forEach((queueItem, index) => {
@@ -62,8 +62,8 @@ const TaskList = (): JSX.Element => {
     // });
 
     return (
-      <div className="task-list-window">
-        <div className="task-list-title">
+      <div className="task-list-window panel-window">
+        <div className="task-list-title panel-title">
           <div>Task List</div>
         </div>
         <div className="task-list-inner">

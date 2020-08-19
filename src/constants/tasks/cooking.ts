@@ -99,7 +99,7 @@ export default class CookingTask {
       ], // todo reward builder this
     };
 
-    const totalDuration = amount * duration * 0.01; // TODO should be 1
+    const totalDuration = amount * duration * 100; // TODO should be 1
 
     // todo return this in the task object
     let taskFinishMsg = `[Test] <orange#${this.playerName}> finished cooking <green#${amount} ${name}s>`;

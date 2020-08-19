@@ -29,19 +29,19 @@ const Log = (): JSX.Element => {
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
     items.forEach(({ msg }) => {
-      const finalResult = msg.split(regex).map((thing, index, all) => {
+      const finalResult = msg.split(regex).map((thing, index, all) => { // use reduce instead
         if (thing.endsWith("#")) {
           return <span key={uuid()} className={thing.slice(0, -1)}>{all[index + 1]}</span>;
         }
         if (all[index - 1] && all[index - 1].endsWith("#")) return "";
         return thing || "";
       }).filter((item) => item !== "");
-      sortedTaskData.push(<div key={uuid()} className="log-item">{finalResult}</div>);
+      sortedTaskData.push(<div key={uuid()} className="log-item item-bubble">{finalResult}</div>);
     });
 
     return (
-      <div className="log-window">
-        <div className="log-title">Character Log</div>
+      <div className="log-window panel-window">
+        <div className="log-title panel-title">Character Log</div>
         <div ref={ref} className="log-inner">
           <div className="log-inner-inner">
             {/* <div className="log-item">[17:55:34] {playerName} finished their task of {taskAmount} {taskName} and received {playerexp} woodcutting experience!</div> */}

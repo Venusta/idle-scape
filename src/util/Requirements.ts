@@ -39,6 +39,7 @@ import store from "../redux-stuff";
 //     return [true, item];
 //   });
 // };
+
 export const hasSkills = (playerID: string, skills: SkillData[]): boolean => {
   const playerSkills = store.getState().characters.skills[playerID];
   return skills.map(({ skill, level }) => playerSkills[skill].level >= level).every((b) => b);
@@ -61,8 +62,8 @@ export const hasItems = (playerID: string, items: ItemData[], amount: number): b
 };
 
 export const hasReqs = (playerID: string, requirements: TaskRequirements, amount: number): boolean => {
-  const x = hasSkills(playerID, requirements.skills);
-  const y = hasEquipment(playerID, requirements.equipment);
-  const z = hasItems(playerID, requirements.items, amount);
-  return x && y && z;
+  const haveSkills = hasSkills(playerID, requirements.skills);
+  const haveEquipment = hasEquipment(playerID, requirements.equipment);
+  const haveItems = hasItems(playerID, requirements.items, amount);
+  return haveSkills && haveEquipment && haveItems;
 };

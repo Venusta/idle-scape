@@ -27,22 +27,9 @@ const shrinkedData = Object.values(data).filter(itemFilter).reduce((accum, thing
     return accum;
   }
 
-  // const has = Object.keys(accum).some((ele) => {
-  //   return ele === name;
-  // });
-  // if (has) {
-  //   if (accum[name] < id) {
-  //     return {
-  //       ...accum,
-  //       [name]: accum[name],
-  //     };
-  //   }
-  // }
-
   return {
     ...accum,
-    // [id]: name,
-    [name]: id,
+    [id]: name,
   };
 }, {});
 

@@ -1,7 +1,7 @@
 html,
 body {
-  background-color: rgb(29, 29, 29);
-  color: rgb(184, 184, 184);
+  background-color: rgb(24, 25, 26);
+  color: rgb(220, 220, 220);
   font-family: "Consolas";
   font-size: 14px;
   box-sizing: border-box;
@@ -13,9 +13,10 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  scrollbar-color: rgb(70, 70, 70) rgb(32, 32, 32);
+  scrollbar-color: rgb(70, 71, 72) rgb(32, 33, 34);
 }
 
 /* a:visited {
   color: hotpink;
 } */
+

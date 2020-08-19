@@ -73,8 +73,8 @@ const Skills = ({ id }: SkillsProps): JSX.Element => {
   };
 
   return (
-    <div className="skill-window">
-      <div className="skill-title">
+    <div className="skill-window panel-window">
+      <div className="panel-title">
         <div>{`${name}'s Stats`}</div>
       </div>
       <ul className="skill-inner">

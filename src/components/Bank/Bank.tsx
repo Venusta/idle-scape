@@ -61,7 +61,7 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
 
   const formatStackNumbers = (number: number) => {
     const suffix: string[] = ["", "K", "M", "B", "T", "Q"];
-    const colours: string[] = ["yellow", "", "green", "cyan", "orange", "pink"];
+    const colours: string[] = ["yellow", "white", "green", "cyan", "orange", "pink"];
     let size = number.toString().length;
 
     let index = 0;
@@ -110,8 +110,8 @@ const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in
   };
 
   return (
-    <div className="bank-window">
-      <div className="bank-title">
+    <div className="bank-window panel-window">
+      <div className="bank-title panel-title">
         {`${name}'s Bank`}
       </div>
       <div className="bank-inner">

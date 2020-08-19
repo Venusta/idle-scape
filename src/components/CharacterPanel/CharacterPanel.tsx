@@ -17,7 +17,7 @@ const CharacterPanel = (): JSX.Element => {
       sortedTaskData.push(
         <Link
           key={playerID}
-          className={`character-panel-item selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
+          className={`character-panel-item item-bubble selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
           to={`/player/${playerID}`}
         >
           {name}
@@ -32,7 +32,7 @@ const CharacterPanel = (): JSX.Element => {
       <Link to="/" className="character-panel-title">
         <div>Overview</div>
       </Link>
-      <div className="character-panel-inner">
+      <div className="character-panel-inner panel-inner">
         {MakeList()}
       </div>
     </div>
