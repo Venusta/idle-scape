@@ -6,24 +6,15 @@ import { nameToId } from "../../util/nameToId";
 interface RewardOptions {
   exp: ExpReward[];
   items: ItemData[];
-  // remove: TaskRemoveItem;
 }
-
-// interface TaskRemoveItem {
-//   items: ItemData[];
-// }
 
 export class RewardBuilder {
   private exp: ExpReward[];
   private items: ItemData[];
-  // private remove: TaskRemoveItem;
 
   constructor() {
     this.exp = [];
     this.items = [];
-    // this.remove = {
-    //   items: [],
-    // };
   }
 
   /**
@@ -50,19 +41,6 @@ export class RewardBuilder {
     this.items.push({ item: id, amount: amount * multiplier });
     return this;
   };
-
-  // /**
-  //  * item to delete
-  //  * @param itemData \{ item: 4151, amount: 3 }
-  //  * @param multiplier how many times you give this reward
-  //  */
-
-  // removeItem = (itemData: ItemData, multiplier: number): this => {
-  //   const { item, amount } = itemData;
-  //   const id = nameToId(item);
-  //   this.remove.items.push({ item: id, amount: amount * multiplier });
-  //   return this;
-  // };
 
   /**
    * finalises and returns a reward object, end the chain with this
