@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   ItemData, ExpReward,
 } from "../../types/types";
@@ -10,12 +9,11 @@ interface RewardOptions {
   // remove: TaskRemoveItem;
 }
 
-interface TaskRemoveItem {
-  items: ItemData[];
-}
+// interface TaskRemoveItem {
+//   items: ItemData[];
+// }
 
 export class RewardBuilder {
-  // private rewards: TaskReward;
   private exp: ExpReward[];
   private items: ItemData[];
   // private remove: TaskRemoveItem;
@@ -30,8 +28,7 @@ export class RewardBuilder {
 
   /**
    * Exp reward for completing a task
-   * @param skill name of a skill e.g. "cooking"
-   * @param baseExp how much exp one task gives
+   * @param expReward \{ skill: "cooking", amount: 30 }
    * @param multiplier how many times you give this reward
    */
 
@@ -44,7 +41,6 @@ export class RewardBuilder {
   /**
    * Item you get if you complete the task
    * @param itemData \{ item: 4151, amount: 3 }
-   * @param amount reward amount for one task, default 1
    * @param multiplier how many times you give this reward
    */
 
@@ -57,8 +53,7 @@ export class RewardBuilder {
 
   // /**
   //  * item to delete
-  //  * @param item id or name. 4151 or "Abyssal whip"
-  //  * @param amount required amount for one task, default 1
+  //  * @param itemData \{ item: 4151, amount: 3 }
   //  * @param multiplier how many times you give this reward
   //  */
 
