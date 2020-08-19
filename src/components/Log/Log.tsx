@@ -9,11 +9,9 @@ import { RootState } from "../../redux-stuff";
 
 const Log = (): JSX.Element => {
   const items = useSelector((state: RootState) => state.log.items, shallowEqual);
-
   const ref = useRef<HTMLDivElement>(null);
 
   const regex = /<([\w-]+#)(.*?)>/gi;
-  // const replace = "<span className=\"$1\">$2</span>";
 
   useLayoutEffect(() => {
     if (ref.current !== null) {
@@ -29,13 +27,14 @@ const Log = (): JSX.Element => {
   const MakeList = (): JSX.Element => {
     const sortedTaskData: Array<JSX.Element> = [];
     items.forEach(({ msg }) => {
-      const finalResult = msg.split(regex).map((thing, index, all) => { // use reduce instead
-        if (thing.endsWith("#")) {
-          return <span key={uuid()} className={thing.slice(0, -1)}>{all[index + 1]}</span>;
+      const finalResult = msg.split(regex).reduce((accum: Array<string | JSX.Element>, thing, index, splitMsg) => {
+        if (thing.endsWith("#") && splitMsg[index + 1]) {
+          return [...accum, <span key={uuid()} className={thing.slice(0, -1)}>{splitMsg[index + 1]}</span>];
         }
-        if (all[index - 1] && all[index - 1].endsWith("#")) return "";
-        return thing || "";
-      }).filter((item) => item !== "");
+        if (splitMsg[index - 1] && splitMsg[index - 1].endsWith("#")) return accum;
+        return [...accum, thing];
+      }, []);
+
       sortedTaskData.push(<div key={uuid()} className="log-item item-bubble">{finalResult}</div>);
     });
 
