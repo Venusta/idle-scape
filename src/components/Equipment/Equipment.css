@@ -10,16 +10,19 @@
   grid-template-columns: repeat(4, 1fr);
   column-gap: 5px;
   row-gap: 5px;
+  position: relative;
+  border: 1px solid rgb(62, 194, 57);
+
 }
 
 .equipment-icon-container {
   display: flex;
   position: relative;
-  /* border: 1px solid rgb(57, 194, 194); */
+  border: 1px solid rgb(57, 194, 194);
 }
 
 .equipment-itemAmount {
-  pointer-events: none;
+  /* pointer-events: none; */
   position: absolute;
   z-index: 8;
   /* border: 1px solid rgb(107, 194, 57); */
@@ -28,7 +31,7 @@
 .equipment-image {
   z-index: 2;
   margin-top: 8px;
-  pointer-events: none;
+  /* pointer-events: none; */
   /* border: 1px solid rgb(192, 194, 57); */
 }
 
@@ -38,4 +41,11 @@
   /* border: 1px solid rgb(194, 57, 126); */
   position: absolute;
   z-index: 4;
+}
+
+.slot-head {
+  /* position: absolute; */
+  /* position: relative;
+  top: 5px;
+  left: 200px */
 }

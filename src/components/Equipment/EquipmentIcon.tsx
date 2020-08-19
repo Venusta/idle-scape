@@ -8,7 +8,7 @@ import { EquipmentSlotName } from "../../types/types";
 import { getIcon, getEquipmentIcon } from "../../model/Icon";
 
 interface ItemProps {
-  slot: EquipmentSlotName
+  slot: EquipmentSlotName | "empty"
   itemID: number;
   amount: string;
   colour: string;
@@ -16,15 +16,11 @@ interface ItemProps {
 
 export const EquipmentIcon: React.FC<ItemProps> = ({
   slot, itemID, amount, colour,
+// eslint-disable-next-line arrow-body-style
 }) => {
-  let extra = "";
-  if (amount === "0") {
-    extra = " itemImage-placeholder";
-  }
-
   return (
     <div
-      className={`equipment-icon-container ${colour}${extra}`}
+      className={`equipment-icon-container ${colour} slot-${slot}`}
       title={`${itemID}`}
     >
       <div className="equipment-itemAmount">{amount}</div>
@@ -32,7 +28,7 @@ export const EquipmentIcon: React.FC<ItemProps> = ({
         className="equipment-image"
         width="36"
         height="36"
-        src={`data:image/png;base64, ${getEquipmentIcon(slot)}`}
+        src={`data:image/png;base64, ${getEquipmentIcon("empty")}`} // slot
       />
       <img
         className="equipment-itemImage"
