@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Bank.css";
 import { useSelector, shallowEqual } from "react-redux";
 import { v1 as uuid } from "uuid";
 import { ItemData } from "../../types/types";
 import { Item } from "./Item";
-import { RootState } from "../../redux-stuff";
+import { RootState, useAppDispatch } from "../../redux-stuff";
+import { updateBank } from "../../slices/character";
 
 interface BankProps {
   id: string;
@@ -17,9 +18,16 @@ interface BankProps {
 export const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot data in props
   const name: string = useSelector((state: RootState) => state.characters.names[id], shallowEqual);
   const bank: ItemData[] = useSelector((state: RootState) => state.characters.banks[id], shallowEqual);
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   console.log(`${name} bank updated oh god`);
+  //   dispatch(updateBank({ playerID: id, bank }));
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [bank]);
 
   const handleDragStart = (e: React.DragEvent) => { // todo make this work
-    console.log(e.currentTarget);
+    console.log(e.target);
     // e.preventDefault();
     e.stopPropagation();
   };
@@ -51,11 +59,6 @@ export const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot 
       itemID={itemID}
       amount={amount}
       colour={colour}
-      onDragEnter={(e: React.DragEvent) => handleDragEnter(e)}
-      onDragLeave={(e: React.DragEvent) => handleDragLeave(e)}
-      onDragOver={(e: React.DragEvent) => handleDragOver(e)}
-      onDrop={(e: React.DragEvent) => handleDrop(e)}
-      onDragStart={(e: React.DragEvent) => handleDragStart(e)}
     />
   );
 
@@ -115,7 +118,14 @@ export const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot 
         {`${name}'s Bank`}
       </div>
       <div className="bank-inner">
-        <div className="bank-wrapper">
+        <div
+          className="bank-wrapper"
+          onDragStart={handleDragStart}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
           {renderBank2()}
         </div>
       </div>

@@ -1,4 +1,4 @@
-.character-panel-window {
+.sidebar-window {
   background-color: rgb(36, 37, 38);
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   user-select: none;
 }
 
-.character-panel-title {
+.sidebar-title {
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);
   text-decoration: none;
   color: rgb(245, 246, 247);
@@ -22,7 +22,7 @@
   align-items: center;
 }
 
-.character-panel-inner {
+.sidebar-inner {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -31,7 +31,7 @@
   padding: 5px 10px 0px 10px;
 }
 
-.character-panel-item {
+.sidebar-item {
   text-decoration: none;
   /* background-color: rgb(65, 67, 69); */
 
@@ -45,7 +45,7 @@
   box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.85); */
 }
 
-.character-panel-item:hover {
+.sidebar-item:hover {
   background-color: rgb(100, 177, 201);
 }
 

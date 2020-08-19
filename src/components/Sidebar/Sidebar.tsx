@@ -4,7 +4,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../../redux-stuff";
 
-import "./CharacterPanel.css";
+import "./Sidebar.css";
 import { NameState } from "../../constants/builders/CharacterBuilder";
 
 export const CharacterPanel = (): JSX.Element => {
@@ -17,7 +17,7 @@ export const CharacterPanel = (): JSX.Element => {
       sortedTaskData.push(
         <Link
           key={playerID}
-          className={`character-panel-item item-bubble selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
+          className={`sidebar-item item-bubble selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
           to={`/player/${playerID}`}
         >
           {name}
@@ -28,11 +28,11 @@ export const CharacterPanel = (): JSX.Element => {
   };
 
   return (
-    <div className="character-panel-window">
-      <Link to="/" className="character-panel-title">
+    <div className="sidebar-window">
+      <Link to="/" className="sidebar-title">
         <div>Overview</div>
       </Link>
-      <div className="character-panel-inner panel-inner">
+      <div className="sidebar-inner panel-inner">
         {MakeList()}
       </div>
     </div>

@@ -1,0 +1,41 @@
+.equipment-window {
+  margin: 10px;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.equipment-inner {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+.equipment-icon-container {
+  display: flex;
+  position: relative;
+  /* border: 1px solid rgb(57, 194, 194); */
+}
+
+.equipment-itemAmount {
+  pointer-events: none;
+  position: absolute;
+  z-index: 8;
+  /* border: 1px solid rgb(107, 194, 57); */
+}
+
+.equipment-image {
+  z-index: 2;
+  margin-top: 8px;
+  pointer-events: none;
+  /* border: 1px solid rgb(192, 194, 57); */
+}
+
+.equipment-itemImage {
+  margin-top: 10px;
+  margin-left: 2px;
+  /* border: 1px solid rgb(194, 57, 126); */
+  position: absolute;
+  z-index: 4;
+}

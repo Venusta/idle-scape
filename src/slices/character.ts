@@ -3,12 +3,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { charactersInitialState } from "../constants/builders/CharacterBuilder";
 import { addBankToBank, expToLevel } from "../util";
-import { TaskReward } from "../types/types";
+import { TaskReward, ItemData } from "../types/types";
 
 interface RewardPayload {
   payload: {
     playerID: string,
     reward: TaskReward,
+  }
+}
+
+interface UpdateBankPayload {
+  payload: {
+    playerID: string,
+    bank: ItemData[],
   }
 }
 
@@ -32,9 +39,13 @@ export const characterSlice = createSlice({
         state.banks[playerID] = addBankToBank(bank, items);
       }
     },
+    updateBank: (state, { payload: { playerID, bank } }: UpdateBankPayload) => {
+      state.banks[playerID] = bank;
+    },
   },
 });
 
 export const {
   addReward,
+  updateBank,
 } = characterSlice.actions;

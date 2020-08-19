@@ -11,15 +11,15 @@ interface ItemProps {
   itemID: number;
   amount: string;
   colour: string;
-  onDragEnter: (e: React.DragEvent) => void;
-  onDragLeave: (e: React.DragEvent) => void;
-  onDragOver: (e: React.DragEvent) => void;
-  onDrop: (e: React.DragEvent) => void;
-  onDragStart: (e: React.DragEvent) => void;
+  // onDragEnter: (e: React.DragEvent) => void;
+  // onDragLeave: (e: React.DragEvent) => void;
+  // onDragOver: (e: React.DragEvent) => void;
+  // onDrop: (e: React.DragEvent) => void;
+  // onDragStart: (e: React.DragEvent) => void;
 }
 
 export const Item: React.FC<ItemProps> = ({
-  itemID, amount, onDragEnter, onDragLeave, onDragOver, onDrop, onDragStart, colour,
+  itemID, amount, colour,
 }) => {
   const [coords, setCoords] = useState([0, 0]);
   const [visible, setVisible] = useState(false);
@@ -51,19 +51,14 @@ export const Item: React.FC<ItemProps> = ({
   );
   let extra = "";
   if (amount === "0") {
-    extra = "itemImage-placeholder";
+    extra = " itemImage-placeholder";
   }
 
   return (
     <div
-      className={`itemInBank ${colour} ${extra}`}
+      className={`itemInBank ${colour}${extra}`}
       draggable="true"
       title={`${itemID}`}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      onDragStart={onDragStart}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
     >

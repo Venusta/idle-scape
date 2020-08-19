@@ -14,10 +14,11 @@ import { Skills } from "./Skills/Skills";
 import { TaskTimer } from "./TaskTimer/TaskTimer";
 import { NameState } from "../constants/builders/CharacterBuilder";
 import { TaskList } from "./TaskList/TaskList";
-import { CharacterPanel } from "./CharacterPanel/CharacterPanel";
+import { CharacterPanel } from "./Sidebar/Sidebar";
 import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
 import { Banks } from "./Bank/Banks";
+import { Equipment } from "./Equipment/Equipment";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -37,6 +38,7 @@ const SingleCharacterView = () => {
     <div className="reeee">
       <TaskList />
       <Bank id={playerID} />
+      <Equipment />
       <Skills id={playerID} />
     </div>
   );
@@ -59,21 +61,21 @@ export const App = (): JSX.Element => {
     //   console.log("---------------------------------------------------");
     // });
 
-    dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
-    }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
     // }));
-    dispatch(newTask({
-      playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
-    }));
+    // // dispatch(newTask({
+    // //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
+    // // }));
     // dispatch(newTask({
-    //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 300,
+    //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
     // }));
-    dispatch(newTask({
-      playerID: "3", taskName: "lobster", taskType: "cooking", amount: 100,
-    }));
+    // // dispatch(newTask({
+    // //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 300,
+    // // }));
+    // dispatch(newTask({
+    //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 100,
+    // }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 50,
     // }));
