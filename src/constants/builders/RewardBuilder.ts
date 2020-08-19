@@ -1,6 +1,4 @@
-import {
-  ItemData, ExpReward,
-} from "../../types/types";
+import { ItemData, ExpReward } from "../../types/types";
 import { nameToId } from "../../util/nameToId";
 
 interface RewardOptions {

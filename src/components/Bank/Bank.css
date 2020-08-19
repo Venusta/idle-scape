@@ -5,15 +5,6 @@
   height: 300px;
 }
 
-.bank-title {
-  font-size: large;
-  font-weight: bold;
-  /* background-color: rgb(33, 33, 33); */
-  padding: 3px 10px 3px 10px;
-  display: flex;
-  justify-content: center;
-}
-
 .bank-inner {
   display: flex;
   flex: 1;
@@ -90,7 +81,7 @@
 
 .pink {
   color: rgb(224, 92, 165);
-  color: #ff8fd3
+  color: #ff8fd3;
 }
 
 .white {
