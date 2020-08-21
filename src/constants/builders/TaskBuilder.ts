@@ -9,10 +9,10 @@ interface TaskBuilderOptions {
 }
 
 export class TaskBuilder {
-  public name: string;
-  public requirements: TaskRequirements;
-  public rewards: TaskReward;
-  public fails: TaskFail;
+  name: string;
+  requirements: TaskRequirements;
+  rewards: TaskReward;
+  fails: TaskFail;
 
   constructor(options: TaskBuilderOptions) {
     this.name = options.name;
@@ -103,10 +103,12 @@ export class TaskBuilder {
 
   /**
  * finalises and returns a task object
- * @param duration how long the task should take in seconds
+ * @param ticks how many ticks per task attempt (600ms per tick), default = 5
  */
 
-  finalise = (duration = 0): TaskOptions => {
+  finalise = (ticks = 5): TaskOptions => {
+    const duration = ticks * 600;
+
     const {
       name, requirements, rewards, fails,
     } = this;

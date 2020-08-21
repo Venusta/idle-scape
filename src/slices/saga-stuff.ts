@@ -13,12 +13,9 @@ import { format } from "../model/LogFormatter";
 
 export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   const { playerID, reward } = action.payload;
-  console.log(action.payload);
-  console.log("@@@@@@@@@@@@@@@@@@@@@");
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state: RootState = yield select();
   const playerName = state.characters.names[playerID];
-  console.log("??????????????????????????????????????????????");
 
   yield put(addReward({ playerID, reward }));
   const msg = format("CompletedTask", playerName, action.payload);

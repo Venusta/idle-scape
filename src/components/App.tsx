@@ -19,6 +19,7 @@ import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
 import { Banks } from "./Bank/Banks";
 import { Equipment } from "./Equipment/Equipment";
+import { FishingTask } from "../constants/tasks/fishing";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -47,7 +48,21 @@ const SingleCharacterView = () => {
 export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
+  // const player = useSelector((state: RootState) => {
+  //   return {
+  //     name: state.characters.names["3"],
+  //     skills: state.characters.skills["3"],
+  //     equipment: state.characters.equipment["3"],
+  //     bank: state.characters.banks["3"],
+  //   };
+  // }, shallowEqual);
+
   useEffect(() => {
+    const x = FishingTask({ playerID: "3", taskName: "shrimp", amount: 1 });
+    console.log(x);
+    const y = FishingTask({ playerID: "3", taskName: "anchovies", amount: 1 });
+    console.log(y);
+    
     // nameToId("Abyssal whip");
 
     // const tests = ["1", "999", "1000", "1001", "99999", "100000", "100001", "999999", "1000000", "1000001", "9999999", "10000000", "10000001", "100000000", "1000000000", "10000000000", "10000000001"];
@@ -62,37 +77,19 @@ export const App = (): JSX.Element => {
     // });
 
     // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
+    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     // }));
-    // // dispatch(newTask({
-    // //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 200,
-    // // }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
     // }));
-    // // dispatch(newTask({
-    // //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 300,
-    // // }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 100,
     // }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 50,
     // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 3,
-    // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 3,
-    // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 3,
-    // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 50,
-    // }));
-    console.log("Rendered");
 
+    console.log("Rendered");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -1,57 +1,26 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  SkillData, TaskEquipmentData, ItemData, TaskRequirements,
+  SkillData, TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots,
 } from "../types/types";
-import { store } from "../redux-stuff";
+import { Skills } from "../model/Skills";
 
-// export const haveSkills = (playerID: string, skills: SkillData[]): (boolean | SkillName)[][] => {
-//   const playerSkills = store.getState().characters.skills[playerID];
+interface CharacterState {
+  name: string;
+  skills: Skills;
+  equipment: EquipmentSlots;
+  bank: ItemData[];
+}
 
-//   return skills.map(({ skill, level }) => {
-//     if (playerSkills[skill].level < level) {
-//       return [false, skill];
-//     }
-//     return [true, skill];
-//   });
-// };
-
-// export const haveEquipment = (playerID: string, equipment: TaskEquipmentData[]): (boolean | EquipmentSlotName)[][] => {
-//   const playerEquipment = store.getState().characters.equipment[playerID];
-
-//   return equipment.map(({ item, slot }) => {
-//     if (playerEquipment[slot] !== item) {
-//       return [false, slot];
-//     }
-//     return [true, slot];
-//   });
-// };
-
-// export const haveItems = (playerID: string, items: ItemData[], amount: number): (boolean | number)[][] => {
-//   const playerItems = store.getState().characters.banks[playerID];
-
-//   return items.map(({ item, amount: amt }) => {
-//     const newAmount = amount * amt;
-//     const index = playerItems.find((element) => (item === element.item && element.amount >= newAmount));
-//     if (!index) {
-//       return [false, item];
-//     }
-//     return [true, item];
-//   });
-// };
-
-export const hasSkills = (playerID: string, skills: SkillData[]): boolean => {
-  const playerSkills = store.getState().characters.skills[playerID];
-  return skills.map(({ skill, level }) => playerSkills[skill].level >= level).every((b) => b);
+export const hasSkills = (characterSkills: Skills, skills: SkillData[]): boolean => {
+  return skills.map(({ skill, level }) => characterSkills[skill].level >= level).every((b) => b);
 };
 
-export const hasEquipment = (playerID: string, equipment: TaskEquipmentData[]): boolean => {
-  const playerEquipment = store.getState().characters.equipment[playerID];
-  return equipment.map(({ item, slot }) => playerEquipment[slot] === item).every((b) => b);
+export const hasEquipment = (characterEquipment: EquipmentSlots, equipment: TaskEquipmentData[]): boolean => {
+  return equipment.map(({ item, slot }) => characterEquipment[slot] === item).every((b) => b);
 };
 
-export const hasItems = (playerID: string, items: ItemData[], amount: number): boolean => {
-  const playerItems = store.getState().characters.banks[playerID];
+export const hasItems = (playerItems: ItemData[], items: ItemData[], amount: number): boolean => {
   return items.map(({ item, amount: amt }) => {
     const index = playerItems.find((element) => (item === element.item && element.amount >= amt * amount));
     if (!index) {
@@ -61,9 +30,10 @@ export const hasItems = (playerID: string, items: ItemData[], amount: number): b
   }).every((b) => b);
 };
 
-export const hasReqs = (playerID: string, requirements: TaskRequirements, amount: number): boolean => {
-  const haveSkills = hasSkills(playerID, requirements.skills);
-  const haveEquipment = hasEquipment(playerID, requirements.equipment);
-  const haveItems = hasItems(playerID, requirements.items, amount);
+export const hasReqs = (character: CharacterState, requirements: TaskRequirements, amount: number): boolean => {
+  const { skills, equipment, bank } = character;
+  const haveSkills = hasSkills(skills, requirements.skills);
+  const haveEquipment = hasEquipment(equipment, requirements.equipment);
+  const haveItems = hasItems(bank, requirements.items, amount);
   return haveSkills && haveEquipment && haveItems;
 };

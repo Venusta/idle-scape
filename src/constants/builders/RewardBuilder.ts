@@ -52,3 +52,14 @@ export class RewardBuilder {
     };
   };
 }
+
+const appendTest = (fixed: string) => {
+  return (dynamic: string) => {
+    return fixed + dynamic;
+  };
+};
+
+const hello = appendTest("Hello");
+
+console.log(hello(" world"));
+console.log(hello(" everyone"));

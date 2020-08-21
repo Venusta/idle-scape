@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
-import { CookingTaskOptions } from "../../types/types";
+import { CookingTask } from "../../types/types";
 import { TaskBuilder } from "./TaskBuilder";
 
 interface TaskBuilderOptions {
@@ -38,7 +38,7 @@ export class CookingTaskBuilder extends TaskBuilder {
  * @param ticks how many ticks to cook 1 item (600ms per tick), default = 5
  */
 
-  finalise = (ticks = 5): CookingTaskOptions => {
+  finalise = (ticks = 5): CookingTask => {
     const duration = ticks * 600;
 
     const {

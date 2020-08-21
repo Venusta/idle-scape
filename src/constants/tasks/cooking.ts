@@ -1,131 +1,142 @@
-/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { addMsg } from "../../slices/log";
-import { getRandomInt, expToLevel } from "../../util";
-import { SkillName } from "../../types/types";
-import { Cooking } from "../taskData/cooking";
+/* eslint-disable max-len */
+/* eslint-disable arrow-body-style */
+import { Skills } from "../../model/Skills";
 import { store } from "../../redux-stuff";
+import { addMsg } from "../../slices/log";
+import { cooking } from "../taskData/cooking";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
-import { TaskDerpThing } from "../../slices/task";
-import { format } from "../../model/LogFormatter";
+import {
+  TaskRequirements, TaskReward, TaskFail, EquipmentSlots, ItemData, SkillName, TaskInputOptions, TaskOptions,
+} from "../../types/types";
+import { expToLevel, getRandomInt } from "../../util";
 import { RewardBuilder } from "../builders/RewardBuilder";
+import { LogMsgBuilder } from "../builders/LogMsgBuilder";
+import { TaskDerpThing } from "../../slices/task";
 
-interface LapOptions {
-  playerID: string;
-  taskName: string;
-  amount: number
+export interface CookingTask extends TaskOptions {
+  stopBurnLevel: number;
+  stopBurnGauntlets: number;
 }
 
-export class CookingTask {
-  private playerID: string;
-  private taskName: string;
-  private amount: number;
-  private playerName: string;
-  private cookingExp: number;
-  private startingLevel: number;
+interface CookingTaskData {
+  tasks: Array<CookingTask>;
+  id: SkillNames;
+}
 
-  constructor({ playerID, taskName, amount }: LapOptions) {
-    this.playerID = playerID;
-    this.taskName = taskName;
-    this.amount = amount;
-    this.playerName = store.getState().characters.names[playerID];
-    this.cookingExp = store.getState().characters.skills[playerID].cooking.exp;
-    this.startingLevel = expToLevel(this.cookingExp);
+interface CharacterState {
+  name: string;
+  skills: Skills;
+  equipment: EquipmentSlots;
+  bank: ItemData[];
+}
+
+const selectTask = (taskData: CookingTaskData, taskName: string) => {
+  return taskData.tasks.find((task) => task.name === taskName);
+};
+
+export const CookingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
+  const character: CharacterState = {
+    name: store.getState().characters.names[playerID],
+    skills: store.getState().characters.skills[playerID],
+    equipment: store.getState().characters.equipment[playerID],
+    bank: store.getState().characters.banks[playerID],
+  };
+
+  const selectedTask = selectTask(cooking, taskName);
+  const { name: playerName, skills } = character;
+
+  const startingLevel = expToLevel(skills.cooking.exp);
+  let cookingExp = skills.cooking.exp;
+
+  if (!selectedTask) {
+    console.error(`Cooking task not found: ${taskName}`);
+    return false;
   }
 
-  start = ():TaskDerpThing | false => {
-    const {
-      playerID, taskName, amount, playerName,
-    } = this;
+  const {
+    requirements, duration, rewards, stopBurnLevel,
+  } = selectedTask;
 
-    const selectedTask = Cooking.cookables.find((taskType) => taskType.name === taskName);
-    if (!selectedTask) {
-      console.error(`Cooking task not found: ${taskName}`);
-      return false;
+  if (!hasReqs(character, requirements, amount)) { // todo get req msg
+    console.log(`${playerName} sucks and misses reqs for ${taskName}`);
+    store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${taskName}` }));
+
+    return false;
+  }
+  // todo remove the req items from bank and put it on the
+  // todo task object so it can be returned if the task is cancelled
+
+  const findRewardSkill = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
+  const cookingReward = findRewardSkill(SkillNames.cooking);
+  if (!cookingReward) {
+    console.error(`skillName not found: ${SkillNames.cooking}`);
+    return false;
+  }
+
+  let cooked = 0;
+  let burned = 0;
+  for (let index = 0; index < amount; index += 1) {
+    if (expToLevel(cookingExp) >= stopBurnLevel) {
+      cooked += amount - index;
+      cookingExp += cooked * cookingReward.amount;
+      break;
     }
-
-    const {
-      name, requirements, duration, rewards, stopBurnLevel,
-    } = selectedTask;
-
-    // console.log(hasSkills(playerID, requirements.skills));
-    // console.log(hasEquipment(playerID, requirements.equipment));
-    // console.log(hasItems(playerID, requirements.items, amount));
-    // console.log(hasReqs(playerID, requirements, amount));
-
-    if (!hasReqs(playerID, requirements, amount)) { // todo get req msg
-      console.log(`${playerName} sucks and misses reqs for ${name}`);
-      store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${name}` }));
-      return false;
+    const rng = getRandomInt(1, 100);
+    if (rng > stopBurnLevel - expToLevel(cookingExp)) {
+      // console.log(`Level: ${expToLevel(cookingExp)}`);
+      cookingExp += cookingReward.amount;
+      cooked += 1;
+      // console.log(`${burned}x Burned food! ${rng} < ${stopBurnLevel - cooking.level}`);
+    } else {
+      burned += 1;
     }
-    // todo remove the req items from bank and put it on the
-    // todo task object so it can be returned if the task is cancelled
+  }
+  console.log(`${burned + cooked === amount} ${burned}x burned ${cooked}x cooked food! level: ${expToLevel(cookingExp)}`);
 
-    // console.log(`${playerName} wants to cook ${amount}x ${name}`);
+  const reward = new RewardBuilder()
+    .rewardItem(selectedTask.rewards.items[0], cooked)
+    .rewardExp(selectedTask.rewards.exp[0], cooked)
+    .rewardExp({ skill: "construction", amount: 93 }, cooked)
+    .rewardExp({ skill: "smithing", amount: 23 }, cooked)
+    .rewardItem(selectedTask.fails.items[0], amount - cooked)
+    .finalise();
 
-    const findRewardSkill = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
-    const cookingReward = findRewardSkill(SkillNames.cooking);
-    if (!cookingReward) {
-      console.error(`skillName not found: ${SkillNames.cooking}`);
-      return false;
-    }
+  const totalDuration = amount * duration * 0.1; // TODO should be 1
 
-    let cooked = 0;
-    let burned = 0;
-    for (let index = 0; index < this.amount; index += 1) {
-      if (expToLevel(this.cookingExp) >= stopBurnLevel) {
-        cooked += this.amount - index;
-        this.cookingExp += cooked * cookingReward.amount;
-        break;
-      }
-      const rng = getRandomInt(1, 100);
-      if (rng > stopBurnLevel - expToLevel(this.cookingExp)) {
-        // console.log(`Level: ${expToLevel(this.cookingExp)}`);
-        this.cookingExp += cookingReward.amount;
-        cooked += 1;
-        // console.log(`${burned}x Burned food! ${rng} < ${stopBurnLevel - cooking.level}`);
-      } else {
-        burned += 1;
-      }
-    }
-    console.log(`${burned + cooked === this.amount} ${burned}x burned ${cooked}x cooked food! level: ${expToLevel(this.cookingExp)}`);
+  // todo return this in the task object
+  let taskFinishMsg = `[Test] <orange#${playerName}> finished cooking <green#${amount} ${taskName}s>`;
+  taskFinishMsg += ` and gained <cyan#${cookingReward.amount * cooked}> cooking xp`;
+  if (expToLevel(cookingExp) > startingLevel) { // todo make this universal maybe
+    taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(cookingExp)}>`;
+  }
+  taskFinishMsg += ".";
+  // todo build the final string for the task complete, calc the level up and xp gain internally so we can display it from one place
+  console.log(taskFinishMsg);
+  store.dispatch(addMsg({ playerID, msg: taskFinishMsg }));
 
-    const reward = new RewardBuilder()
-      .rewardItem(selectedTask.rewards.items[0], cooked)
-      .rewardExp(selectedTask.rewards.exp[0], cooked)
-      .rewardItem(selectedTask.fails.items[0], this.amount - cooked)
-      .finalise();
+  const msg = new LogMsgBuilder()
+    .finished(playerName, "cooking", amount, taskName)
+    .gaining(reward.exp)
+    .toString();
+  console.log(msg);
 
-    const totalDuration = amount * duration * 0.01; // TODO should be 1
-
-    // todo return this in the task object
-    let taskFinishMsg = `[Test] <orange#${this.playerName}> finished cooking <green#${amount} ${name}s>`;
-    taskFinishMsg += ` and gained <cyan#${cookingReward.amount * cooked}> cooking xp`;
-    if (expToLevel(this.cookingExp) > this.startingLevel) { // todo make this universal maybe
-      taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(this.cookingExp)}>`;
-    }
-    taskFinishMsg += ".";
-    // todo build the final string for the task complete, calc the level up and xp gain internally so we can display it from one place
-    console.log(taskFinishMsg);
-    store.dispatch(addMsg({ playerID, msg: format("None", this.playerID, { msg: taskFinishMsg }) }));
-
-    const skill = SkillNames.cooking;
-    const type = "cooking";
-    const info = {
-      name,
-      amount,
-    };
-
-    const taskObj = {
-      playerID,
-      duration: totalDuration,
-      type,
-      info,
-      skill,
-      reward,
-    };
-
-    return taskObj;
+  const skill = SkillNames.cooking;
+  const type = "cooking";
+  const info = {
+    name: taskName,
+    amount,
   };
-}
+
+  const taskObj = {
+    playerID,
+    duration: totalDuration,
+    type,
+    info,
+    skill,
+    reward,
+  };
+
+  return taskObj;
+};

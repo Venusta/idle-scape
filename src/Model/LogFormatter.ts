@@ -27,7 +27,6 @@ export const format = (type: string, playerName: string, payload: LogPayload): s
   }
   if (type === "CompletedTask") {
     const { info: { amount: taskAmount, name }, reward: { exp }, type: taskType } = payload;
-    console.log(payload);
 
     let expMsg = "";
     if (exp.length > 0) {

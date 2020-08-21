@@ -108,8 +108,8 @@ export const taskSlice = createSlice({
     },
 
     handleActiveTask: (state, { payload: { playerID, reward, type } }: { payload: TaskPayloadData }) => {
-      console.log("reward:");
-      console.log(reward);
+      // console.log("reward:");
+      // console.log(reward);
 
       console.log(`${type} task finished.`);
       state[playerID].active = false;

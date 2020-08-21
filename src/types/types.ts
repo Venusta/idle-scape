@@ -13,6 +13,19 @@
 //   equipment: Partial<EquipmentSlots>
 // }
 
+export interface TaskInputOptions {
+  playerID: string;
+  taskName: string;
+  amount: number
+}
+
+export interface CharacterState {
+  name: string;
+  skills: SkillsStats;
+  equipment: EquipmentSlots;
+  bank: ItemData[];
+}
+
 export type ItemData = {
   item: number;
   amount: number;
@@ -56,9 +69,15 @@ export interface TaskOptions {
   fails: TaskFail;
 }
 
-export interface CookingTaskOptions extends TaskOptions {
+export interface CookingTask extends TaskOptions {
   stopBurnLevel: number;
   stopBurnGauntlets: number;
+}
+
+export interface FishingTask extends TaskOptions {
+  weight1: number;
+  weight99: number;
+  totalWeight: number;
 }
 
 export interface MonsterOptions {

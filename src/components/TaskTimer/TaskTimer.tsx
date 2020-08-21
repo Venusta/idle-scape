@@ -1,22 +1,22 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
-import { CookingTask } from "../../constants/tasks/cooking";
 import { RootState, useAppDispatch } from "../../redux-stuff";
 import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
+import { CookingTask } from "../../constants/tasks/cooking";
 
 export const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(new Date());
-  const tasks: TaskState = useSelector((state: RootState) => state.tasks);
+  const tasks: TaskState = useSelector((state: RootState) => state.tasks, shallowEqual);
 
   const handleTask = () => {
     const characterIds = Object.keys(tasks);
 
-    characterIds.forEach((character) => {
-      const { queue, active } = tasks[character];
+    characterIds.forEach((characterID) => {
+      const { queue, active } = tasks[characterID];
 
       if (queue.length > 0 && active === false) {
         const task = queue[0];
@@ -24,13 +24,14 @@ export const TaskTimer = (): JSX.Element => {
         /* // TODO
          * switch statement here for the task type
         */
-        const x = new CookingTask({ playerID, taskName, amount }).start();
+        // const x = new CookingTask(player, { playerID, taskName, amount }).start();
+        const x = CookingTask({ playerID, taskName, amount });
 
-        dispatch(processQueue({ playerID: character, task: x }));
+        dispatch(processQueue({ playerID: characterID, task: x }));
         console.log("This should only happen once per task");
       }
 
-      const task = tasks[character].activeTask;
+      const task = tasks[characterID].activeTask;
       if (active && task) {
         const { when } = task;
 
