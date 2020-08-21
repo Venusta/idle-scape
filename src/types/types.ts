@@ -77,7 +77,6 @@ export interface CookingTask extends TaskOptions {
 export interface FishingTask extends TaskOptions {
   weight1: number;
   weight99: number;
-  totalWeight: number;
 }
 
 export interface MonsterOptions {

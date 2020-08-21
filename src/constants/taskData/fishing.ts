@@ -10,27 +10,29 @@ interface FishingSpot {
 export interface FishingTasks {
   names: string[]
   tool: ItemData;
+  totalWeight: number;
   bait?: string;
-  fish: FishingSpot
+  fishingSpot: FishingSpot
 }
 
 const tasks: FishingTasks[] = [
   {
     names: ["shrimp", "anchovies"],
     tool: { item: nameToId("Small fishing net"), amount: 1 },
-    fish: {
+    totalWeight: 255,
+    fishingSpot: {
       shrimp: new FishingTaskBuilder({ name: "shrimp" })
         .reqSkill(SkillNames.fishing, 1)
         .rewardExp(SkillNames.fishing, 10)
         .rewardItem("Raw shrimp")
-        .weight(8, 64, 255)
+        .weight(32, 200)
         .finalise(),
 
       anchovies: new FishingTaskBuilder({ name: "anchovies" })
         .reqSkill(SkillNames.fishing, 15)
         .rewardExp(SkillNames.fishing, 40)
         .rewardItem("Raw anchovies")
-        .weight(16, 96, 255)
+        .weight(16, 96)
         .finalise(),
     },
   },

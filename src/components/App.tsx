@@ -58,11 +58,11 @@ export const App = (): JSX.Element => {
   // }, shallowEqual);
 
   useEffect(() => {
-    const x = FishingTask({ playerID: "3", taskName: "shrimp", amount: 1 });
+    const x = FishingTask({ playerID: "3", taskName: "shrimp", amount: 10 });
     console.log(x);
-    const y = FishingTask({ playerID: "3", taskName: "anchovies", amount: 1 });
+    const y = FishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
     console.log(y);
-    
+
     // nameToId("Abyssal whip");
 
     // const tests = ["1", "999", "1000", "1001", "99999", "100000", "100001", "999999", "1000000", "1000001", "9999999", "10000000", "10000001", "100000000", "1000000000", "10000000000", "10000000001"];

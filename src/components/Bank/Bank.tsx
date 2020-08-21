@@ -74,7 +74,6 @@ export const Bank: React.FC<BankProps> = ({ id }) => { // todo pass bank / loot 
         size -= 3;
         index += 1;
       }
-      // console.log(`number: ${number} (${number.toString().length})- size: ${size} index: ${index}`);
     }
     return { amount: `${number.toString().slice(0, size)}${suffix[index]}`, colour: colours[index] };
   };

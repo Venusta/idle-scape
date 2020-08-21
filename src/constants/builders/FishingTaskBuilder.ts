@@ -8,26 +8,22 @@ interface TaskBuilderOptions {
 export class FishingTaskBuilder extends TaskBuilder {
   private weight1: number;
   private weight99: number;
-  private totalWeight: number;
 
   constructor(options: TaskBuilderOptions) {
     super(options);
     this.weight1 = 0;
     this.weight99 = 20;
-    this.totalWeight = 255;
   }
 
   /**
    * weighting for the fishies
    * @param weight1 level 1 weight
    * @param weight99 level 99 weight
-   * @param totalWeight total weight
    */
 
-  weight = (weight1: number, weight99: number, totalWeight: number): this => {
+  weight = (weight1: number, weight99: number): this => {
     this.weight1 = weight1;
     this.weight99 = weight99;
-    this.totalWeight = totalWeight;
     return this;
   };
 
@@ -40,7 +36,7 @@ export class FishingTaskBuilder extends TaskBuilder {
     const duration = ticks;
 
     const {
-      name, requirements, rewards, fails, weight1, weight99, totalWeight,
+      name, requirements, rewards, fails, weight1, weight99,
     } = this;
 
     return {
@@ -51,7 +47,6 @@ export class FishingTaskBuilder extends TaskBuilder {
       fails,
       weight1,
       weight99,
-      totalWeight,
     };
   };
 }
