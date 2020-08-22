@@ -19,7 +19,7 @@ import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
 import { Banks } from "./Bank/Banks";
 import { Equipment } from "./Equipment/Equipment";
-import { FishingTask } from "../constants/tasks/fishing";
+import { fishingTask } from "../constants/tasks/fishing";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -58,10 +58,10 @@ export const App = (): JSX.Element => {
   // }, shallowEqual);
 
   useEffect(() => {
-    const x = FishingTask({ playerID: "3", taskName: "shrimp", amount: 10 });
+    const x = fishingTask({ playerID: "3", taskName: "shrimp", amount: 500 });
     console.log(x);
-    const y = FishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
-    console.log(y);
+    // const y = fishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
+    // console.log(y);
 
     // nameToId("Abyssal whip");
 

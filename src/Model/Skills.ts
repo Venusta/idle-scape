@@ -27,7 +27,7 @@ export interface Skills {
   construction: Skill;
 }
 
-export const skills = (): Skills => ({
+export const skills: Skills = {
   attack: skill(levelToExp(70)),
   defence: skill(levelToExp(70)),
   strength: skill(levelToExp(70)),
@@ -51,4 +51,4 @@ export const skills = (): Skills => ({
   runecrafting: skill(),
   hunter: skill(),
   construction: skill(),
-});
+};

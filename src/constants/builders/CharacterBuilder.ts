@@ -40,6 +40,7 @@ const startingItems: ItemData[] = [
   { item: 995, amount: 6000, placeholder: true },
   { item: 377, amount: 6000, placeholder: true },
   { item: 2138, amount: 50000 },
+  { item: 314, amount: 5 },
   { item: 331, amount: 8045 },
   { item: 303, amount: 5 },
   { item: 2140, amount: 0 },
@@ -129,7 +130,7 @@ export const charactersInitialState = ({ ids = startingIDs }: StateOptions): Pla
   console.log("Character State Remake!");
 
   const banks: ItemBankState = mapDataToId(ids, startingItems);
-  const skills: SkillsState = mapDataToId(ids, startingSkills.skills());
+  const skills: SkillsState = mapDataToId(ids, startingSkills.skills);
   const names: NameState = {
     [ids[0]]: startingNames[0],
     [ids[1]]: startingNames[1],

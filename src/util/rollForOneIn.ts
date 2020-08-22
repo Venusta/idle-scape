@@ -5,5 +5,5 @@ import { getRandomInt } from "./getRandomInt";
  * @param upperLimit The upper limit of the roll.
  */
 export function rollForOneIn(upperLimit: number): boolean {
-  return getRandomInt(1, upperLimit) === 1;
+  return getRandomInt(1, upperLimit + 1) === 1;
 }

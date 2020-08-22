@@ -10,22 +10,25 @@ interface FishingSpot {
 export interface FishingTasks {
   names: string[]
   tool: ItemData;
-  totalWeight: number;
-  bait?: string;
+  maxWeight: number;
+  bait?: number;
   fishingSpot: FishingSpot
 }
 
+// todo maybe get rid of chaining and use a method for each specific thing
+// todo builder for this, ensure highest level fish is first, idk
 const tasks: FishingTasks[] = [
   {
-    names: ["shrimp", "anchovies"],
+    names: ["shrimp", "anchovies", "trout"],
     tool: { item: nameToId("Small fishing net"), amount: 1 },
-    totalWeight: 255,
+    bait: nameToId("Feather"),
+    maxWeight: 255,
     fishingSpot: {
       shrimp: new FishingTaskBuilder({ name: "shrimp" })
         .reqSkill(SkillNames.fishing, 1)
         .rewardExp(SkillNames.fishing, 10)
-        .rewardItem("Raw shrimp")
-        .weight(32, 200)
+        .rewardItem("Raw shrimps")
+        .weight(32, 192)
         .finalise(),
 
       anchovies: new FishingTaskBuilder({ name: "anchovies" })
@@ -33,6 +36,13 @@ const tasks: FishingTasks[] = [
         .rewardExp(SkillNames.fishing, 40)
         .rewardItem("Raw anchovies")
         .weight(16, 96)
+        .finalise(),
+
+      trout: new FishingTaskBuilder({ name: "trout" })
+        .reqSkill(SkillNames.fishing, 25)
+        .rewardExp(SkillNames.fishing, 90)
+        .rewardItem("Raw trout")
+        .weight(8, 64)
         .finalise(),
     },
   },

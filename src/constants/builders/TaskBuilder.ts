@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
   SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail,
@@ -17,7 +18,7 @@ export class TaskBuilder {
   constructor(options: TaskBuilderOptions) {
     this.name = options.name;
     this.requirements = {
-      skills: [],
+      skills: new Map([]),
       items: [],
       equipment: [],
     };
@@ -37,7 +38,7 @@ export class TaskBuilder {
    */
 
   reqSkill = (skill: SkillName, level: number): this => {
-    this.requirements.skills.push({ skill, level });
+    this.requirements.skills.set(skill, level);
     return this;
   };
 

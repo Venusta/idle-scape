@@ -55,8 +55,11 @@ export interface TaskEquipmentData extends ItemData {
   slot: EquipmentSlotName
 }
 
+export type SkillMap = Map<SkillName, number>;
+
 export interface TaskRequirements {
-  skills: SkillData[]
+  // skills: SkillData[]
+  skills: SkillMap
   items: ItemData[]
   equipment: TaskEquipmentData[]
 }

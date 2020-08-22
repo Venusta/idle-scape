@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  SkillData, TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots,
+  SkillData, TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap,
 } from "../types/types";
 import { Skills } from "../model/Skills";
 
@@ -12,8 +12,8 @@ interface CharacterState {
   bank: ItemData[];
 }
 
-export const hasSkills = (characterSkills: Skills, skills: SkillData[]): boolean => {
-  return skills.map(({ skill, level }) => characterSkills[skill].level >= level).every((b) => b);
+export const hasSkills = (characterSkills: Skills, skills: SkillMap): boolean => {
+  return Array.from(skills).map(([skill, level]) => characterSkills[skill].level >= level).every((b) => b);
 };
 
 export const hasEquipment = (characterEquipment: EquipmentSlots, equipment: TaskEquipmentData[]): boolean => {
@@ -28,6 +28,11 @@ export const hasItems = (playerItems: ItemData[], items: ItemData[], amount: num
     }
     return true;
   }).every((b) => b);
+};
+
+export const getItemFromBank = (playerItems: ItemData[], item: number): ItemData | undefined => {
+  const index = playerItems.find((element) => (item === element.item && element.amount));
+  return index;
 };
 
 export const hasReqs = (character: CharacterState, requirements: TaskRequirements, amount: number): boolean => {

@@ -36,7 +36,7 @@ const selectTask = (taskData: CookingTaskData, taskName: string) => {
   return taskData.tasks.find((task) => task.name === taskName);
 };
 
-export const CookingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
+export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
   const character: CharacterState = {
     name: store.getState().characters.names[playerID],
     skills: store.getState().characters.skills[playerID],
@@ -68,7 +68,7 @@ export const CookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   // todo remove the req items from bank and put it on the
   // todo task object so it can be returned if the task is cancelled
 
-  const findRewardSkill = (skillName: SkillName) => rewards.exp.find((skill) => skill.skill === skillName);
+  const findRewardSkill = (skillName: SkillName) => rewards.exp.find(({ skill }) => skill === skillName);
   const cookingReward = findRewardSkill(SkillNames.cooking);
   if (!cookingReward) {
     console.error(`skillName not found: ${SkillNames.cooking}`);
