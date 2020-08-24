@@ -20,17 +20,12 @@ export const levelToExpLookupTableData = [0, 0, 83, 174, 276, 388, 512, 650, 801
 
 export const levelToExpLookupTable = (lvl: number): number => levelToExpLookupTableData[lvl];
 
-export const srdfghsfghsfghuinshfguihnbasdfgh = {
+const tempData = {
 };
 
 const wtfAmIDoing = () => {
   for (let index = 1; index < 100; index += 1) {
     // @ts-ignore
-    srdfghsfghsfghuinshfguihnbasdfgh[index] = levelToExp(index);
+    tempData[index] = levelToExp(index);
   }
 };
-
-console.log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET");
-
-// wtfAmIDoing();
-// console.log(srdfghsfghsfghuinshfguihnbasdfgh);
