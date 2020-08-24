@@ -14,6 +14,7 @@ import {
   hasReqs, hasItems, hasSkills, getItemFromBank,
 } from "../../util/Requirements";
 import { addMsg } from "../../slices/log";
+import { RewardStore } from "../builders/RewardStore";
 
 interface FishingTaskData {
   tasks: Array<FishingTasks>;
@@ -124,40 +125,13 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
    * * does this for all fish, if caught +5 ticks, if fail +1 tick for every attempt
    */
 
-  type IdMap = Map<number, number>;
-
-  interface NewRewardObject {
-    items: IdMap
-    exp: ExpMap
-  }
-
-  /**
-   * * this is what gets processed by the reducer before becoming state
-   * * it has to turn from whatever format it is into an object
-   */
-  let rewardStore: NewRewardObject = { // todo defo have this as a class or we need this on every task
-    items: new Map([]),
-    exp: new Map([]),
-  };
-  // remove: new Map([])
-
-  // todo move this maybe to new class
-  // eslint-disable-next-line no-shadow
-  const addToReward = (rewardStore: NewRewardObject, rewardToAdd: NewRewardObject): NewRewardObject => {
-    const tempStore = { ...rewardStore };
-    Array.from(rewardToAdd.exp).forEach(([key, amt]) => {
-      rewardStore.exp.set(key, (rewardStore.exp.get(key) ?? 0) + amt);
-    });
-    Array.from(rewardToAdd.items).forEach(([key, amt]) => {
-      rewardStore.items.set(key, (rewardStore.items.get(key) ?? 0) + amt);
-    });
-    return tempStore;
-  };
-
   /**
    * Get initial fishing level
    */
   let fishingLvl = skills.fishing.level;
+
+  const rewardStore = new RewardStore();
+
   console.time("start");
   while (fishCaught < fishToCatch && tick < tickLimit) {
     if (selectedFishSpot.bait && baitAmount === 0) {
@@ -168,14 +142,14 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
     for (let index = 0; index < fishPool.length; index += 1) {
       const fish = fishPool[index];
 
-      if (hasSkills(skills, fish.requirements.skills, rewardStore.exp)) {
+      if (hasSkills(skills, fish.requirements.skills, rewardStore.getExp())) {
         const weight = calculateWeight(fishingLvl, fish.weight1, fish.weight99);
         if (randomRoll(maxWeight) < weight) {
           // Add xp and fish to the reward store
-          rewardStore = addToReward(rewardStore, fish.rewards);
+          rewardStore.addReward(fish.rewards);
 
           // Recalculate fishing level for a potential level-up after a successful catch
-          fishingLvl = expToLevel(skills.fishing.exp + (rewardStore.exp.get("fishing") ?? 0));
+          fishingLvl = expToLevel(skills.fishing.exp + rewardStore.get("fishing"), fishingLvl);
 
           if (fish.name === taskName) {
             fishCaught += 1;
@@ -192,12 +166,12 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
     tick += 5;
   }
 
-  console.table(rewardStore.exp);
-  console.table(rewardStore.items);
+  console.table(rewardStore.getExp());
+  console.table(rewardStore.getItems());
 
   console.timeEnd("start");
 
-  console.log(rewardStore);
+  console.log(rewardStore.getStore());
 
   // todo return the task object for the reducer
 
