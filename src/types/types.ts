@@ -43,8 +43,8 @@ export type ExpReward = {
 };
 
 export interface TaskReward {
-  exp: ExpReward[]
-  items: ItemData[]
+  exp: SkillMap
+  items: Map<number, number>
 }
 
 export interface TaskFail {
@@ -55,7 +55,10 @@ export interface TaskEquipmentData extends ItemData {
   slot: EquipmentSlotName
 }
 
+// Same types but still worth having them with different names
+// since the "number" isn't the same in both (level vs xp)
 export type SkillMap = Map<SkillName, number>;
+export type ExpMap = Map<SkillName, number>;
 
 export interface TaskRequirements {
   // skills: SkillData[]

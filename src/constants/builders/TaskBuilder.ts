@@ -23,8 +23,8 @@ export class TaskBuilder {
       equipment: [],
     };
     this.rewards = {
-      exp: [],
-      items: [],
+      exp: new Map([]),
+      items: new Map([]),
     };
     this.fails = {
       items: [],
@@ -74,7 +74,7 @@ export class TaskBuilder {
    */
 
   rewardExp = (skill: SkillName, amount: number): this => {
-    this.rewards.exp.push({ skill, amount });
+    this.rewards.exp.set(skill, amount);
     return this;
   };
 
@@ -86,7 +86,7 @@ export class TaskBuilder {
 
   rewardItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    this.rewards.items.push({ item: id, amount });
+    this.rewards.items.set(id, amount); // todo maybe add if multiple of same item
     return this;
   };
 

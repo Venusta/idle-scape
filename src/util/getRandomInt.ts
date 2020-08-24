@@ -11,3 +11,9 @@ export function getRandomInt(min: number, max: number): number {
   const tmax = Math.floor(max);
   return Math.floor(Math.random() * (tmax - tmin)) + tmin;
 }
+
+/**
+ * Rolls a number from 0 to max-1
+ * @param max
+ */
+export const randomRoll = (max: number): number => getRandomInt(0, max - 1);

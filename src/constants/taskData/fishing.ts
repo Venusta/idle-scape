@@ -46,6 +46,40 @@ const tasks: FishingTasks[] = [
         .finalise(),
     },
   },
+  {
+    names: ["leaping trout", "leaping salmon", "leaping sturgeon"],
+    tool: { item: nameToId("Small fishing net"), amount: 1 },
+    // bait: nameToId("Feather"),
+    maxWeight: 255,
+    fishingSpot: {
+      "leaping trout": new FishingTaskBuilder({ name: "leaping trout" })
+        .reqSkill(SkillNames.fishing, 48)
+        .rewardExp(SkillNames.fishing, 50)
+        .rewardExp(SkillNames.agility, 5)
+        .rewardExp(SkillNames.strength, 5)
+        .rewardItem("Leaping trout")
+        .weight(32, 192)
+        .finalise(),
+
+      "leaping salmon": new FishingTaskBuilder({ name: "leaping salmon" })
+        .reqSkill(SkillNames.fishing, 58)
+        .rewardExp(SkillNames.fishing, 70)
+        .rewardExp(SkillNames.agility, 6)
+        .rewardExp(SkillNames.strength, 6)
+        .rewardItem("Leaping salmon")
+        .weight(16, 96)
+        .finalise(),
+
+      "leaping sturgeon": new FishingTaskBuilder({ name: "leaping sturgeon" })
+        .reqSkill(SkillNames.fishing, 70)
+        .rewardExp(SkillNames.fishing, 80)
+        .rewardExp(SkillNames.agility, 7)
+        .rewardExp(SkillNames.strength, 7)
+        .rewardItem("Leaping sturgeon")
+        .weight(8, 64)
+        .finalise(),
+    },
+  },
   // {
   //   names: ["salmon", "trout"],
   //   tool: "Small fishing net",

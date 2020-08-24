@@ -1,4 +1,4 @@
-import { ItemData, ExpReward } from "../../types/types";
+import { ItemData, ExpReward, SkillName } from "../../types/types";
 import { nameToId } from "../../util/nameToId";
 
 interface RewardOptions {
@@ -21,9 +21,8 @@ export class RewardBuilder {
    * @param multiplier how many times you give this reward
    */
 
-  rewardExp = (expReward: ExpReward, multiplier: number): this => {
-    const { skill, amount: baseAmount } = expReward;
-    this.exp.push({ skill, amount: baseAmount * multiplier });
+  rewardExp = (skill: SkillName, amount = 0, multiplier: number): this => {
+    this.exp.push({ skill, amount: amount * multiplier });
     return this;
   };
 
@@ -52,14 +51,3 @@ export class RewardBuilder {
     };
   };
 }
-
-const appendTest = (fixed: string) => {
-  return (dynamic: string) => {
-    return fixed + dynamic;
-  };
-};
-
-const hello = appendTest("Hello");
-
-console.log(hello(" world"));
-console.log(hello(" everyone"));

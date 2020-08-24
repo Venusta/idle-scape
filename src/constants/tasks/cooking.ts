@@ -68,9 +68,9 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   // todo remove the req items from bank and put it on the
   // todo task object so it can be returned if the task is cancelled
 
-  const findRewardSkill = (skillName: SkillName) => rewards.exp.find(({ skill }) => skill === skillName);
-  const cookingReward = findRewardSkill(SkillNames.cooking);
-  if (!cookingReward) {
+  // const findRewardSkill = (skillName: SkillName) => rewards.exp.find(({ skill }) => skill === skillName);
+  const cookingXp = rewards.exp.get(SkillNames.cooking);
+  if (!cookingXp) {
     console.error(`skillName not found: ${SkillNames.cooking}`);
     return false;
   }
@@ -80,13 +80,13 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   for (let index = 0; index < amount; index += 1) {
     if (expToLevel(cookingExp) >= stopBurnLevel) {
       cooked += amount - index;
-      cookingExp += cooked * cookingReward.amount;
+      cookingExp += cooked * cookingXp;
       break;
     }
     const rng = getRandomInt(1, 100);
     if (rng > stopBurnLevel - expToLevel(cookingExp)) {
       // console.log(`Level: ${expToLevel(cookingExp)}`);
-      cookingExp += cookingReward.amount;
+      cookingExp += cookingXp;
       cooked += 1;
       // console.log(`${burned}x Burned food! ${rng} < ${stopBurnLevel - cooking.level}`);
     } else {
@@ -95,19 +95,19 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   }
   console.log(`${burned + cooked === amount} ${burned}x burned ${cooked}x cooked food! level: ${expToLevel(cookingExp)}`);
 
-  const reward = new RewardBuilder()
-    .rewardItem(selectedTask.rewards.items[0], cooked)
-    .rewardExp(selectedTask.rewards.exp[0], cooked)
-    .rewardExp({ skill: "construction", amount: 93 }, cooked)
-    .rewardExp({ skill: "smithing", amount: 23 }, cooked)
-    .rewardItem(selectedTask.fails.items[0], amount - cooked)
-    .finalise();
+  // const reward = new RewardBuilder()
+  //   .rewardItem(selectedTask.rewards.items.[0], cooked)
+  //   .rewardExp("cooking", selectedTask.rewards.exp.get("cooking"), cooked)
+  //   // .rewardExp({ skill: "construction", amount: 93 }, cooked)
+  //   // .rewardExp({ skill: "smithing", amount: 23 }, cooked)
+  //   .rewardItem(selectedTask.fails.items[0], amount - cooked)
+  //   .finalise();
 
   const totalDuration = amount * duration * 0.1; // TODO should be 1
 
   // todo return this in the task object
   let taskFinishMsg = `[Test] <orange#${playerName}> finished cooking <green#${amount} ${taskName}s>`;
-  taskFinishMsg += ` and gained <cyan#${cookingReward.amount * cooked}> cooking xp`;
+  taskFinishMsg += ` and gained <cyan#${cookingXp * cooked}> cooking xp`;
   if (expToLevel(cookingExp) > startingLevel) { // todo make this universal maybe
     taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(cookingExp)}>`;
   }
@@ -118,7 +118,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
 
   const msg = new LogMsgBuilder()
     .finished(playerName, "cooking", amount, taskName)
-    .gaining(reward.exp)
+    // .gaining(reward.exp)
     .toString();
   console.log(msg);
 
@@ -135,6 +135,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
     type,
     info,
     skill,
+    //@ts-ignore // TODO FIX THIS
     reward,
   };
 

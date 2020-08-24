@@ -58,7 +58,7 @@ export const App = (): JSX.Element => {
   // }, shallowEqual);
 
   useEffect(() => {
-    const x = fishingTask({ playerID: "3", taskName: "shrimp", amount: 500 });
+    const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount: Infinity });
     console.log(x);
     // const y = fishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
     // console.log(y);

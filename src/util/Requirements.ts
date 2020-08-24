@@ -1,8 +1,9 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  SkillData, TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap,
+  SkillData, TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap, ExpMap,
 } from "../types/types";
+import { expToLevel } from ".";
 import { Skills } from "../model/Skills";
 
 interface CharacterState {
@@ -12,8 +13,8 @@ interface CharacterState {
   bank: ItemData[];
 }
 
-export const hasSkills = (characterSkills: Skills, skills: SkillMap): boolean => {
-  return Array.from(skills).map(([skill, level]) => characterSkills[skill].level >= level).every((b) => b);
+export const hasSkills = (characterSkills: Skills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => {
+  return Array.from(skills).map(([skill, level]) => expToLevel(characterSkills[skill].exp + (gainedExp.get(skill) ?? 0)) >= level).every((b) => b);
 };
 
 export const hasEquipment = (characterEquipment: EquipmentSlots, equipment: TaskEquipmentData[]): boolean => {

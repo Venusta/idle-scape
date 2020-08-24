@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable object-curly-newline */
 import { createSlice } from "@reduxjs/toolkit";
-import { TaskReward, SkillName } from "../types/types";
+import { SkillName, ExpReward, ItemData } from "../types/types";
 
 export type QueuedTask = {
   playerID: string
@@ -41,7 +41,10 @@ export interface TaskDerpThing {
   type: string
   info: TaskInfo
   skill: SkillName
-  reward: TaskReward
+  reward: {
+    exp: ExpReward[]
+    items: ItemData[]
+  }
 }
 export interface TaskPayloadData extends TaskDerpThing {
   when: number

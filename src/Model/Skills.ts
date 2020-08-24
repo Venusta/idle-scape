@@ -38,7 +38,7 @@ export const skills: Skills = {
   cooking: skill(),
   woodcutting: skill(),
   fletching: skill(),
-  fishing: skill(levelToExp(15)),
+  fishing: skill(levelToExp(99)),
   firemaking: skill(),
   crafting: skill(),
   smithing: skill(),

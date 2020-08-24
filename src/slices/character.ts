@@ -3,12 +3,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { charactersInitialState } from "../constants/builders/CharacterBuilder";
 import { addBankToBank, expToLevel } from "../util";
-import { TaskReward, ItemData } from "../types/types";
+import { ItemData, ExpReward } from "../types/types";
 
 interface RewardPayload {
   payload: {
     playerID: string,
-    reward: TaskReward,
+    reward: {
+      items: ItemData[],
+      exp: ExpReward[],
+    },
   }
 }
 

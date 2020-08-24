@@ -60,7 +60,7 @@ export const Skills = ({ id }: SkillsProps): JSX.Element => {
     console.log(`${name} Skills Rendered`);
 
     const itemCount = Object.keys(skills).length;
-    const skillDivs = [];
+    const skillDivs: JSX.Element[] = [];
 
     for (let index = 0; index < itemCount; index += 1) {
       const skillName: string = Object.keys(skills)[index];
