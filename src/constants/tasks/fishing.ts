@@ -1,7 +1,6 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 
-import { TaskDerpThing } from "../../slices/task";
 import { store } from "../../redux-stuff";
 import {
   TaskInputOptions, CharacterState, FishingTask, SkillName,
@@ -14,7 +13,6 @@ import {
 } from "../../util/Requirements";
 import { addMsg } from "../../slices/log";
 import { RewardStore } from "../builders/RewardStore";
-import { SkillNames2 } from "../../types/playground";
 
 interface FishingTaskData {
   tasks: Array<FishingTasks>;
@@ -33,7 +31,7 @@ const calculateWeight = (level: number, low: number, high: number) => {
   return low + ((level - 1) / 98) * (high - low); // divide by total weight to give chance
 };
 
-export const fishingTask = async ({ playerID, taskName, amount }: TaskInputOptions): Promise<TaskDerpThing | false> => {
+export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): false => {
   const character: CharacterState = {
     name: store.getState().characters.names[playerID],
     skills: store.getState().characters.skills[playerID],
@@ -191,7 +189,6 @@ export const fishingTask = async ({ playerID, taskName, amount }: TaskInputOptio
   //   hasSkills2(skills, fishPool[2].requirements.skills, rewardStore.getExp());
   // }
   // console.timeEnd("hasSkills2");
-
 
   // todo return the task object for the reducer
 
