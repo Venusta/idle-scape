@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail,
+  SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail, TaskRewardMap,
 } from "../../types/types";
 import { nameToId } from "../../util/nameToId";
 
@@ -12,7 +12,7 @@ interface TaskBuilderOptions {
 export class TaskBuilder {
   name: string;
   requirements: TaskRequirements;
-  rewards: TaskReward;
+  rewards: TaskRewardMap;
   fails: TaskFail;
 
   constructor(options: TaskBuilderOptions) {

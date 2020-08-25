@@ -13,6 +13,7 @@ import {
 } from "../../util/Requirements";
 import { addMsg } from "../../slices/log";
 import { RewardStore } from "../builders/RewardStore";
+import { TaskDerpThing } from "../../slices/task";
 
 interface FishingTaskData {
   tasks: Array<FishingTasks>;
@@ -31,7 +32,7 @@ const calculateWeight = (level: number, low: number, high: number) => {
   return low + ((level - 1) / 98) * (high - low); // divide by total weight to give chance
 };
 
-export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): false => {
+export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
   const character: CharacterState = {
     name: store.getState().characters.names[playerID],
     skills: store.getState().characters.skills[playerID],
@@ -107,12 +108,12 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): f
    */
   const fishToCatch = amount;
   /**
- ** How many of the target fish we caught, total fish can be higher than this
- */
+   * * How many of the target fish we caught, total fish can be higher than this
+   */
   let fishCaught = 0;
 
   /**
-   ** no more than 6000 ticks (one hour)
+   * * no more than 6000 ticks (one hour)
    */
   const tickLimit = 6000;
   let tick = 0;
@@ -128,10 +129,10 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): f
    * * rolls a random number 0 - maxWeight-1 and checks if it's less than the calculated fish weight
    * * does this for all fish, +5 ticks for every attempt
    */
-  console.time("start");
+  console.time("Fishing Task Simulation");
   while (fishCaught < fishToCatch && tick < tickLimit) {
     if (selectedFishSpot.bait && baitAmount === 0) {
-      console.error("RAN OUT OF BAIT BRAH");
+      console.error("Ran out of bait");
       break;
     }
 
@@ -161,36 +162,27 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): f
     // Increment tick counter by 5 for each catch attempt
     tick += 5;
   }
+  console.timeEnd("Fishing Task Simulation");
 
-  console.table(rewardStore.getExp());
-  console.table(rewardStore.getItems());
+  // todo remove bait
 
-  console.timeEnd("start");
+  const skill = SkillNames.fishing;
+  const type = "fishing";
+  const info = {
+    name: taskName,
+    amount,
+  };
+  const duration = (tick * 600) * 0.001;
+  console.log(`Task should take ${(duration) / 1000} seconds`);
 
-  console.log(rewardStore.getStore());
+  const taskObj = {
+    playerID,
+    duration,
+    type,
+    info,
+    skill,
+    reward: rewardStore.toObject(),
+  };
 
-  // await new Promise(r => setTimeout(r, 2000));
-
-  // console.time("hasSkills1");
-  // for (let index = 0; index < 100000; index += 1) {
-  //   hasSkills(skills, fishPool[2].requirements.skills, rewardStore.getExp());
-  // }
-  // console.timeEnd("hasSkills1");
-
-  // await new Promise((r) => setTimeout(r, 5000));
-  // console.time("hasSkills");
-  // for (let index = 0; index < 100000; index += 1) {
-  //   hasSkills(skills, fishPool[2].requirements.skills, rewardStore.getExp());
-  // }
-  // console.timeEnd("hasSkills");
-  // await new Promise((r) => setTimeout(r, 5000));
-  // console.time("hasSkills2");
-  // for (let index = 0; index < 100000; index += 1) {
-  //   hasSkills2(skills, fishPool[2].requirements.skills, rewardStore.getExp());
-  // }
-  // console.timeEnd("hasSkills2");
-
-  // todo return the task object for the reducer
-
-  return false;
+  return taskObj;
 };

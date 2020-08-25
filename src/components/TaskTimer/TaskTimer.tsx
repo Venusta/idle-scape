@@ -6,6 +6,7 @@ import { v1 as uuid } from "uuid";
 import { RootState, useAppDispatch } from "../../redux-stuff";
 import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
 import { cookingTask } from "../../constants/tasks/cooking";
+import { fishingTask } from "../../constants/tasks/fishing";
 
 export const TaskTimer = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,8 @@ export const TaskTimer = (): JSX.Element => {
          * switch statement here for the task type
         */
         // const x = new CookingTask(player, { playerID, taskName, amount }).start();
-        const x = cookingTask({ playerID, taskName, amount });
+        // const x = cookingTask({ playerID, taskName, amount });
+        const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount });
 
         dispatch(processQueue({ playerID: characterID, task: x }));
         console.log("This should only happen once per task");

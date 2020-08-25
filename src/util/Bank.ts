@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { ItemData } from "../types/types";
+import { ItemData, ItemMap } from "../types/types";
 
 const parseItem = (singleItem: [string, number]): ItemData => {
   const [itemID, amount] = singleItem;
@@ -49,6 +49,17 @@ export const addBankToBank2 = (bank: ItemData[], bankToAdd: ItemData[]): ItemDat
 // const addItemAtIndex = (bank, item, index) => {
 
 // };
+
+// eslint-disable-next-line arrow-body-style
+export const addItemRewardToBank = (bank: ItemData[], itemReward: ItemMap): ItemData[] => {
+  let tempBank = [...bank];
+
+  itemReward.forEach((value, key) => {
+    tempBank = addToItemBank(tempBank, { item: key, amount: value }); // todo temp hack
+  });
+
+  return tempBank;
+};
 
 export const addBankToBank = (bank: ItemData[], bankToAdd: ItemData[]): ItemData[] => {
   let tempBank = [...bank];

@@ -58,10 +58,14 @@ export const App = (): JSX.Element => {
   // }, shallowEqual);
 
   useEffect(() => {
-    const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount: Infinity });
-    console.log(x);
+    // const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount: 20 });
+    // console.log(x);
     // const y = fishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
     // console.log(y);
+
+    dispatch(newTask({
+      playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
+    }));
 
     // nameToId("Abyssal whip");
 

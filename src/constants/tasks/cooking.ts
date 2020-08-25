@@ -69,6 +69,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   // todo task object so it can be returned if the task is cancelled
 
   // const findRewardSkill = (skillName: SkillName) => rewards.exp.find(({ skill }) => skill === skillName);
+  //@ts-ignore
   const cookingXp = rewards.exp.get(SkillNames.cooking);
   if (!cookingXp) {
     console.error(`skillName not found: ${SkillNames.cooking}`);
