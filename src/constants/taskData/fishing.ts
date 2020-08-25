@@ -54,6 +54,8 @@ const tasks: FishingTasks[] = [
     fishingSpot: {
       "leaping trout": new FishingTaskBuilder({ name: "leaping trout" })
         .reqSkill(SkillNames.fishing, 48)
+        .reqSkill(SkillNames.agility, 15)
+        .reqSkill(SkillNames.strength, 15)
         .rewardExp(SkillNames.fishing, 50)
         .rewardExp(SkillNames.agility, 5)
         .rewardExp(SkillNames.strength, 5)

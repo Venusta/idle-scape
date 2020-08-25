@@ -1,20 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 
 import { TaskDerpThing } from "../../slices/task";
 import { store } from "../../redux-stuff";
 import {
-  TaskInputOptions, CharacterState, FishingTask, SkillName, ItemData, ExpReward, SkillMap, ExpMap,
+  TaskInputOptions, CharacterState, FishingTask, SkillName,
 } from "../../types/types";
 import { SkillNames } from "../data";
 import { fishing, FishingTasks } from "../taskData/fishing";
 import { expToLevel, randomRoll } from "../../util";
 import {
-  hasReqs, hasItems, hasSkills, getItemFromBank,
+  hasItems, hasSkills, getItemFromBank,
 } from "../../util/Requirements";
 import { addMsg } from "../../slices/log";
 import { RewardStore } from "../builders/RewardStore";
+import { SkillNames2 } from "../../types/playground";
 
 interface FishingTaskData {
   tasks: Array<FishingTasks>;
@@ -33,7 +33,7 @@ const calculateWeight = (level: number, low: number, high: number) => {
   return low + ((level - 1) / 98) * (high - low); // divide by total weight to give chance
 };
 
-export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
+export const fishingTask = async ({ playerID, taskName, amount }: TaskInputOptions): Promise<TaskDerpThing | false> => {
   const character: CharacterState = {
     name: store.getState().characters.names[playerID],
     skills: store.getState().characters.skills[playerID],
@@ -65,7 +65,7 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   if (!hasSkills(skills, fishingSpot[taskName].requirements.skills)) {
     console.log(`${playerName}'s fishing level is too low for ${taskName}`);
     store.dispatch(addMsg({ playerID, msg: `${playerName}'s fishing level is too low for ${taskName}` }));
-    return false;
+    // return false;
   }
 
   /**
@@ -95,22 +95,21 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   const getSkillReqLevel = (map: Map<SkillName, number>, skill: SkillName): number => map.get(skill) || 0;
 
   /**
-   * * the fish the character has reqs for, should be re-checked if the character levels up
-   * * sorted by level, highest first
+   * * Converts the fishingSpot Object to an Array and then sorts them from high to low based on the fishing level
    */
-  const fishPool = names.reduce((accum: FishingTask[], fish) => { // todo recalc on level maybe
-    // if (hasSkills(character.skills, fishingSpot[fish].requirements.skills)) {
-    return [...accum, fishingSpot[fish]];
-    // }
-    // return accum;
-  }, []).sort((a, b) => getSkillReqLevel(a.requirements.skills, "fishing") + getSkillReqLevel(b.requirements.skills, "fishing"));
+  const fishPool = names
+    .reduce((accum: FishingTask[], fish) => [...accum, fishingSpot[fish]], [])
+    .sort(
+      (a, b) => getSkillReqLevel(a.requirements.skills, "fishing")
+        + getSkillReqLevel(b.requirements.skills, "fishing"),
+    );
 
   /**
-   * * task amount or bait amount, whichever is lower
+   * * Target amount of the chosen fish to catch
    */
   const fishToCatch = amount;
   /**
- ** how many of the task fish we caught, total fish can be higher than this
+ ** How many of the target fish we caught, total fish can be higher than this
  */
   let fishCaught = 0;
 
@@ -121,17 +120,16 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   let tick = 0;
 
   /**
-   * * rolls a random number 0 - maxWeight-1 and checks if it's less than the calculated fish weight
-   * * does this for all fish, if caught +5 ticks, if fail +1 tick for every attempt
-   */
-
-  /**
    * Get initial fishing level
    */
   let fishingLvl = skills.fishing.level;
 
   const rewardStore = new RewardStore();
 
+  /**
+   * * rolls a random number 0 - maxWeight-1 and checks if it's less than the calculated fish weight
+   * * does this for all fish, +5 ticks for every attempt
+   */
   console.time("start");
   while (fishCaught < fishToCatch && tick < tickLimit) {
     if (selectedFishSpot.bait && baitAmount === 0) {
@@ -172,6 +170,28 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   console.timeEnd("start");
 
   console.log(rewardStore.getStore());
+
+  // await new Promise(r => setTimeout(r, 2000));
+
+  // console.time("hasSkills1");
+  // for (let index = 0; index < 100000; index += 1) {
+  //   hasSkills(skills, fishPool[2].requirements.skills, rewardStore.getExp());
+  // }
+  // console.timeEnd("hasSkills1");
+
+  // await new Promise((r) => setTimeout(r, 5000));
+  // console.time("hasSkills");
+  // for (let index = 0; index < 100000; index += 1) {
+  //   hasSkills(skills, fishPool[2].requirements.skills, rewardStore.getExp());
+  // }
+  // console.timeEnd("hasSkills");
+  // await new Promise((r) => setTimeout(r, 5000));
+  // console.time("hasSkills2");
+  // for (let index = 0; index < 100000; index += 1) {
+  //   hasSkills2(skills, fishPool[2].requirements.skills, rewardStore.getExp());
+  // }
+  // console.timeEnd("hasSkills2");
+
 
   // todo return the task object for the reducer
 

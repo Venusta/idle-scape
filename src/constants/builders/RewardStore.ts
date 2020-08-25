@@ -7,7 +7,9 @@ interface RewardObject {
   items: IdMap
   exp: ExpMap
 }
-
+/**
+ * Reward data that gets passed to the reducer
+ */
 export class RewardStore {
   private items: IdMap;
   private exp: ExpMap;
