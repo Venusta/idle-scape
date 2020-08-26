@@ -14,7 +14,7 @@
 // }
 
 export interface TaskInputOptions {
-  playerID: string;
+  characterId: string;
   taskName: string;
   amount: number
 }

@@ -36,16 +36,16 @@ const selectTask = (taskData: CookingTaskData, taskName: string) => {
   return taskData.tasks.find((task) => task.name === taskName);
 };
 
-export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
+export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
   const character: CharacterState = {
-    name: store.getState().characters.names[playerID],
-    skills: store.getState().characters.skills[playerID],
-    equipment: store.getState().characters.equipment[playerID],
-    bank: store.getState().characters.banks[playerID],
+    name: store.getState().characters.names[characterId],
+    skills: store.getState().characters.skills[characterId],
+    equipment: store.getState().characters.equipment[characterId],
+    bank: store.getState().characters.banks[characterId],
   };
 
   const selectedTask = selectTask(cooking, taskName);
-  const { name: playerName, skills } = character;
+  const { name: characterName, skills } = character;
 
   const startingLevel = expToLevel(skills.cooking.exp);
   let cookingExp = skills.cooking.exp;
@@ -62,8 +62,8 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   if (!hasReqs(character, requirements, amount)) { // todo get req msg
     console.log(requirements);
 
-    console.log(`${playerName} sucks and misses reqs for ${taskName}`);
-    store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${taskName}` }));
+    console.log(`${characterName} sucks and misses reqs for ${taskName}`);
+    store.dispatch(addMsg({ characterId, msg: `${characterName} sucks and misses reqs for ${taskName}` }));
 
     return false;
   }
@@ -104,7 +104,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   const totalDuration = amount * duration * 0.1; // TODO should be 1
 
   // todo return this in the task object
-  let taskFinishMsg = `[Test] <orange#${playerName}> finished cooking <green#${amount} ${taskName}s>`;
+  let taskFinishMsg = `[Test] <orange#${characterName}> finished cooking <green#${amount} ${taskName}s>`;
   taskFinishMsg += ` and gained <cyan#${cookingXp * cooked}> cooking xp`;
   if (expToLevel(cookingExp) > startingLevel) { // todo make this universal maybe
     taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(cookingExp)}>`;
@@ -112,10 +112,10 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   taskFinishMsg += ".";
   // todo build the final string for the task complete, calc the level up and xp gain internally so we can display it from one place
   console.log(taskFinishMsg);
-  store.dispatch(addMsg({ playerID, msg: taskFinishMsg }));
+  store.dispatch(addMsg({ characterId, msg: taskFinishMsg }));
 
   const msg = new LogMsgBuilder()
-    .finished(playerName, "cooking", amount, taskName)
+    .finished(characterName, "cooking", amount, taskName)
     // .gaining(reward.exp)
     .toString();
   console.log(msg);
@@ -128,7 +128,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   };
 
   const taskObj = {
-    playerID,
+    characterId,
     duration: totalDuration,
     type,
     info,

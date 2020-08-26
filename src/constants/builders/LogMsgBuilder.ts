@@ -7,8 +7,8 @@ export class LogMsgBuilder {
     this.msg = "";
   }
 
-  finished = (playerName: string, action: string, amount: number, name: string): this => {
-    this.msg = this.msg.concat(`<orange#${playerName}> finished ${action} <green#${amount} ${name}s>. `);
+  finished = (characterName: string, action: string, amount: number, name: string): this => {
+    this.msg = this.msg.concat(`<orange#${characterName}> finished ${action} <green#${amount} ${name}s>. `);
     return this;
   };
 

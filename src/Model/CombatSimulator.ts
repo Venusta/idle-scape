@@ -27,9 +27,9 @@ export interface CombatStats {
 }
 
 interface CombatBonuses {
-  playerStrengthBonus: number;
-  playerAttackBonus: number;
-  playerDefenceBonus: number;
+  characterStrengthBonus: number;
+  characterAttackBonus: number;
+  characterDefenceBonus: number;
   monsterAttackBonus: number;
   monsterDefenceBonus: number;
 }
@@ -77,8 +77,8 @@ const addAttackStance = (attackStyle: AttackStyle, attackType: AttackType, comba
   };
 };
 
-const addToEffectiveLevels = (playerEffectiveLevels: EffectiveLevels, amount = 0) => {
-  return Object.entries(playerEffectiveLevels).reduce((accum, [key, value]) => {
+const addToEffectiveLevels = (characterEffectiveLevels: EffectiveLevels, amount = 0) => {
+  return Object.entries(characterEffectiveLevels).reduce((accum, [key, value]) => {
     if (key === "hitpoints") {
       return { ...accum, [key]: value };
     }
@@ -109,13 +109,13 @@ export class CombatSimulator {
 
   constructor(
     monsterID: number,
-    playerID: string,
+    characterId: string,
     timeLimit: number,
     attackStyle: AttackStyle,
     supplies: any,
   ) {
-    this.skills = store.getState().characters.skills[playerID];
-    this.equipment = store.getState().characters.equipment[playerID];
+    this.skills = store.getState().characters.skills[characterId];
+    this.equipment = store.getState().characters.equipment[characterId];
     this.timeLimit = timeLimit;
     this.supplies = supplies;
 
@@ -145,21 +145,21 @@ export class CombatSimulator {
     return Math.floor(0.5 + (effectiveLevel * (equipmentBonus + 64)) / 640);
   };
 
-  public calculateEffectiveLevelsPlayer = (): EffectiveLevels => {
+  public calculateEffectiveLevelsCharacter = (): EffectiveLevels => {
     const boostedCombatStats = getBoostedCombatStats(this.skills);
     console.log(boostedCombatStats);
 
     // TODO: Handle prayer bonus here
 
-    let playerEffectiveLevels = addAttackStance(this.attackStyle, this.attackType, boostedCombatStats);
-    console.log(playerEffectiveLevels);
+    let characterEffectiveLevels = addAttackStance(this.attackStyle, this.attackType, boostedCombatStats);
+    console.log(characterEffectiveLevels);
 
-    playerEffectiveLevels = addToEffectiveLevels(playerEffectiveLevels, 8);
-    console.log(playerEffectiveLevels);
+    characterEffectiveLevels = addToEffectiveLevels(characterEffectiveLevels, 8);
+    console.log(characterEffectiveLevels);
 
     // TODO: Handle set bonuses here
 
-    return playerEffectiveLevels;
+    return characterEffectiveLevels;
   };
 
   private calculateEffectiveLevelsMonster = (): EffectiveLevels => {
@@ -192,100 +192,100 @@ export class CombatSimulator {
     return 0;
   };
 
-  private getRelevantCombatBonuses = (playerAttackType: AttackType, monsterAttackType: AttackType, equipmentBonuses: EquipmentBonuses): CombatBonuses => {
+  private getRelevantCombatBonuses = (characterAttackType: AttackType, monsterAttackType: AttackType, equipmentBonuses: EquipmentBonuses): CombatBonuses => {
     const combatBonuses = {
-      playerStrengthBonus: 0,
-      playerAttackBonus: 0,
-      playerDefenceBonus: 0,
+      characterStrengthBonus: 0,
+      characterAttackBonus: 0,
+      characterDefenceBonus: 0,
       monsterAttackBonus: 0,
       monsterDefenceBonus: 0,
     };
 
-    // Figure out player attack & strength bonus and monster defence bonus based on player attack type
-    switch (playerAttackType) {
+    // Figure out character attack & strength bonus and monster defence bonus based on character attack type
+    switch (characterAttackType) {
       case AttackType.Ranged:
-        combatBonuses.playerAttackBonus = equipmentBonuses.attack_ranged;
-        combatBonuses.playerStrengthBonus = equipmentBonuses.ranged_strength;
+        combatBonuses.characterAttackBonus = equipmentBonuses.attack_ranged;
+        combatBonuses.characterStrengthBonus = equipmentBonuses.ranged_strength;
         combatBonuses.monsterDefenceBonus = this.monster.data.defenceRanged;
         break;
       case AttackType.Magic:
-        combatBonuses.playerAttackBonus = equipmentBonuses.attack_magic;
-        combatBonuses.playerStrengthBonus = equipmentBonuses.magic_damage;
+        combatBonuses.characterAttackBonus = equipmentBonuses.attack_magic;
+        combatBonuses.characterStrengthBonus = equipmentBonuses.magic_damage;
         combatBonuses.monsterDefenceBonus = this.monster.data.defenceMagic;
         break;
       case AttackType.Crush:
-        combatBonuses.playerAttackBonus = equipmentBonuses.attack_crush;
-        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.characterAttackBonus = equipmentBonuses.attack_crush;
+        combatBonuses.characterStrengthBonus = equipmentBonuses.melee_strength;
         combatBonuses.monsterDefenceBonus = this.monster.data.defenceCrush;
         break;
       case AttackType.Slash:
-        combatBonuses.playerAttackBonus = equipmentBonuses.attack_slash;
-        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.characterAttackBonus = equipmentBonuses.attack_slash;
+        combatBonuses.characterStrengthBonus = equipmentBonuses.melee_strength;
         combatBonuses.monsterDefenceBonus = this.monster.data.defenceSlash;
         break;
       case AttackType.Stab:
-        combatBonuses.playerAttackBonus = equipmentBonuses.attack_stab;
-        combatBonuses.playerStrengthBonus = equipmentBonuses.melee_strength;
+        combatBonuses.characterAttackBonus = equipmentBonuses.attack_stab;
+        combatBonuses.characterStrengthBonus = equipmentBonuses.melee_strength;
         combatBonuses.monsterDefenceBonus = this.monster.data.defenceStab;
         break;
       default:
         break;
     }
 
-    // Figure out monster attack bonus and player defence bonus based on monster attack type
+    // Figure out monster attack bonus and character defence bonus based on monster attack type
     switch (monsterAttackType) {
       case AttackType.Ranged:
         combatBonuses.monsterAttackBonus = this.monster.data.attackRanged;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_ranged;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_ranged;
         break;
       case AttackType.Magic:
         combatBonuses.monsterAttackBonus = this.monster.data.attackMagic;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_magic;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_magic;
         break;
       case AttackType.Crush:
         combatBonuses.monsterAttackBonus = this.monster.data.attackCrush;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_crush;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_crush;
         break;
       case AttackType.Slash:
         combatBonuses.monsterAttackBonus = this.monster.data.attackSlash;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_slash;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_slash;
         break;
       case AttackType.Stab:
         combatBonuses.monsterAttackBonus = this.monster.data.attackStab;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_stab;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_stab;
         break;
       default:
         // So we need to think about what to do when monster attack type is 'melee'
         // I guess just default to slash for now, probably fine forever tbh
         combatBonuses.monsterAttackBonus = this.monster.data.attackSlash;
-        combatBonuses.playerDefenceBonus = equipmentBonuses.defence_slash;
+        combatBonuses.characterDefenceBonus = equipmentBonuses.defence_slash;
         break;
     }
 
     return combatBonuses;
   };
 
-  private getDamageAndAccuracyLevels = (playerAttackType: AttackType, playerEffectiveLevels: EffectiveLevels): { damage: number, accuracy: number } => {
+  private getDamageAndAccuracyLevels = (characterAttackType: AttackType, characterEffectiveLevels: EffectiveLevels): { damage: number, accuracy: number } => {
     const relevantDamageAndAccuracyLevels = {
       damage: 0,
       accuracy: 0,
     };
 
-    switch (playerAttackType) {
+    switch (characterAttackType) {
       case AttackType.Ranged:
-        // Ranged: accuracy and damage both scale with the player's ranged level
-        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.ranged;
-        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.ranged;
+        // Ranged: accuracy and damage both scale with the character's ranged level
+        relevantDamageAndAccuracyLevels.damage = characterEffectiveLevels.ranged;
+        relevantDamageAndAccuracyLevels.accuracy = characterEffectiveLevels.ranged;
         break;
       case AttackType.Magic:
-        // Magic: accuracy and damage both scale with the player's magic level (probably only for fucking trident)
-        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.magic;
-        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.magic;
+        // Magic: accuracy and damage both scale with the character's magic level (probably only for fucking trident)
+        relevantDamageAndAccuracyLevels.damage = characterEffectiveLevels.magic;
+        relevantDamageAndAccuracyLevels.accuracy = characterEffectiveLevels.magic;
         break;
       default:
-        // Melee: accuracy scales with player's attack level, damage with player's strength level
-        relevantDamageAndAccuracyLevels.damage = playerEffectiveLevels.strength;
-        relevantDamageAndAccuracyLevels.accuracy = playerEffectiveLevels.attack;
+        // Melee: accuracy scales with character's attack level, damage with character's strength level
+        relevantDamageAndAccuracyLevels.damage = characterEffectiveLevels.strength;
+        relevantDamageAndAccuracyLevels.accuracy = characterEffectiveLevels.attack;
         break;
     }
 
@@ -293,52 +293,50 @@ export class CombatSimulator {
   };
 
   public simulate = (): { killcount: number; time: number } => {
-    const playerEffectiveLevels = this.calculateEffectiveLevelsPlayer();
+    const characterEffectiveLevels = this.calculateEffectiveLevelsCharacter();
     const monsterEffectiveLevels = this.calculateEffectiveLevelsMonster();
 
     const {
-      damage: playerEffectiveDamageLevel,
-      accuracy: playerEffectiveAccuracyLevel,
-    } = this.getDamageAndAccuracyLevels(this.attackType, playerEffectiveLevels);
+      damage: characterEffectiveDamageLevel,
+      accuracy: characterEffectiveAccuracyLevel,
+    } = this.getDamageAndAccuracyLevels(this.attackType, characterEffectiveLevels);
 
-    const playerEquipmentBonuses = new Equipment(this.equipment).equipmentBonuses;
+    const characterEquipmentBonuses = new Equipment(this.equipment).equipmentBonuses;
 
     const {
-      playerStrengthBonus,
-      playerAttackBonus,
-      playerDefenceBonus,
+      characterStrengthBonus,
+      characterAttackBonus,
+      characterDefenceBonus,
       monsterAttackBonus,
       monsterDefenceBonus,
-    } = this.getRelevantCombatBonuses(this.attackType, this.monster.data.attackType[0], playerEquipmentBonuses);
+    } = this.getRelevantCombatBonuses(this.attackType, this.monster.data.attackType[0], characterEquipmentBonuses);
 
     const monsterMaxAttackRoll = this.calculateMaxRoll(monsterEffectiveLevels.attack, monsterAttackBonus);
     const monsterMaxDefenceRoll = this.calculateMaxRoll(monsterEffectiveLevels.defence, monsterDefenceBonus);
-    const playerMaxAttackRoll = this.calculateMaxRoll(playerEffectiveAccuracyLevel, playerAttackBonus);
-    const playerMaxDefenceRoll = this.calculateMaxRoll(playerEffectiveLevels.defence, playerDefenceBonus);
+    const characterMaxAttackRoll = this.calculateMaxRoll(characterEffectiveAccuracyLevel, characterAttackBonus);
+    const characterMaxDefenceRoll = this.calculateMaxRoll(characterEffectiveLevels.defence, characterDefenceBonus);
 
-    const playerMaxHit = this.calculateMaxHit(playerEffectiveDamageLevel, playerStrengthBonus);
+    const characterMaxHit = this.calculateMaxHit(characterEffectiveDamageLevel, characterStrengthBonus);
     const monsterMaxHit = this.monster.data.maxHit;
 
-    console.log(`Player max hit: ${playerMaxHit}`);
+    console.log(`Character max hit: ${characterMaxHit}`);
     console.log(`Monster max hit: ${monsterMaxHit}`);
 
-    const monsterAccuracy = this.calculateAccuracy(monsterMaxAttackRoll, playerMaxDefenceRoll);
-    const playerAccuracy = this.calculateAccuracy(playerMaxAttackRoll, monsterMaxDefenceRoll);
+    const monsterAccuracy = this.calculateAccuracy(monsterMaxAttackRoll, characterMaxDefenceRoll);
+    const characterAccuracy = this.calculateAccuracy(characterMaxAttackRoll, monsterMaxDefenceRoll);
 
-    console.log(`Player accuracy: ${playerAccuracy}`);
+    console.log(`Character accuracy: ${characterAccuracy}`);
     console.log(`Monster accuracy: ${monsterAccuracy}`);
 
-    let playerHitpoints = this.skills.hitpoints.level + this.skills.hitpoints.boost;
+    let characterHitpoints = this.skills.hitpoints.level + this.skills.hitpoints.boost;
     let monsterHitpoints = this.monster.data.hitpoints;
     let killcount = 0;
     let time = 0; // In in-game ticks (0.6s per tick)
-    let playerAttackCountdown = 0;
+    let characterAttackCountdown = 0;
     let monsterAttackCountdown = 2;
-    const playerEatThreshold = playerHitpoints - 20 - this.skills.hitpoints.boost; // TODO: determine number from how much the food heals
+    const characterEatThreshold = characterHitpoints - 20 - this.skills.hitpoints.boost; // TODO: determine number from how much the food heals
 
     let saveMyPc = 0;
-
-    const gameTick = 600;
 
     while (true) {
       saveMyPc += 1;
@@ -351,27 +349,27 @@ export class CombatSimulator {
         break;
       }
 
-      if (playerHitpoints < playerEatThreshold) {
-        playerHitpoints += 20; // TODO: replace 20 with actual healing value of food in this.supplies
+      if (characterHitpoints < characterEatThreshold) {
+        characterHitpoints += 20; // TODO: replace 20 with actual healing value of food in this.supplies
         // remove 1 food from supplies
-        playerAttackCountdown += 3; // 3 tick delay after eating food
+        characterAttackCountdown += 3; // 3 tick delay after eating food
       }
 
-      if (playerAttackCountdown <= 0) {
-        monsterHitpoints -= this.rollHit(playerAccuracy, playerMaxHit);
+      if (characterAttackCountdown <= 0) {
+        monsterHitpoints -= this.rollHit(characterAccuracy, characterMaxHit);
         if (monsterHitpoints <= 0) {
           // ded monster
           killcount += 1;
           monsterHitpoints = this.monster.data.hitpoints;
         }
-        playerAttackCountdown = this.attackSpeed;
+        characterAttackCountdown = this.attackSpeed;
       }
 
       if (monsterAttackCountdown <= 0) {
-        playerHitpoints -= this.rollHit(monsterAccuracy, monsterMaxHit);
-        if (playerHitpoints <= 0) {
-          // ded player
-          console.log("Player died, returning.");
+        characterHitpoints -= this.rollHit(monsterAccuracy, monsterMaxHit);
+        if (characterHitpoints <= 0) {
+          // ded character
+          console.log("Character died, returning.");
           break;
         }
         monsterAttackCountdown = this.monster.data.attackSpeed;
@@ -381,7 +379,7 @@ export class CombatSimulator {
       time += 1;
 
       // Decrement attack cooldown counters
-      playerAttackCountdown -= 1;
+      characterAttackCountdown -= 1;
       monsterAttackCountdown -= 1;
     }
 

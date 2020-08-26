@@ -53,11 +53,11 @@ const twoHandedSlotData = rawTwoHandedSlotData as { [id: string]: MinifiedItemDa
 const stanceData = rawStanceData as { [id: string]: WeaponStance[] };
 
 export class Equipment {
-  private playerEquipment: EquipmentSlots;
+  private characterEquipment: EquipmentSlots;
   public equipmentBonuses: EquipmentBonuses;
 
   constructor(equipment: EquipmentSlots) {
-    this.playerEquipment = equipment;
+    this.characterEquipment = equipment;
     this.equipmentBonuses = this.calculateEquipmentBonuses();
   }
 
@@ -79,7 +79,7 @@ export class Equipment {
       prayer: 0,
     };
 
-    Object.entries(this.playerEquipment).forEach(([slot, itemID]: [string, number]) => {
+    Object.entries(this.characterEquipment).forEach(([slot, itemID]: [string, number]) => {
       const slotItemData = this.getItemDataForSlot(slot as EquipmentSlotNames);
       if (slotItemData[itemID] === undefined) return;
 
@@ -128,7 +128,7 @@ export class Equipment {
   };
 
   public getAttackType = (attackStyle: AttackStyle): AttackType => {
-    const weaponID = this.playerEquipment[EquipmentSlotNames.weapon];
+    const weaponID = this.characterEquipment[EquipmentSlotNames.weapon];
     const weaponData = weaponSlotData[weaponID].weapon;
     const weaponType = weaponData?.weapon_type;
 
@@ -151,7 +151,7 @@ export class Equipment {
   };
 
   public getAttackSpeed = (attackStyle: AttackStyle): number => {
-    const weaponID = this.playerEquipment[EquipmentSlotNames.weapon];
+    const weaponID = this.characterEquipment[EquipmentSlotNames.weapon];
     const weaponData = weaponSlotData[weaponID].weapon;
     const attackSpeed = weaponData?.attack_speed;
 

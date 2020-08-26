@@ -95,7 +95,7 @@ export const removeFromItemBank = (bank: ItemData[], itemToBeRemoved: ItemData):
       tempBank.splice(index, 1);
     }
   } else {
-    console.error(`Item not found in player bank: ${itemToBeRemoved.item}`);
+    console.error(`Item not found in character bank: ${itemToBeRemoved.item}`);
   }
 
   return tempBank;

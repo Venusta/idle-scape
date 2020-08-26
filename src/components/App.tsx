@@ -19,13 +19,12 @@ import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
 import { Banks } from "./Bank/Banks";
 import { Equipment } from "./Equipment/Equipment";
-import { fishingTask } from "../constants/tasks/fishing";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
-  const { playerID } = useParams<{playerID: string}>();
+  const { characterId } = useParams<{characterId: string}>();
 
-  if (ids[playerID] === undefined) {
+  if (ids[characterId] === undefined) {
     return (
       <Redirect
         to={{
@@ -38,9 +37,9 @@ const SingleCharacterView = () => {
   return (
     <div className="reeee">
       <TaskList />
-      <Bank id={playerID} />
+      <Bank id={characterId} />
       <Equipment />
-      <Skills id={playerID} />
+      <Skills id={characterId} />
     </div>
   );
 };
@@ -62,14 +61,14 @@ export const App = (): JSX.Element => {
     // console.log(x);
 
     dispatch(newTask({
-      playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
+      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
     }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
     // }));
 
     dispatch(newTask({
-      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
@@ -98,7 +97,7 @@ export const App = (): JSX.Element => {
               <Banks />
             </div>
           </Route>
-          <Route path="/player/:playerID">
+          <Route path="/character/:characterId">
             <SingleCharacterView />
           </Route>
           <Route>

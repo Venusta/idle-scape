@@ -24,7 +24,7 @@ export const gainExp = (skillData: Skill, amount: number): Skill => {
   return { ...skillData, exp: newExp, level: expToLevel(newExp) };
 };
 
-export const decide = (payload: { playerID: number; duration: number; skill: string; expReward: number; }): void => {
+export const decide = (payload: { characterId: number; duration: number; skill: string; expReward: number; }): void => {
   console.log(payload);
   console.log("yeeeeeeeeet");
 };

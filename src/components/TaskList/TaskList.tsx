@@ -9,7 +9,7 @@ import { NameState } from "../../constants/builders/CharacterBuilder";
 import { QueuedTask, TaskState } from "../../slices/task";
 
 interface TaskData extends QueuedTask {
-  playerName: string
+  characterName: string
   classes: string
 }
 

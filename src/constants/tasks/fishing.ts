@@ -32,14 +32,14 @@ const calculateWeight = (level: number, low: number, high: number) => {
   return low + ((level - 1) / 98) * (high - low); // divide by total weight to give chance
 };
 
-export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
+export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
   const character: CharacterState = {
-    name: store.getState().characters.names[playerID],
-    skills: store.getState().characters.skills[playerID],
-    equipment: store.getState().characters.equipment[playerID],
-    bank: store.getState().characters.banks[playerID],
+    name: store.getState().characters.names[characterId],
+    skills: store.getState().characters.skills[characterId],
+    equipment: store.getState().characters.equipment[characterId],
+    bank: store.getState().characters.banks[characterId],
   };
-  const { name: playerName, skills, bank } = character;
+  const { name: characterName, skills, bank } = character;
 
   /**
    * * select the fishing spot
@@ -62,8 +62,8 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
    * * check if the character has reqs for the chosen fish from the fishing spot
    */
   if (!hasSkills(skills, fishingSpot[taskName].requirements.skills)) {
-    console.log(`${playerName}'s fishing level is too low for ${taskName}`);
-    store.dispatch(addMsg({ playerID, msg: `${playerName}'s fishing level is too low for ${taskName}` }));
+    console.log(`${characterName}'s fishing level is too low for ${taskName}`);
+    store.dispatch(addMsg({ characterId, msg: `${characterName}'s fishing level is too low for ${taskName}` }));
     // return false;
   }
 
@@ -81,7 +81,7 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   if (selectedFishSpot.bait) {
     baitAmount = getItemFromBank(bank, selectedFishSpot.bait)?.amount ?? 0;
     if (baitAmount === 0) { // id to name for msg
-      store.dispatch(addMsg({ playerID, msg: `${playerName} doesn't have any ${selectedFishSpot.bait} for ${taskName}` }));
+      store.dispatch(addMsg({ characterId, msg: `${characterName} doesn't have any ${selectedFishSpot.bait} for ${taskName}` }));
       return false;
     }
   }
@@ -176,7 +176,7 @@ export const fishingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   console.log(`Task should take ${(duration) / 1000} seconds`);
 
   const taskObj = {
-    playerID,
+    characterId,
     duration,
     type,
     info,

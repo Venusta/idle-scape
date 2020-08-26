@@ -18,12 +18,12 @@ type Derp = LogPayload | TaskPayloadData;
 }
 */
 
-export const format = (type: string, playerName: string, payload: LogPayload): string => {
+export const format = (type: string, characterName: string, payload: LogPayload): string => {
   if (type === "QueuedTask") {
     const {
       taskType, taskName, amount,
     } = payload;
-    return `<orange#${playerName}> queued a ${taskType} task of <green#${amount}x ${taskName}s>`;
+    return `<orange#${characterName}> queued a ${taskType} task of <green#${amount}x ${taskName}s>`;
   }
   if (type === "CompletedTask") {
     const { info: { amount: taskAmount, name }, reward: { exp }, type: taskType } = payload;
@@ -37,7 +37,7 @@ export const format = (type: string, playerName: string, payload: LogPayload): s
       });
     }
 
-    return `<orange#${playerName}> finished their ${taskType} task of <green#${taskAmount}x ${name}s> ${expMsg.trim().slice(0, -1)} exp`;
+    return `<orange#${characterName}> finished their ${taskType} task of <green#${taskAmount}x ${name}s> ${expMsg.trim().slice(0, -1)} exp`;
   }
   if (type === "None") {
     return payload.msg;

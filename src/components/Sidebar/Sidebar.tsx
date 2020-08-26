@@ -13,12 +13,12 @@ export const CharacterPanel = (): JSX.Element => {
 
   const MakeList = () => {
     const sortedTaskData: Array<JSX.Element> = [];
-    Object.entries(names).forEach(([playerID, name]) => {
+    Object.entries(names).forEach(([characterId, name]) => {
       sortedTaskData.push(
         <Link
-          key={playerID}
-          className={`sidebar-item item-bubble selected-button ${location.pathname === `/player/${playerID}` ? "selected" : ""}`}
-          to={`/player/${playerID}`}
+          key={characterId}
+          className={`sidebar-item item-bubble selected-button ${location.pathname === `/character/${characterId}` ? "selected" : ""}`}
+          to={`/character/${characterId}`}
         >
           {name}
         </Link>,

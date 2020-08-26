@@ -29,11 +29,11 @@ export const TaskTimer = (): JSX.Element => {
         */
         switch (taskType) {
           case "cooking": {
-            dispatch(processQueue({ playerID: characterId, task: cookingTask(task) }));
+            dispatch(processQueue({ characterId, task: cookingTask(task) }));
             break;
           }
           case "fishing": {
-            dispatch(processQueue({ playerID: characterId, task: fishingTask(task) }));
+            dispatch(processQueue({ characterId, task: fishingTask(task) }));
             break;
           }
           default:

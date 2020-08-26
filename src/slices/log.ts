@@ -3,7 +3,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
-  playerID: string;
+  characterId: string;
   msg: string;
 }
 
@@ -22,13 +22,13 @@ export const logSlice = createSlice({
   name: "log",
   initialState,
   reducers: {
-    addMsg: ({ items }, { payload: { playerID, msg } }: {payload: InitialState }) => {
+    addMsg: ({ items }, { payload: { characterId, msg } }: {payload: InitialState }) => {
       if (items.length > 100) items.shift(); // 100 entires should be enough
 
       // this reducer should probably recieve the already built string
       // no idea how to handle this shit, save me please
-      // const stringBuilder = `${when} player: ${playerID} finished ${type} ${amount} ${name} and gained ${reward.exp[0].amount} ${reward.exp[0].skill} exp`;
-      items.push({ playerID, msg });
+      // const stringBuilder = `${when} player: ${characterId} finished ${type} ${amount} ${name} and gained ${reward.exp[0].amount} ${reward.exp[0].skill} exp`;
+      items.push({ characterId, msg });
     },
   },
 });

@@ -27,7 +27,7 @@ export const Skill: React.FC<ItemProps> = ({ skillName, exp }) => {
   };
   return (
     <div
-      className="player-skill"
+      className="character-skill"
       title={`${skillName} Click me!`}
       onClick={() => handleClick()}
     >
@@ -41,12 +41,12 @@ interface SkillsProps {
 }
 
 export const Skills = ({ id }: SkillsProps): JSX.Element => {
-  const playerData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
+  const characterData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
     name: state.characters.names[id],
     skills: state.characters.skills[id],
   }), shallowEqual);
 
-  const { name, skills } = playerData;
+  const { name, skills } = characterData;
 
   const renderSkill = (skillName: string, exp: number): JSX.Element => (
     <Skill

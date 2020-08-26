@@ -36,9 +36,9 @@ export const hasEquipment = (characterEquipment: EquipmentSlots, equipment: Task
   return equipment.map(({ item, slot }) => characterEquipment[slot] === item).every((b) => b);
 };
 
-export const hasItems = (playerItems: ItemData[], items: ItemData[], amount: number): boolean => {
+export const hasItems = (characterItems: ItemData[], items: ItemData[], amount: number): boolean => {
   return items.map(({ item, amount: amt }) => {
-    const index = playerItems.find((element) => (item === element.item && element.amount >= amt * amount));
+    const index = characterItems.find((element) => (item === element.item && element.amount >= amt * amount));
     if (!index) {
       return false;
     }
@@ -46,8 +46,8 @@ export const hasItems = (playerItems: ItemData[], items: ItemData[], amount: num
   }).every((b) => b);
 };
 
-export const getItemFromBank = (playerItems: ItemData[], item: number): ItemData | undefined => {
-  const index = playerItems.find((element) => (item === element.item && element.amount));
+export const getItemFromBank = (characterItems: ItemData[], item: number): ItemData | undefined => {
+  const index = characterItems.find((element) => (item === element.item && element.amount));
   return index;
 };
 

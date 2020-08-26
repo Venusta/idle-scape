@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SkillName, ExpReward, ItemData, TaskReward } from "../types/types";
 
 export type QueuedTask = {
-  playerID: string
+  characterId: string
   taskType: string
   taskName: string
   amount: number
@@ -18,7 +18,7 @@ export interface TaskInfo {
 
 type ProcessQueueTaskPayload = {
   payload: {
-    playerID: string
+    characterId: string
     task: TaskDerpThing | false
   }
 };
@@ -29,14 +29,14 @@ type NewTaskPayload = {
 
 // interface HandleRewardPayload {
 //   payload: {
-//     playerID: string,
+//     characterId: string,
 //     reward: TaskReward,
 //     type: string,
 //   }
 // }
 
 export interface TaskDerpThing {
-  playerID: string
+  characterId: string
   duration: number
   type: string
   info: TaskInfo
@@ -76,24 +76,24 @@ export const taskSlice = createSlice({
   name: "tasks",
   initialState: taskInitialState,
   reducers: {
-    newTask: (state, { payload: { playerID, taskType, taskName, amount } }: NewTaskPayload) => {
-      const { queue } = state[playerID];
-      queue.push({ playerID, taskType, taskName, amount });
+    newTask: (state, { payload: { characterId, taskType, taskName, amount } }: NewTaskPayload) => {
+      const { queue } = state[characterId];
+      queue.push({ characterId, taskType, taskName, amount });
     },
 
-    processQueue: (state, { payload: { playerID, task } }: ProcessQueueTaskPayload) => {
-      const { queue, active } = state[playerID];
+    processQueue: (state, { payload: { characterId, task } }: ProcessQueueTaskPayload) => {
+      const { queue, active } = state[characterId];
 
       if (task === false) {
         console.log("Task doesn't exist or reqs not met");
-        state[playerID].activeTask = false;
+        state[characterId].activeTask = false;
         queue.shift();
         return;
       }
 
       if (active === true) {
         console.error("This really shouldn't happen ever, what the fuck did you do?!");
-        state[playerID].activeTask = false;
+        state[characterId].activeTask = false;
         queue.shift();
         return;
       }
@@ -102,23 +102,23 @@ export const taskSlice = createSlice({
       const now = Date.now();
       const when = now + duration;
 
-      console.log(`Setting character ${playerID}'s queue to active`);
-      state[playerID].active = true;
-      state[playerID].activeTask = {
+      console.log(`Setting character ${characterId}'s queue to active`);
+      state[characterId].active = true;
+      state[characterId].activeTask = {
         when,
         ...task,
       };
       queue.shift();
     },
 
-    handleActiveTask: (state, { payload: { playerID, reward, type } }: { payload: TaskPayloadData }) => {
+    handleActiveTask: (state, { payload: { characterId, reward, type } }: { payload: TaskPayloadData }) => {
       // console.log("reward:");
       // console.log(reward);
 
       console.log(`${type} task finished.`);
-      state[playerID].active = false;
-      const { queue } = state[playerID];
-      if (queue.length === 0) state[playerID].activeTask = false; // may cause issues
+      state[characterId].active = false;
+      const { queue } = state[characterId];
+      if (queue.length === 0) state[characterId].activeTask = false; // may cause issues
     },
   },
 });

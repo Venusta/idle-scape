@@ -7,7 +7,7 @@ import { ItemData, ExpReward } from "../types/types";
 
 interface RewardPayload {
   payload: {
-    playerID: string,
+    characterId: string,
     reward: {
       items: ItemData[],
       exp: ExpReward[],
@@ -17,7 +17,7 @@ interface RewardPayload {
 
 interface UpdateBankPayload {
   payload: {
-    playerID: string,
+    characterId: string,
     bank: ItemData[],
   }
 }
@@ -26,9 +26,9 @@ export const characterSlice = createSlice({
   name: "characters",
   initialState: charactersInitialState({}),
   reducers: {
-    addReward: (state, { payload: { playerID, reward } }: RewardPayload) => {
-      const skills = state.skills[playerID];
-      const bank = state.banks[playerID];
+    addReward: (state, { payload: { characterId, reward } }: RewardPayload) => {
+      const skills = state.skills[characterId];
+      const bank = state.banks[characterId];
       const { exp, items } = reward;
       if (exp.length > 0) {
         exp.forEach((expReward) => {
@@ -39,11 +39,11 @@ export const characterSlice = createSlice({
       }
 
       if (items.length > 0) {
-        state.banks[playerID] = addBankToBank(bank, items);
+        state.banks[characterId] = addBankToBank(bank, items);
       }
     },
-    updateBank: (state, { payload: { playerID, bank } }: UpdateBankPayload) => {
-      state.banks[playerID] = bank;
+    updateBank: (state, { payload: { characterId, bank } }: UpdateBankPayload) => {
+      state.banks[characterId] = bank;
     },
   },
 });

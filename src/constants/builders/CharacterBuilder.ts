@@ -24,7 +24,7 @@ export interface EquipmentState {
   [x: string]: EquipmentSlots
 }
 
-interface PlayerState {
+interface CharactersState {
   ids: IDsState,
   banks: ItemBankState,
   skills: SkillsState,
@@ -129,7 +129,7 @@ const mapDataToId = (ids: string[], data: ItemData[] | startingSkills.Skills | E
   }), {});
 };
 
-export const charactersInitialState = ({ ids = startingIDs }: StateOptions): PlayerState => {
+export const charactersInitialState = ({ ids = startingIDs }: StateOptions): CharactersState => {
   console.log("Character State Remake!");
 
   const banks: ItemBankState = mapDataToId(ids, startingItems);

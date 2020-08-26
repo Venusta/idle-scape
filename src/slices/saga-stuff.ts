@@ -12,26 +12,26 @@ import { addMsg } from "./log";
 import { format } from "../model/LogFormatter";
 
 export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
-  const { playerID, reward } = action.payload;
+  const { characterId, reward } = action.payload;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state: RootState = yield select();
-  const playerName = state.characters.names[playerID];
+  const characterName = state.characters.names[characterId];
 
-  yield put(addReward({ playerID, reward }));
-  const msg = format("CompletedTask", playerName, action.payload);
+  yield put(addReward({ characterId, reward }));
+  const msg = format("CompletedTask", characterName, action.payload);
 
-  yield put(addMsg({ playerID, msg }));
+  yield put(addMsg({ characterId, msg }));
 }
 
 export function* newTaskMsg(action: { payload: QueuedTask }) {
-  const { playerID } = action.payload;
+  const { characterId } = action.payload;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state: RootState = yield select();
-  const playerName = state.characters.names[playerID];
-  const msg = format("QueuedTask", playerName, action.payload);
+  const characterName = state.characters.names[characterId];
+  const msg = format("QueuedTask", characterName, action.payload);
 
-  yield put(addMsg({ playerID, msg }));
+  yield put(addMsg({ characterId, msg }));
 }
 
 export function* taskSagas() {
