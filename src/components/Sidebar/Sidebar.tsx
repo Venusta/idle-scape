@@ -7,7 +7,7 @@ import { RootState } from "../../redux-stuff";
 import "./Sidebar.css";
 import { NameState } from "../../constants/builders/CharacterBuilder";
 
-export const CharacterPanel = (): JSX.Element => {
+export const Sidebar = (): JSX.Element => {
   const names: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
   const location = useLocation();
 

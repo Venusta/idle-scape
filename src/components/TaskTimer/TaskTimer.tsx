@@ -24,9 +24,6 @@ export const TaskTimer = (): JSX.Element => {
         const { taskType } = task;
         console.log(taskType);
 
-        /* // TODO
-         * switch statement here for the task type
-        */
         switch (taskType) {
           case "cooking": {
             dispatch(processQueue({ characterId, task: cookingTask(task) }));

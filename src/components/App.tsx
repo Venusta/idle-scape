@@ -14,7 +14,7 @@ import { Skills } from "./Skills/Skills";
 import { TaskTimer } from "./TaskTimer/TaskTimer";
 import { NameState } from "../constants/builders/CharacterBuilder";
 import { TaskList } from "./TaskList/TaskList";
-import { CharacterPanel } from "./Sidebar/Sidebar";
+import { Sidebar } from "./Sidebar/Sidebar";
 import { Log } from "./Log/Log";
 import { newTask } from "../slices/task";
 import { Banks } from "./Bank/Banks";
@@ -68,7 +68,7 @@ export const App = (): JSX.Element => {
 
   return (
     <div className="app">
-      <CharacterPanel />
+      <Sidebar />
       <TaskTimer />
       <div className="content">
         <Switch>
