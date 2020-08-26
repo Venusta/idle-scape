@@ -47,38 +47,17 @@ const SingleCharacterView = () => {
 export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  // const player = useSelector((state: RootState) => {
-  //   return {
-  //     name: state.characters.names["3"],
-  //     skills: state.characters.skills["3"],
-  //     equipment: state.characters.equipment["3"],
-  //     bank: state.characters.banks["3"],
-  //   };
-  // }, shallowEqual);
-
   useEffect(() => {
-    // const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount: 20 });
+    // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
 
     dispatch(newTask({
-      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
+      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
     }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
-    // }));
 
     dispatch(newTask({
       characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
-    // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 100,
-    // }));
-    // dispatch(newTask({
-    //   playerID: "3", taskName: "lobster", taskType: "cooking", amount: 50,
-    // }));
 
     console.log("Rendered");
     // eslint-disable-next-line react-hooks/exhaustive-deps
