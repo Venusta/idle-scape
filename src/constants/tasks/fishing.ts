@@ -50,7 +50,7 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   if (!hasSkills(skills, fishingSpot[taskName].requirements.skills)) {
     console.log(`${characterName}'s fishing level is too low for ${taskName}`);
     store.dispatch(addMsg({ characterId, msg: `${characterName}'s fishing level is too low for ${taskName}` }));
-    // return false;
+    return false;
   }
 
   /**
