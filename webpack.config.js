@@ -11,7 +11,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 // We'll refer to our source and dist paths frequently, so let's store them here
 const PATH_SOURCE = path.join(__dirname, "./src");
-const PATH_DIST = path.join(__dirname, "./dist");
+const PATH_DIST = path.join(__dirname, "./build");
 const isProduction = process.argv.indexOf("-p") >= 0 || process.env.NODE_ENV === "production";
 
 // If we export a function, it will be passed two parameters, the first
@@ -129,7 +129,6 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: "development", // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false,
-      PUBLIC_URL: "/",
     }),
 
     // This plugin will delete all files inside `output.path` (the dist directory),

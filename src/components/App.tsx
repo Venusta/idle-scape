@@ -60,29 +60,17 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     // const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
-    // const y = fishingTask({ playerID: "3", taskName: "anchovies", amount: 10 });
-    // console.log(y);
 
     dispatch(newTask({
       playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
     }));
-
-    // nameToId("Abyssal whip");
-
-    // const tests = ["1", "999", "1000", "1001", "99999", "100000", "100001", "999999", "1000000", "1000001", "9999999", "10000000", "10000001", "100000000", "1000000000", "10000000000", "10000000001"];
-    // const answers = ["1", "999", "1000", "1001", "99999", "100k", "100k", "999k", "1000k", "1000k", "9999k", "10m", "10m", "100m", "1000m", "10b", "10b"];
-
-    // tests.forEach((num, index) => {
-    //   const x = help2(num);
-    //   const y = answers[index];
-
-    //   console.log(`${x} should be: ${answers[index]} ${x === y}`);
-    //   console.log("---------------------------------------------------");
-    // });
-
     // dispatch(newTask({
-    //   playerID: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    //   playerID: "3", taskName: "leaping trout", taskType: "fishing", amount: 200,
     // }));
+
+    dispatch(newTask({
+      playerID: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    }));
     // dispatch(newTask({
     //   playerID: "3", taskName: "salmon", taskType: "cooking", amount: 200,
     // }));

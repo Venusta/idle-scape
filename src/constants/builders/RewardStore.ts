@@ -17,22 +17,22 @@ export class RewardStore {
    * @param rewardToAdd
    */
 
-  addReward = (rewardToAdd: TaskRewardMap): this => {
-    this.addExpReward(rewardToAdd.exp);
-    this.addItemReward(rewardToAdd.items);
+  addReward = (rewardToAdd: TaskRewardMap, multiplier = 1): this => {
+    this.addExpReward(rewardToAdd.exp, multiplier);
+    this.addItemReward(rewardToAdd.items, multiplier);
     return this;
   };
 
-  addItemReward = (itemReward: ItemMap): this => {
-    Array.from(itemReward).forEach(([key, amt]) => {
-      this.items.set(key, (this.items.get(key) ?? 0) + amt);
+  addItemReward = (itemReward: ItemMap, multiplier = 1): this => {
+    Array.from(itemReward).forEach(([key, amount]) => {
+      this.items.set(key, (this.items.get(key) ?? 0) + (amount * multiplier));
     });
     return this;
   };
 
-  addExpReward = (expReward: ExpMap): this => {
-    Array.from(expReward).forEach(([key, amt]) => {
-      this.exp.set(key, (this.exp.get(key) ?? 0) + amt);
+  addExpReward = (expReward: ExpMap, multiplier = 1): this => {
+    Array.from(expReward).forEach(([key, amount]) => {
+      this.exp.set(key, (this.exp.get(key) ?? 0) + (amount * multiplier));
     });
     return this;
   };

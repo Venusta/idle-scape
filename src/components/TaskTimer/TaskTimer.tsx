@@ -16,24 +16,33 @@ export const TaskTimer = (): JSX.Element => {
   const handleTask = () => {
     const characterIds = Object.keys(tasks);
 
-    characterIds.forEach((characterID) => {
-      const { queue, active } = tasks[characterID];
+    characterIds.forEach((characterId) => {
+      const { queue, active } = tasks[characterId];
 
       if (queue.length > 0 && active === false) {
         const task = queue[0];
-        const { playerID, taskName, amount } = task;
+        const { taskType } = task;
+        console.log(taskType);
+
         /* // TODO
          * switch statement here for the task type
         */
-        // const x = new CookingTask(player, { playerID, taskName, amount }).start();
-        // const x = cookingTask({ playerID, taskName, amount });
-        const x = fishingTask({ playerID: "3", taskName: "leaping trout", amount });
-
-        dispatch(processQueue({ playerID: characterID, task: x }));
+        switch (taskType) {
+          case "cooking": {
+            dispatch(processQueue({ playerID: characterId, task: cookingTask(task) }));
+            break;
+          }
+          case "fishing": {
+            dispatch(processQueue({ playerID: characterId, task: fishingTask(task) }));
+            break;
+          }
+          default:
+            console.log(`No tasktype found: ${taskType}`);
+        }
         console.log("This should only happen once per task");
       }
 
-      const task = tasks[characterID].activeTask;
+      const task = tasks[characterId].activeTask;
       if (active && task) {
         const { when } = task;
 

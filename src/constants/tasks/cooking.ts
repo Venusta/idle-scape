@@ -8,12 +8,12 @@ import { cooking } from "../taskData/cooking";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import {
-  TaskRequirements, TaskReward, TaskFail, EquipmentSlots, ItemData, SkillName, TaskInputOptions, TaskOptions,
+  EquipmentSlots, ItemData, TaskInputOptions, TaskOptions,
 } from "../../types/types";
 import { expToLevel, getRandomInt } from "../../util";
-import { RewardBuilder } from "../builders/RewardBuilder";
 import { LogMsgBuilder } from "../builders/LogMsgBuilder";
 import { TaskDerpThing } from "../../slices/task";
+import { RewardStore } from "../builders/RewardStore";
 
 export interface CookingTask extends TaskOptions {
   stopBurnLevel: number;
@@ -60,6 +60,8 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   } = selectedTask;
 
   if (!hasReqs(character, requirements, amount)) { // todo get req msg
+    console.log(requirements);
+
     console.log(`${playerName} sucks and misses reqs for ${taskName}`);
     store.dispatch(addMsg({ playerID, msg: `${playerName} sucks and misses reqs for ${taskName}` }));
 
@@ -69,7 +71,6 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   // todo task object so it can be returned if the task is cancelled
 
   // const findRewardSkill = (skillName: SkillName) => rewards.exp.find(({ skill }) => skill === skillName);
-  //@ts-ignore
   const cookingXp = rewards.exp.get(SkillNames.cooking);
   if (!cookingXp) {
     console.error(`skillName not found: ${SkillNames.cooking}`);
@@ -96,13 +97,9 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
   }
   console.log(`${burned + cooked === amount} ${burned}x burned ${cooked}x cooked food! level: ${expToLevel(cookingExp)}`);
 
-  // const reward = new RewardBuilder()
-  //   .rewardItem(selectedTask.rewards.items.[0], cooked)
-  //   .rewardExp("cooking", selectedTask.rewards.exp.get("cooking"), cooked)
-  //   // .rewardExp({ skill: "construction", amount: 93 }, cooked)
-  //   // .rewardExp({ skill: "smithing", amount: 23 }, cooked)
-  //   .rewardItem(selectedTask.fails.items[0], amount - cooked)
-  //   .finalise();
+  const rewardStore = new RewardStore()
+    .addReward(selectedTask.rewards, cooked)
+    .addItemReward(selectedTask.fails.items, amount - cooked);
 
   const totalDuration = amount * duration * 0.1; // TODO should be 1
 
@@ -136,8 +133,7 @@ export const cookingTask = ({ playerID, taskName, amount }: TaskInputOptions): T
     type,
     info,
     skill,
-    //@ts-ignore // TODO FIX THIS
-    reward,
+    reward: rewardStore.toObject(),
   };
 
   return taskObj;

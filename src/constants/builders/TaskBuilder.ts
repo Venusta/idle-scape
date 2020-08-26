@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  SkillName, EquipmentSlotName, TaskRequirements, TaskReward, TaskOptions, TaskFail, TaskRewardMap,
+  SkillName, EquipmentSlotName, TaskRequirements, TaskOptions, TaskFailMap, TaskRewardMap,
 } from "../../types/types";
 import { nameToId } from "../../util/nameToId";
 
@@ -13,7 +13,7 @@ export class TaskBuilder {
   name: string;
   requirements: TaskRequirements;
   rewards: TaskRewardMap;
-  fails: TaskFail;
+  fails: TaskFailMap;
 
   constructor(options: TaskBuilderOptions) {
     this.name = options.name;
@@ -27,7 +27,7 @@ export class TaskBuilder {
       items: new Map([]),
     };
     this.fails = {
-      items: [],
+      items: new Map([]),
     };
   }
 
@@ -98,7 +98,8 @@ export class TaskBuilder {
 
   failItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    this.fails.items.push({ item: id, amount });
+    // this.fails.items.push({ item: id, amount });
+    this.fails.items.set(id, amount);
     return this;
   };
 

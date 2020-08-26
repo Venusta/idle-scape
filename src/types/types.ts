@@ -56,8 +56,8 @@ export interface TaskReward {
   items: ItemData[];
 }
 
-export interface TaskFail {
-  items: ItemData[]
+export interface TaskFailMap {
+  items: ItemMap;
 }
 
 export interface TaskEquipmentData extends ItemData {
@@ -76,7 +76,7 @@ export interface TaskOptions {
   requirements: TaskRequirements;
   rewards: TaskRewardMap;
   duration: number;
-  fails: TaskFail;
+  fails: TaskFailMap;
 }
 
 export interface CookingTask extends TaskOptions {
