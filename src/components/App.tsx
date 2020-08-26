@@ -58,6 +58,9 @@ export const App = (): JSX.Element => {
     dispatch(newTask({
       characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     }));
+    dispatch(newTask({
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    }));
 
     console.log("Rendered");
     // eslint-disable-next-line react-hooks/exhaustive-deps

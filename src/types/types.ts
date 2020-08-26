@@ -67,7 +67,7 @@ export interface TaskEquipmentData extends ItemData {
 export interface TaskRequirements {
   // skills: SkillData[]
   skills: SkillMap
-  items: ItemData[]
+  items: ItemMap
   equipment: TaskEquipmentData[]
 }
 

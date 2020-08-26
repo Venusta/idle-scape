@@ -56,7 +56,8 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   /**
    * * check if the character has the right tool
    */
-  if (!hasItems(bank, [tool], 1)) { // todo maybe check "hasOneOf" for a range of tools
+
+  if (!hasItems(bank, tool)) { // todo maybe check "hasOneOf" for a range of tools
     console.log("Fishing tool doesn't exist");
     return false;
   }

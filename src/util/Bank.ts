@@ -12,6 +12,11 @@ export const addToItemBank = (bank: ItemData[], itemToBeAdded: ItemData): ItemDa
 
   const index = tempBank.findIndex((itemInBank) => itemInBank.item === itemToBeAdded.item);
 
+  if (tempBank[index].amount + itemToBeAdded.amount < 0) {
+    console.error("NEGATIVE ITEMS IN BANK ALERT!!!");
+    console.trace();
+  }
+
   if (index !== -1) {
     tempBank[index] = {
       ...tempBank[index],

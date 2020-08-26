@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
+import { addReward } from "../../slices/character";
 import { store } from "../../redux-stuff";
 import { addMsg } from "../../slices/log";
 import { cooking } from "../taskData/cooking";
@@ -54,6 +55,10 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
 
     return false;
   }
+
+  const deleteItems = new RewardStore()
+    .removeItem(requirements.items, amount);
+  store.dispatch(addReward({ characterId, reward: deleteItems.toObject() }));
   // todo remove the req items from bank and put it on the
   // todo task object so it can be returned if the task is cancelled
 
@@ -86,7 +91,7 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
 
   const rewardStore = new RewardStore()
     .addReward(selectedTask.rewards, cooked)
-    .addItemReward(selectedTask.fails.items, amount - cooked);
+    .addItem(selectedTask.fails.items, amount - cooked);
 
   const totalDuration = amount * duration * 0.1; // TODO should be 1
 

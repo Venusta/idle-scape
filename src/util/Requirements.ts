@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap, ExpMap, SkillName,
+  TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap, ExpMap, ItemMap,
 } from "../types/types";
 import { expToLevel } from ".";
 import { Skills } from "../model/Skills";
@@ -35,14 +35,25 @@ export const hasEquipment = (characterEquipment: EquipmentSlots, equipment: Task
   return equipment.map(({ item, slot }) => characterEquipment[slot] === item).every((b) => b);
 };
 
-export const hasItems = (characterItems: ItemData[], items: ItemData[], amount: number): boolean => {
-  return items.map(({ item, amount: amt }) => {
-    const index = characterItems.find((element) => (item === element.item && element.amount >= amt * amount));
+export const hasItems = (characterItems: ItemData[], items: ItemMap, multiplier = 1): boolean => {
+  return Array.from(items).map(([item, amount]) => {
+    const index = characterItems.find((element) => (item === element.item && element.amount >= amount * multiplier));
     if (!index) {
       return false;
     }
     return true;
   }).every((b) => b);
+};
+
+export const hasItems2 = (characterItems: ItemData[], items: ItemMap, multiplier = 1): boolean => {
+  let reqs = true;
+  items.forEach((amount, item) => {
+    const index = characterItems.find((element) => (item === element.item && element.amount >= multiplier * amount));
+    if (!index) {
+      reqs = false;
+    }
+  });
+  return reqs;
 };
 
 export const getItemFromBank = (characterItems: ItemData[], item: number): ItemData | undefined => {

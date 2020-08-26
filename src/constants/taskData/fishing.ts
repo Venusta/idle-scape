@@ -1,5 +1,5 @@
 import { SkillNames } from "../data";
-import { FishingTask, ItemData } from "../../types/types";
+import { FishingTask, ItemData, ItemMap } from "../../types/types";
 import { FishingTaskBuilder } from "../builders/FishingTaskBuilder";
 import { nameToId } from "../../util/nameToId";
 
@@ -9,7 +9,7 @@ interface FishingSpot {
 
 export interface FishingTasks {
   names: string[]
-  tool: ItemData;
+  tool: ItemMap;
   maxWeight: number;
   bait?: number;
   fishingSpot: FishingSpot
@@ -20,7 +20,7 @@ export interface FishingTasks {
 const tasks: FishingTasks[] = [
   {
     names: ["shrimp", "anchovies", "trout"],
-    tool: { item: nameToId("Small fishing net"), amount: 1 },
+    tool: new Map([[nameToId("Small fishing net"), 1]]),
     bait: nameToId("Feather"),
     maxWeight: 255,
     fishingSpot: {
@@ -48,7 +48,7 @@ const tasks: FishingTasks[] = [
   },
   {
     names: ["leaping trout", "leaping salmon", "leaping sturgeon"],
-    tool: { item: nameToId("Small fishing net"), amount: 1 },
+    tool: new Map([[nameToId("Small fishing net"), 1]]),
     // bait: nameToId("Feather"),
     maxWeight: 255,
     fishingSpot: {

@@ -19,7 +19,7 @@ export class TaskBuilder {
     this.name = options.name;
     this.requirements = {
       skills: new Map([]),
-      items: [],
+      items: new Map([]),
       equipment: [],
     };
     this.rewards = {
@@ -63,7 +63,7 @@ export class TaskBuilder {
 
   reqItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
-    this.requirements.items.push({ item: id, amount });
+    this.requirements.items.set(id, amount);
     return this;
   };
 
