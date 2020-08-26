@@ -1,50 +1,36 @@
-/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 
 import { store } from "../../redux-stuff";
 import {
-  TaskInputOptions, CharacterState, FishingTask, SkillName,
+  TaskInputOptions, FishingTask, SkillName, CharacterState,
 } from "../../types/types";
 import { SkillNames } from "../data";
 import { fishing, FishingTasks } from "../taskData/fishing";
-import { expToLevel, randomRoll } from "../../util";
+import { expToLevel, randomRoll, calculateWeight } from "../../util";
 import {
   hasItems, hasSkills, getItemFromBank,
 } from "../../util/Requirements";
 import { addMsg } from "../../slices/log";
 import { RewardStore } from "../builders/RewardStore";
 import { TaskDerpThing } from "../../slices/task";
+import { selectCharacter } from "../../selectors";
 
 interface FishingTaskData {
   tasks: Array<FishingTasks>;
   id: SkillNames;
 }
 
-const selectTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.names.find((name) => name === taskName));
-
-/**
-   * * returns weight from a range based on level
-   * @param level level
-   * @param low level 1 weight
-   * @param high level 99 weight
-   */
-const calculateWeight = (level: number, low: number, high: number) => {
-  return low + ((level - 1) / 98) * (high - low); // divide by total weight to give chance
-};
+const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.names.find((name) => name === taskName));
 
 export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
-  const character: CharacterState = {
-    name: store.getState().characters.names[characterId],
-    skills: store.getState().characters.skills[characterId],
-    equipment: store.getState().characters.equipment[characterId],
-    bank: store.getState().characters.banks[characterId],
-  };
+  const character: CharacterState = selectCharacter(store.getState(), characterId);
+
   const { name: characterName, skills, bank } = character;
 
   /**
    * * select the fishing spot
    */
-  const selectedFishSpot = selectTask(fishing, taskName);
+  const selectedFishSpot = selectFishingTask(fishing, taskName);
 
   /**
    * * check the fishing spot is valid

@@ -24,7 +24,6 @@ export const hasSkillsOld = (characterSkills: Skills, skills: SkillMap, gainedEx
 export const hasSkills = (characterSkills: Skills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => {
   let reqs = true;
   skills.forEach((reqLevel, skill) => {
-    console.log(`reqLevel: ${reqLevel}`);
     if (expToLevel(characterSkills[skill].exp + (gainedExp.get(skill) ?? 0), characterSkills[skill].level) < reqLevel) { // <=?
       reqs = false;
     }
@@ -56,7 +55,5 @@ export const hasReqs = (character: CharacterState, requirements: TaskRequirement
   const haveSkills = hasSkills(skills, requirements.skills);
   const haveEquipment = hasEquipment(equipment, requirements.equipment);
   const haveItems = hasItems(bank, requirements.items, amount);
-  console.log(`Skills: ${haveSkills} Equip: ${haveEquipment} Items: ${haveItems}`);
-
   return haveSkills && haveEquipment && haveItems;
 };

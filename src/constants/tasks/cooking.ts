@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
-import { Skills } from "../../model/Skills";
 import { store } from "../../redux-stuff";
 import { addMsg } from "../../slices/log";
 import { cooking } from "../taskData/cooking";
 import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import {
-  EquipmentSlots, ItemData, TaskInputOptions, TaskOptions,
+  TaskInputOptions, TaskOptions, CharacterState,
 } from "../../types/types";
 import { expToLevel, getRandomInt } from "../../util";
 import { LogMsgBuilder } from "../builders/LogMsgBuilder";
 import { TaskDerpThing } from "../../slices/task";
 import { RewardStore } from "../builders/RewardStore";
+import { selectCharacter } from "../../selectors";
 
 export interface CookingTask extends TaskOptions {
   stopBurnLevel: number;
@@ -25,27 +25,14 @@ interface CookingTaskData {
   id: SkillNames;
 }
 
-interface CharacterState {
-  name: string;
-  skills: Skills;
-  equipment: EquipmentSlots;
-  bank: ItemData[];
-}
-
 const selectTask = (taskData: CookingTaskData, taskName: string) => {
   return taskData.tasks.find((task) => task.name === taskName);
 };
 
 export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
-  const character: CharacterState = {
-    name: store.getState().characters.names[characterId],
-    skills: store.getState().characters.skills[characterId],
-    equipment: store.getState().characters.equipment[characterId],
-    bank: store.getState().characters.banks[characterId],
-  };
-
-  const selectedTask = selectTask(cooking, taskName);
+  const character: CharacterState = selectCharacter(store.getState(), characterId);
   const { name: characterName, skills } = character;
+  const selectedTask = selectTask(cooking, taskName);
 
   const startingLevel = expToLevel(skills.cooking.exp);
   let cookingExp = skills.cooking.exp;

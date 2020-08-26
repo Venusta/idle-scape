@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable object-curly-newline */
 import { createSlice } from "@reduxjs/toolkit";
-import { SkillName, ExpReward, ItemData, TaskReward } from "../types/types";
+import { SkillName, TaskReward } from "../types/types";
 
 export type QueuedTask = {
   characterId: string
@@ -27,14 +27,6 @@ type NewTaskPayload = {
   payload: QueuedTask
 };
 
-// interface HandleRewardPayload {
-//   payload: {
-//     characterId: string,
-//     reward: TaskReward,
-//     type: string,
-//   }
-// }
-
 export interface TaskDerpThing {
   characterId: string
   duration: number
@@ -42,10 +34,6 @@ export interface TaskDerpThing {
   info: TaskInfo
   skill: SkillName
   reward: TaskReward
-  // reward: {
-  //   exp: ExpReward[]
-  //   items: ItemData[]
-  // }
 }
 export interface TaskPayloadData extends TaskDerpThing {
   when: number
@@ -111,10 +99,7 @@ export const taskSlice = createSlice({
       queue.shift();
     },
 
-    handleActiveTask: (state, { payload: { characterId, reward, type } }: { payload: TaskPayloadData }) => {
-      // console.log("reward:");
-      // console.log(reward);
-
+    handleActiveTask: (state, { payload: { characterId, type } }: { payload: TaskPayloadData }) => {
       console.log(`${type} task finished.`);
       state[characterId].active = false;
       const { queue } = state[characterId];
