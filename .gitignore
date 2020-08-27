@@ -2,5 +2,5 @@ build
 node_modules
 junk
 
-scripts/*.json
+scripts/**/*.json
 *.old
