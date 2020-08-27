@@ -141,15 +141,14 @@ module.exports = {
     //   verbose: true,
     // }),
 
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.join(PATH_SOURCE, "./assets/images"),
-          to: path.join(PATH_DIST, "./assets/images"),
-        },
-        // { from: "other", to: "public" },
-      ],
-    }),
+    // new CopyPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.join(PATH_SOURCE, "./assets/images"),
+    //       to: path.join(PATH_DIST, "./assets/images"),
+    //     },
+    //   ],
+    // }),
 
     // This plugin will generate an HTML5 file that imports all our Webpack
     // bundles using <script> tags. The file will be placed in `output.path`.
