@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 // const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 
 // We'll refer to our source and dist paths frequently, so let's store them here
@@ -134,7 +135,21 @@ module.exports = {
     // This plugin will delete all files inside `output.path` (the dist directory),
     // but the directory itself will be kept.
     // https://github.com/johnagan/clean-webpack-plugin
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin({
+    //   // dry: true,
+    //   exclude: ["assets/images/"],
+    //   verbose: true,
+    // }),
+
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(PATH_SOURCE, "./assets/images"),
+          to: path.join(PATH_DIST, "./assets/images"),
+        },
+        // { from: "other", to: "public" },
+      ],
+    }),
 
     // This plugin will generate an HTML5 file that imports all our Webpack
     // bundles using <script> tags. The file will be placed in `output.path`.
