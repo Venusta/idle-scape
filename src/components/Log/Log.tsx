@@ -89,18 +89,19 @@ export const Log = (): JSX.Element => {
       }, []);
 
       ohMyGod = (renderBank2("jfc", reward.items));
-      sortedTaskData.push(<div key={uuid()} className="log-item item-bubble">
-        {finalResult}
-        <div className="loot-table">
-          {ohMyGod}
-        </div>
-      </div>);
+      sortedTaskData.push(
+        <div key={uuid()} className="log-item item-bubble">
+          {finalResult}
+          <div className="loot-table">
+            {ohMyGod}
+          </div>
+        </div>,
+      );
     });
 
     return (
-      <div>
+      <div className="log-inner-inner">
         {sortedTaskData}
-
       </div>
     );
   };
@@ -109,8 +110,10 @@ export const Log = (): JSX.Element => {
     <div className="log-window panel-window">
       <div className="log-title panel-title">Character Log</div>
       <div ref={ref} className="log-inner">
-        <div className="log-inner-inner" />
+        {/* <div className="log-inner-inner"> */}
+
         <NewListShit />
+        {/* </div> */}
       </div>
     </div>
   );
