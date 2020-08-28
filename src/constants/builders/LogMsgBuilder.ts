@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { ExpMap, SkillName } from "../../types/types";
+import { ExpMap, SkillName, ExpReward } from "../../types/types";
 
 export class LogMsgBuilder {
   private msg: string;
@@ -33,14 +33,22 @@ export class LogMsgBuilder {
    * @returns They gained 50 slayer, 90 cooking and 25 smithing xp
    */
 
-  gainingExp = (expReward: ExpMap): this => {
-    const x = Array.from(expReward)
-      .map(([skill, amount]) => `<cyan#${amount}> ${skill}`)
+  gainingExp = (expReward: ExpReward[]): this => {
+    const x = expReward
+      .map(({ skill, amount }) => `<cyan#${amount}> ${skill}`)
       .join(", ")
       .replace(/(?:,)([^,]+)$/, " and$1");
     this.msg = this.msg.concat(`They gained ${x} xp. `);
     return this;
   };
+  // gainingExp = (expReward: ExpMap): this => {
+  //   const x = Array.from(expReward)
+  //     .map(([skill, amount]) => `<cyan#${amount}> ${skill}`)
+  //     .join(", ")
+  //     .replace(/(?:,)([^,]+)$/, " and$1");
+  //   this.msg = this.msg.concat(`They gained ${x} xp. `);
+  //   return this;
+  // };
 
   andLevels = (levelsGained: [SkillName, number, number][]): this => {
     if (levelsGained.length === 0) {

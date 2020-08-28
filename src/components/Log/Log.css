@@ -52,3 +52,9 @@
 .name-colour3 {
   color: #7de8e8;
 }
+
+
+.loot-table {
+  display: flex;
+  flex-direction: row;
+}

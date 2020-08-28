@@ -51,27 +51,18 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
-    // const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 20 });
-    // dispatch(processQueue({ characterId: "3", task: x }));
+    const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 20 });
+    dispatch(processQueue({ characterId: "3", task: x }));
 
-    // dispatch(newTask({
-    //   characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
-    // }));
+    dispatch(newTask({
+      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
+    }));
 
-    // dispatch(newTask({
-    //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
-    // }));
     dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 1,
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     }));
     dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 2,
-    }));
-    dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 2,
-    }));
-    dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 14,
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 10,
     }));
 
     console.log("Rendered");

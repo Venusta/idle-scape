@@ -8,6 +8,8 @@ import { selectCharacter } from "../../selectors";
 import { chicken } from "../monsters/Chicken";
 import { CombatSimulator } from "../../model/CombatSimulator";
 import { store } from "../../redux-stuff";
+import { levelsGained } from "../../util";
+import { addMsg } from "../../slices/log";
 
 const selectMonster = chicken;
 
@@ -25,6 +27,15 @@ export const combatTask = ({ characterId, taskName, amount }: TaskInputOptions):
   };
   const duration = (ticks * 600) * 0.001;
   console.log(`Task should take ${(duration) / 1000} seconds`);
+
+  store.dispatch(addMsg({
+    type,
+    info,
+    characterId,
+    characterName,
+    reward: rewards,
+    gained: levelsGained(skills, rewards.exp),
+  }));
 
   const taskObj = {
     characterId,

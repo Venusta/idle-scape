@@ -6,7 +6,7 @@ import {
 } from "../../types/types";
 import { SkillNames } from "../../model/Skills";
 import { fishing, FishingTasks } from "../taskData/fishing";
-import { expToLevel, randomRoll, calculateWeight } from "../../util";
+import { expToLevel, randomRoll, calculateWeight, levelsGained } from "../../util";
 import {
   hasItems, hasSkills, getItemFromBank,
 } from "../../util/Requirements";
@@ -49,7 +49,7 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
    */
   if (!hasSkills(skills, fishingSpot[taskName].requirements.skills)) {
     console.log(`${characterName}'s fishing level is too low for ${taskName}`);
-    store.dispatch(addMsg({ characterId, msg: `${characterName}'s fishing level is too low for ${taskName}` }));
+    // store.dispatch(addMsg({ characterId, msg: `${characterName}'s fishing level is too low for ${taskName}` }));
     return false;
   }
 
@@ -68,7 +68,7 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   if (selectedFishSpot.bait) {
     baitAmount = getItemFromBank(bank, selectedFishSpot.bait)?.amount ?? 0;
     if (baitAmount === 0) { // id to name for msg
-      store.dispatch(addMsg({ characterId, msg: `${characterName} doesn't have any ${selectedFishSpot.bait} for ${taskName}` }));
+      // store.dispatch(addMsg({ characterId, msg: `${characterName} doesn't have any ${selectedFishSpot.bait} for ${taskName}` }));
       return false;
     }
   }
@@ -152,12 +152,23 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   console.timeEnd("Fishing Task Simulation");
 
   // todo remove bait
+  // const type = "cooking";
 
   const type = "fishing";
   const info = {
     name: taskName,
     amount,
   };
+
+  store.dispatch(addMsg({
+    type,
+    info,
+    characterId,
+    characterName,
+    reward: rewardStore.toObject(),
+    gained: levelsGained(skills, rewardStore.getExpObject()),
+  }));
+
   const duration = (tick * 600) * 0.001;
   console.log(`Task should take ${(duration) / 1000} seconds`);
 

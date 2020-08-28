@@ -51,7 +51,7 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     console.log(requirements);
 
     console.log(`${characterName} sucks and misses reqs for ${taskName}`);
-    store.dispatch(addMsg({ characterId, msg: `${characterName} sucks and misses reqs for ${taskName}` }));
+    // store.dispatch(addMsg({ characterId, msg: `${characterName} sucks and misses reqs for ${taskName}` }));
 
     return false;
   }
@@ -108,19 +108,26 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
 
   // eslint-disable-next-line no-shadow
 
-  const msg = new LogMsgBuilder()
-    .finished(characterName, "cooking", amount, taskName)
-    .gainingExp(rewardStore.getExp())
-    .andLevels(levelsGained(skills, rewardStore.getExpObject()))
-    .returnMsg();
-  console.log(msg);
-  store.dispatch(addMsg({ characterId, msg }));
+  // const msg = new LogMsgBuilder()
+  //   .finished(characterName, "cooking", amount, taskName)
+  //   .gainingExp(rewardStore.getExp())
+  //   .andLevels(levelsGained(skills, rewardStore.getExpObject()))
+  //   .returnMsg();
+  // console.log(msg);
 
   const type = "cooking";
   const info = {
     name: taskName,
     amount,
   };
+  store.dispatch(addMsg({
+    type,
+    info,
+    characterId,
+    characterName,
+    reward: rewardStore.toObject(),
+    gained: levelsGained(skills, rewardStore.getExpObject()),
+  }));
 
   const taskObj = {
     characterId,

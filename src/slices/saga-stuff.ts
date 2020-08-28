@@ -20,7 +20,7 @@ export function* handleRewardRequest(action: { payload: TaskPayloadData }) {
   yield put(addReward({ characterId, reward }));
   const msg = format("CompletedTask", characterName, action.payload);
 
-  yield put(addMsg({ characterId, msg }));
+  // yield put(addMsg({ characterId, msg }));
 }
 
 export function* newTaskMsg(action: { payload: QueuedTask }) {
@@ -31,7 +31,7 @@ export function* newTaskMsg(action: { payload: QueuedTask }) {
   const characterName = state.characters.names[characterId];
   const msg = format("QueuedTask", characterName, action.payload);
 
-  yield put(addMsg({ characterId, msg }));
+  // yield put(addMsg({ characterId, msg }));
 }
 
 export function* taskSagas() {
