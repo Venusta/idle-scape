@@ -1,5 +1,5 @@
-import { SkillNames } from "../data";
-import { FishingTask, ItemData, ItemMap } from "../../types/types";
+import { SkillNames } from "../../model/Skills";
+import { FishingTask, ItemMap } from "../../types/types";
 import { FishingTaskBuilder } from "../builders/FishingTaskBuilder";
 import { nameToId } from "../../util/nameToId";
 

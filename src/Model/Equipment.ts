@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import {
   EquipmentData, EquipableRequirements, EquipmentSlots, EquipmentBonuses,
-  EquipmentSlotNames, AttackType, AttackStyle,
+  EquipmentSlotNames, AttackType, AttackStyle, StyleExperience,
 } from "../types/types";
 import rawBodySlotData from "../assets/mini-items-json-slot/mini-items-body.json";
 import rawAmmoSlotData from "../assets/mini-items-json-slot/mini-items-ammo.json";
@@ -34,7 +34,7 @@ interface WeaponStance {
   "combat_style": string;
   "attack_type": AttackType | null;
   "attack_style": AttackStyle | null;
-  "experience": string | null;
+  "experience": StyleExperience | null;
   "boosts": string | null;
 }
 
@@ -127,7 +127,7 @@ export class Equipment {
     }
   };
 
-  public getAttackType = (attackStyle: AttackStyle): AttackType => {
+  public getAttackTypeAndExperience = (attackStyle: AttackStyle): { attackType: AttackType, styleExperience: StyleExperience } => {
     const weaponID = this.characterEquipment[EquipmentSlotNames.weapon];
     const weaponData = weaponSlotData[weaponID].weapon;
     const weaponType = weaponData?.weapon_type;
@@ -140,14 +140,21 @@ export class Equipment {
     console.log(weaponType);
 
     const stances = stanceData[weaponType];
-    const attackType = stances.find((stance) => stance.attack_style === attackStyle)?.attack_type;
+    const usedStance = stances.find((stance) => stance.attack_style === attackStyle);
+    const attackType = usedStance?.attack_type;
+    const styleExperience: StyleExperience | null | undefined = usedStance?.experience;
 
     if (attackType === null || attackType === undefined) {
       console.error("Stance did not have a valid attack type.");
       throw new Error("this also should never happen aaaa");
     }
 
-    return attackType;
+    if (styleExperience === null || styleExperience === undefined) {
+      console.error("Stance did not have a valid experience value.");
+      throw new Error("this also should never happen bbbbbbb");
+    }
+
+    return { attackType, styleExperience };
   };
 
   public getAttackSpeed = (attackStyle: AttackStyle): number => {

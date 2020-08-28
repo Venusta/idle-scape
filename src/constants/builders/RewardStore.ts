@@ -70,13 +70,16 @@ export class RewardStore {
     };
   };
 
+  getExpObject = (): ExpReward[] => Array.from(this.exp.entries()).map(([skill, amount]) => ({ skill, amount }));
+  getItemsObject = (): ItemData[] => Array.from(this.items.entries()).map(([item, amount]) => ({ item, amount }));
+
   /**
    * Converts the Maps to a pure Object of Arrays for the reducer
    */
 
   toObject = (): TaskReward => {
-    const exp: ExpReward[] = Array.from(this.exp.entries()).map(([skill, amount]) => ({ skill, amount }));
-    const items: ItemData[] = Array.from(this.items.entries()).map(([item, amount]) => ({ item, amount }));
+    const exp = this.getExpObject();
+    const items = this.getItemsObject();
     return ({
       items,
       exp,

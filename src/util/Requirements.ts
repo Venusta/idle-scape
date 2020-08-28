@@ -2,26 +2,25 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
-  TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap, ExpMap, ItemMap,
+  TaskEquipmentData, ItemData, TaskRequirements, EquipmentSlots, SkillMap, ExpMap, ItemMap, CharacterSkills,
 } from "../types/types";
 import { expToLevel } from ".";
-import { Skills } from "../model/Skills";
 
 interface CharacterState {
   name: string;
-  skills: Skills;
+  skills: CharacterSkills;
   equipment: EquipmentSlots;
   bank: ItemData[];
 }
 
-export const hasSkillsOld = (characterSkills: Skills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => { // good for req msg
+export const hasSkillsOld = (characterSkills: CharacterSkills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => { // good for req msg
   return Array
     .from(skills)
     .map(([skill, level]) => expToLevel(characterSkills[skill].exp + (gainedExp.get(skill) ?? 0), characterSkills[skill].level) >= level)
     .every((b) => b);
 };
 
-export const hasSkills = (characterSkills: Skills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => {
+export const hasSkills = (characterSkills: CharacterSkills, skills: SkillMap, gainedExp: ExpMap = new Map([])): boolean => {
   let reqs = true;
   skills.forEach((reqLevel, skill) => {
     if (expToLevel(characterSkills[skill].exp + (gainedExp.get(skill) ?? 0), characterSkills[skill].level) < reqLevel) { // <=?

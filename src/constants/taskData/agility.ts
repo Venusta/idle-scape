@@ -1,4 +1,4 @@
-import { SkillNames } from "../data";
+import { SkillNames } from "../../model/Skills";
 import { TaskBuilder } from "../builders/TaskBuilder";
 
 const gnome = new TaskBuilder({ name: "Gnome" })

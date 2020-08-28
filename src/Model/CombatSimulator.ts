@@ -2,10 +2,9 @@
 /* eslint-disable arrow-body-style */
 import { store } from "../redux-stuff";
 import {
-  AttackStyle, AttackType, SkillsStats, EquipmentSlots, EquipmentBonuses,
+  AttackStyle, AttackType, EquipmentSlots, EquipmentBonuses, StyleExperience, TaskReward, CharacterSkills,
 } from "../types/types";
 import { SimpleMonster } from "./SimpleMonster";
-import { testMonster } from "../constants/monsters/TestMonster";
 import { getRandomInt } from "../util";
 import { Equipment } from "./Equipment";
 
@@ -84,9 +83,9 @@ const addToEffectiveLevels = (characterEffectiveLevels: EffectiveLevels, amount 
     }
     return { ...accum, [key]: value + amount };
   }, {}) as EffectiveLevels;
-};
+}; // todo probably try use Map
 
-const getBoostedCombatStats = (stats: SkillsStats): CombatStats => {
+const getBoostedCombatStats = (stats: CharacterSkills): CombatStats => {
   return {
     attack: stats.attack.level + stats.attack.boost,
     defence: stats.defence.level + stats.defence.boost,
@@ -100,31 +99,37 @@ const getBoostedCombatStats = (stats: SkillsStats): CombatStats => {
 export class CombatSimulator {
   private monster: SimpleMonster;
   private timeLimit: number;
+  private amountLimit: number;
   private supplies: any;
   private attackStyle: AttackStyle;
   private attackType: AttackType;
+  private styleExperience: StyleExperience;
   private attackSpeed: number;
-  private skills: SkillsStats;
+  private skills: CharacterSkills;
   private equipment: EquipmentSlots;
 
   constructor(
-    monsterID: number,
+    monster: SimpleMonster,
     characterId: string,
-    timeLimit: number,
     attackStyle: AttackStyle,
     supplies: any,
+    timeLimit = 6000,
+    amount = Infinity,
   ) {
     this.skills = store.getState().characters.skills[characterId];
     this.equipment = store.getState().characters.equipment[characterId];
-    this.timeLimit = timeLimit;
     this.supplies = supplies;
+    this.timeLimit = timeLimit < 6000 ? timeLimit : 6000;
+    this.amountLimit = amount;
 
     const equipment = new Equipment(this.equipment);
     this.attackStyle = attackStyle;
-    this.attackType = equipment.getAttackType(this.attackStyle);
+    const attackTypeAndExperience = equipment.getAttackTypeAndExperience(this.attackStyle);
+    this.attackType = attackTypeAndExperience.attackType;
+    this.styleExperience = attackTypeAndExperience.styleExperience;
     this.attackSpeed = equipment.getAttackSpeed(this.attackStyle);
 
-    this.monster = testMonster; // getMonsterByID(monsterID)
+    this.monster = monster; // getMonsterByID(monsterID)
   }
 
   private calculateAccuracy = (
@@ -292,7 +297,7 @@ export class CombatSimulator {
     return relevantDamageAndAccuracyLevels;
   };
 
-  public simulate = (): { killcount: number; time: number } => {
+  public simulate = (): { killcount: number; rewards: TaskReward; ticks: number } => {
     const characterEffectiveLevels = this.calculateEffectiveLevelsCharacter();
     const monsterEffectiveLevels = this.calculateEffectiveLevelsMonster();
 
@@ -331,20 +336,13 @@ export class CombatSimulator {
     let characterHitpoints = this.skills.hitpoints.level + this.skills.hitpoints.boost;
     let monsterHitpoints = this.monster.data.hitpoints;
     let killcount = 0;
-    let time = 0; // In in-game ticks (0.6s per tick)
+    let ticks = 0; // In in-game ticks (0.6s per tick)
     let characterAttackCountdown = 0;
     let monsterAttackCountdown = 2;
     const characterEatThreshold = characterHitpoints - 20 - this.skills.hitpoints.boost; // TODO: determine number from how much the food heals
 
-    let saveMyPc = 0;
-
     while (true) {
-      saveMyPc += 1;
-      if (saveMyPc > 6002) { // one hour
-        console.error("NO INFINITY LOOP PLS THX!");
-        break;
-      }
-      if (time * 0.6 > this.timeLimit) {
+      if (ticks > this.timeLimit) {
         console.log("Time limit reached, returning early.");
         break;
       }
@@ -376,15 +374,20 @@ export class CombatSimulator {
       }
 
       // Increment time counter by one tick
-      time += 1;
+      ticks += 1;
 
       // Decrement attack cooldown counters
       characterAttackCountdown -= 1;
       monsterAttackCountdown -= 1;
     }
 
-    console.log(`Trip results: ${killcount} kills in ${Math.round(time * 0.6)} second(s).`);
+    const rewards = {
+      exp: this.monster.getExperience(killcount, this.styleExperience),
+      items: this.monster.getLoot(killcount),
+    };
 
-    return { killcount, time };
+    console.log(`Trip results: ${killcount} kills in ${Math.round(ticks * 0.6)} second(s).`);
+
+    return { killcount, rewards, ticks };
   };
 }

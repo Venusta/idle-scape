@@ -12,7 +12,6 @@ export const Equipment = (): JSX.Element => {
   const icons: Array<JSX.Element> = [];
 
   Object.values(EquipmentSlotNames).forEach((slot) => {
-    console.log(`${slot}`);
     icons.push(
       <EquipmentIcon
         key={`equipIcon-${uuid()}`}

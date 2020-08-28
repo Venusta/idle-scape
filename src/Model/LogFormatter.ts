@@ -1,13 +1,10 @@
 /* eslint-disable arrow-body-style */
 
-import { TaskPayloadData } from "src/slices/task";
-import { SkillName } from "src/types/types";
+import { SkillName } from "../types/types";
 
 interface LogPayload {
   [key: string]: any
 }
-
-type Derp = LogPayload | TaskPayloadData;
 
 /*
 {

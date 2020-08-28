@@ -4,7 +4,7 @@ import { store } from "../../redux-stuff";
 import {
   TaskInputOptions, FishingTask, SkillName, CharacterState,
 } from "../../types/types";
-import { SkillNames } from "../data";
+import { SkillNames } from "../../model/Skills";
 import { fishing, FishingTasks } from "../taskData/fishing";
 import { expToLevel, randomRoll, calculateWeight } from "../../util";
 import {
@@ -153,7 +153,6 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
 
   // todo remove bait
 
-  const skill = SkillNames.fishing;
   const type = "fishing";
   const info = {
     name: taskName,
@@ -167,7 +166,6 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     duration,
     type,
     info,
-    skill,
     reward: rewardStore.toObject(),
   };
 

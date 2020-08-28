@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
 import * as startingSkills from "../../model/Skills";
-import { EquipmentSlots, ItemData } from "../../types/types";
+import { EquipmentSlots, ItemData, CharacterSkills } from "../../types/types";
 
 export type IDsState = string[];
 
@@ -13,7 +14,7 @@ export interface NameState {
 }
 
 export interface SkillsState {
-  [x: string]: startingSkills.Skills;
+  [x: string]: CharacterSkills;
 }
 
 export interface StateOptions {
@@ -122,7 +123,7 @@ const startingEquipment: EquipmentSlots = {
   neck: -2,
 };
 
-const mapDataToId = (ids: string[], data: ItemData[] | startingSkills.Skills | EquipmentSlots) => {
+const mapDataToId = (ids: string[], data: ItemData[] | CharacterSkills | EquipmentSlots) => {
   return ids.reduce((accum, id) => ({
     ...accum,
     [id]: data,

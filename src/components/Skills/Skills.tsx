@@ -8,10 +8,10 @@ import { useSelector, shallowEqual } from "react-redux";
 import { v1 as uuid } from "uuid";
 
 import "./Skills.css";
-// import Laps from "../../constants/tasks/laps";
 import { expToLevel } from "../../util";
 import { RootState } from "../../redux-stuff";
-import { SkillsStats, SkillStats } from "../../types/types";
+import { CharacterSkills, CharacterSkill } from "../../types/types";
+import { selectSkills, selectName } from "../../selectors";
 
 interface ItemProps {
   skillName: string;
@@ -41,9 +41,9 @@ interface SkillsProps {
 }
 
 export const Skills = ({ id }: SkillsProps): JSX.Element => {
-  const characterData: {name: string, skills: SkillsStats } = useSelector((state: RootState) => ({
-    name: state.characters.names[id],
-    skills: state.characters.skills[id],
+  const characterData: { name: string, skills: CharacterSkills } = useSelector((state: RootState) => ({
+    name: selectName(state, id),
+    skills: selectSkills(state, id),
   }), shallowEqual);
 
   const { name, skills } = characterData;
@@ -56,20 +56,9 @@ export const Skills = ({ id }: SkillsProps): JSX.Element => {
     />
   );
 
-  const renderSkills = (): JSX.Element[] => { // todo fix
+  const renderSkills = (): JSX.Element[] => {
     console.log(`${name} Skills Rendered`);
-
-    const itemCount = Object.keys(skills).length;
-    const skillDivs: JSX.Element[] = [];
-
-    for (let index = 0; index < itemCount; index += 1) {
-      const skillName: string = Object.keys(skills)[index];
-      const data: SkillStats = skills[skillName as keyof SkillsStats];
-      const { exp } = data;
-
-      skillDivs.push(renderSkill(skillName, exp));
-    }
-    return skillDivs;
+    return Object.entries(skills).map(([key, { exp }]: [string, CharacterSkill]) => renderSkill(key, exp));
   };
 
   return (

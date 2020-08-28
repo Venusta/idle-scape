@@ -1,13 +1,8 @@
 /* eslint-disable max-len */
 import { expToLevel } from "../util";
+import { CharacterSkill } from "../types/types";
 
-export interface Skill {
-  exp: number;
-  level: number;
-  boost: number;
-}
-
-export const skill = (exp = 0, boost = 0): Skill => ({
+export const skill = (exp = 0, boost = 0): CharacterSkill => ({
   exp,
   level: expToLevel(exp),
   boost,
@@ -15,7 +10,7 @@ export const skill = (exp = 0, boost = 0): Skill => ({
 
 const didWeLevel = (lvl: number, newLvl: number): boolean => newLvl > lvl;
 
-export const gainExp = (skillData: Skill, amount: number): Skill => {
+export const gainExp = (skillData: CharacterSkill, amount: number): CharacterSkill => {
   const { exp, level } = skillData;
   const newExp = exp + amount;
   if (didWeLevel(level, expToLevel(newExp))) {

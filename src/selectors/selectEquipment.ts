@@ -7,4 +7,4 @@ import { EquipmentSlots } from "../types/types";
  * @param state RootState
  * @param id character id
  */
-export const selectEquipment = (state: RootState, id: string): EquipmentSlots => state.characters.equipment[id];
+export const selectEquipment = (state: RootState, id: string): EquipmentSlots => (state.characters.equipment[id]);

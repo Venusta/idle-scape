@@ -1,10 +1,14 @@
-import { SkillNames } from "../data";
+import { SkillNames } from "../../model/Skills";
 import { CookingTaskBuilder } from "../builders/CookingTaskBuilder";
 
 const tasks = [
   new CookingTaskBuilder({ name: "chicken" })
     .reqSkill(SkillNames.cooking, 1)
     .rewardExp(SkillNames.cooking, 30)
+    .rewardExp(SkillNames.farming, 15)
+    .rewardExp(SkillNames.attack, 30)
+    .rewardExp(SkillNames.construction, 30)
+    .rewardExp(SkillNames.crafting, 30)
     .reqItem("Raw chicken")
     .rewardItem("Cooked chicken")
     .failItem("Burnt chicken")

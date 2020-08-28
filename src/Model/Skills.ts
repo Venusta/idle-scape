@@ -1,33 +1,34 @@
-import { skill, Skill } from "./Skill";
 import { levelToExp } from "../util";
+import { CharacterSkills } from "../types/types";
+import { skill } from "./Skill";
 
-export interface Skills {
-  attack: Skill;
-  defence: Skill;
-  strength: Skill;
-  hitpoints: Skill;
-  ranged: Skill;
-  prayer: Skill;
-  magic: Skill;
-  cooking: Skill;
-  woodcutting: Skill;
-  fletching: Skill;
-  fishing: Skill;
-  firemaking: Skill;
-  crafting: Skill;
-  smithing: Skill;
-  mining: Skill;
-  herblore: Skill;
-  agility: Skill;
-  thieving: Skill;
-  slayer: Skill;
-  farming: Skill;
-  runecrafting: Skill;
-  hunter: Skill;
-  construction: Skill;
+export enum SkillNames {
+  attack = "attack",
+  defence = "defence",
+  strength = "strength",
+  hitpoints = "hitpoints",
+  ranged = "ranged",
+  prayer = "prayer",
+  magic = "magic",
+  cooking = "cooking",
+  woodcutting = "woodcutting",
+  fletching = "fletching",
+  fishing = "fishing",
+  firemaking = "firemaking",
+  crafting = "crafting",
+  smithing = "smithing",
+  mining = "mining",
+  herblore = "herblore",
+  agility = "agility",
+  thieving = "thieving",
+  slayer = "slayer",
+  farming = "farming",
+  runecrafting = "runecrafting",
+  hunter = "hunter",
+  construction = "construction",
 }
 
-export const skills: Skills = {
+export const skills: CharacterSkills = {
   attack: skill(levelToExp(70)),
   defence: skill(levelToExp(70)),
   strength: skill(levelToExp(70)),

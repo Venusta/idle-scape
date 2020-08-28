@@ -16,9 +16,10 @@ import { NameState } from "../constants/builders/CharacterBuilder";
 import { TaskList } from "./TaskList/TaskList";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { Log } from "./Log/Log";
-import { newTask } from "../slices/task";
+import { newTask, processQueue } from "../slices/task";
 import { Banks } from "./Bank/Banks";
 import { Equipment } from "./Equipment/Equipment";
+import { combatTask } from "../constants/tasks/combat";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -50,16 +51,27 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
+    // const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 20 });
+    // dispatch(processQueue({ characterId: "3", task: x }));
 
-    dispatch(newTask({
-      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
-    }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
+    // }));
 
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    // }));
     dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 1,
     }));
     dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 2,
+    }));
+    dispatch(newTask({
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 2,
+    }));
+    dispatch(newTask({
+      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 14,
     }));
 
     console.log("Rendered");

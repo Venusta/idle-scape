@@ -5,16 +5,16 @@ import { addReward } from "../../slices/character";
 import { store } from "../../redux-stuff";
 import { addMsg } from "../../slices/log";
 import { cooking } from "../taskData/cooking";
-import { SkillNames } from "../data";
 import { hasReqs } from "../../util/Requirements";
 import {
   TaskInputOptions, TaskOptions, CharacterState,
 } from "../../types/types";
-import { expToLevel, getRandomInt } from "../../util";
+import { expToLevel, getRandomInt, levelsGained } from "../../util";
 import { LogMsgBuilder } from "../builders/LogMsgBuilder";
 import { TaskDerpThing } from "../../slices/task";
 import { RewardStore } from "../builders/RewardStore";
 import { selectCharacter } from "../../selectors";
+import { SkillNames } from "../../model/Skills";
 
 export interface CookingTask extends TaskOptions {
   stopBurnLevel: number;
@@ -97,22 +97,25 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
 
   // todo return this in the task object
   let taskFinishMsg = `[Test] <orange#${characterName}> finished cooking <green#${amount} ${taskName}s>`;
-  taskFinishMsg += ` and gained <cyan#${cookingXp * cooked}> cooking xp`;
+  taskFinishMsg += ` and gained <cyan#${cookingXp * cooked}> cooking xp.`;
   if (expToLevel(cookingExp) > startingLevel) { // todo make this universal maybe
-    taskFinishMsg += ` their cooking level is now <cyan#${expToLevel(cookingExp)}>`;
+    taskFinishMsg += ` Their cooking level is now <cyan#${expToLevel(cookingExp)}>.`;
   }
   taskFinishMsg += ".";
   // todo build the final string for the task complete, calc the level up and xp gain internally so we can display it from one place
   console.log(taskFinishMsg);
-  store.dispatch(addMsg({ characterId, msg: taskFinishMsg }));
+  // store.dispatch(addMsg({ characterId, msg: taskFinishMsg }));
+
+  // eslint-disable-next-line no-shadow
 
   const msg = new LogMsgBuilder()
     .finished(characterName, "cooking", amount, taskName)
-    // .gaining(reward.exp)
-    .toString();
+    .gainingExp(rewardStore.getExp())
+    .andLevels(levelsGained(skills, rewardStore.getExpObject()))
+    .returnMsg();
   console.log(msg);
+  store.dispatch(addMsg({ characterId, msg }));
 
-  const skill = SkillNames.cooking;
   const type = "cooking";
   const info = {
     name: taskName,
@@ -124,8 +127,8 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     duration: totalDuration,
     type,
     info,
-    skill,
     reward: rewardStore.toObject(),
+    // gained: levelsGained(skills, rewardStore.getExp()),
   };
 
   return taskObj;

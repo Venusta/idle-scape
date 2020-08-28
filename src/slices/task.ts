@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable object-curly-newline */
 import { createSlice } from "@reduxjs/toolkit";
-import { SkillName, TaskReward } from "../types/types";
+import { TaskReward } from "../types/types";
 
 export type QueuedTask = {
   characterId: string
@@ -27,12 +27,11 @@ type NewTaskPayload = {
   payload: QueuedTask
 };
 
-export interface TaskDerpThing {
+export interface TaskDerpThing { // todo and this
   characterId: string
   duration: number
   type: string
   info: TaskInfo
-  skill: SkillName
   reward: TaskReward
 }
 export interface TaskPayloadData extends TaskDerpThing {

@@ -13,6 +13,38 @@
 //   equipment: Partial<EquipmentSlots>
 // }
 
+export interface CharacterSkill {
+  exp: number;
+  level: number;
+  boost: number;
+}
+
+export interface CharacterSkills {
+  attack: CharacterSkill;
+  defence: CharacterSkill;
+  strength: CharacterSkill;
+  hitpoints: CharacterSkill;
+  ranged: CharacterSkill;
+  prayer: CharacterSkill;
+  magic: CharacterSkill;
+  cooking: CharacterSkill;
+  woodcutting: CharacterSkill;
+  fletching: CharacterSkill;
+  fishing: CharacterSkill;
+  firemaking: CharacterSkill;
+  crafting: CharacterSkill;
+  smithing: CharacterSkill;
+  mining: CharacterSkill;
+  herblore: CharacterSkill;
+  agility: CharacterSkill;
+  thieving: CharacterSkill;
+  slayer: CharacterSkill;
+  farming: CharacterSkill;
+  runecrafting: CharacterSkill;
+  hunter: CharacterSkill;
+  construction: CharacterSkill;
+}
+
 export interface TaskInputOptions {
   characterId: string;
   taskName: string;
@@ -21,7 +53,7 @@ export interface TaskInputOptions {
 
 export interface CharacterState {
   name: string;
-  skills: SkillsStats;
+  skills: CharacterSkills;
   equipment: EquipmentSlots;
   bank: ItemData[];
 }
@@ -196,37 +228,37 @@ export type EquipmentSlotName = "head" |
 "ring" |
 "neck";
 
-export interface SkillStats {
-  level: number;
-  exp: number;
-  boost: number
-}
+// export interface SkillStats {
+//   level: number;
+//   exp: number;
+//   boost: number
+// }
 
-export interface SkillsStats {
-  attack: SkillStats;
-  defence: SkillStats;
-  strength: SkillStats;
-  hitpoints: SkillStats;
-  ranged: SkillStats;
-  prayer: SkillStats;
-  magic: SkillStats;
-  cooking: SkillStats;
-  woodcutting: SkillStats;
-  fletching: SkillStats;
-  fishing: SkillStats;
-  firemaking: SkillStats;
-  crafting: SkillStats;
-  smithing: SkillStats;
-  mining: SkillStats;
-  herblore: SkillStats;
-  agility: SkillStats;
-  thieving: SkillStats;
-  slayer: SkillStats;
-  farming: SkillStats;
-  runecrafting: SkillStats;
-  hunter: SkillStats;
-  construction: SkillStats;
-}
+// export interface SkillsStats {
+//   attack: SkillStats;
+//   defence: SkillStats;
+//   strength: SkillStats;
+//   hitpoints: SkillStats;
+//   ranged: SkillStats;
+//   prayer: SkillStats;
+//   magic: SkillStats;
+//   cooking: SkillStats;
+//   woodcutting: SkillStats;
+//   fletching: SkillStats;
+//   fishing: SkillStats;
+//   firemaking: SkillStats;
+//   crafting: SkillStats;
+//   smithing: SkillStats;
+//   mining: SkillStats;
+//   herblore: SkillStats;
+//   agility: SkillStats;
+//   thieving: SkillStats;
+//   slayer: SkillStats;
+//   farming: SkillStats;
+//   runecrafting: SkillStats;
+//   hunter: SkillStats;
+//   construction: SkillStats;
+// }
 
 export interface EquipmentSlots {
   head: number;
@@ -367,3 +399,8 @@ export interface EquipmentBonuses {
   "magic_damage": number;
   "prayer": number;
 }
+
+export type StyleExperience = "shared" |
+"ranged and defence" |
+"magic and defence" |
+SkillName;
