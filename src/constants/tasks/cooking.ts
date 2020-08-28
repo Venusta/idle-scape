@@ -128,7 +128,7 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     type,
     info,
     reward: rewardStore.toObject(),
-    // gained: levelsGained(skills, rewardStore.getExp()),
+    gained: levelsGained(skills, rewardStore.getExpObject()),
   };
 
   return taskObj;

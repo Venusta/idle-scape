@@ -16,7 +16,7 @@ export const combatTask = ({ characterId, taskName, amount }: TaskInputOptions):
   const { name: characterName, skills, bank } = character;
 
   const simulator = new CombatSimulator(selectMonster, characterId, AttackStyle.accurate, {});
-  const { killcount, rewards, ticks } = simulator.simulate();
+  const { killcount, rewards, ticks } = simulator.simulate({ kills: amount });
 
   const type = "combat";
   const info = {

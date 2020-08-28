@@ -98,8 +98,7 @@ const getBoostedCombatStats = (stats: CharacterSkills): CombatStats => {
 
 export class CombatSimulator {
   private monster: SimpleMonster;
-  private timeLimit: number;
-  private amountLimit: number;
+  private timeLimit = 6000;
   private supplies: any;
   private attackStyle: AttackStyle;
   private attackType: AttackType;
@@ -113,14 +112,10 @@ export class CombatSimulator {
     characterId: string,
     attackStyle: AttackStyle,
     supplies: any,
-    timeLimit = 6000,
-    amount = Infinity,
   ) {
     this.skills = store.getState().characters.skills[characterId];
     this.equipment = store.getState().characters.equipment[characterId];
     this.supplies = supplies;
-    this.timeLimit = timeLimit < 6000 ? timeLimit : 6000;
-    this.amountLimit = amount;
 
     const equipment = new Equipment(this.equipment);
     this.attackStyle = attackStyle;
@@ -297,7 +292,7 @@ export class CombatSimulator {
     return relevantDamageAndAccuracyLevels;
   };
 
-  public simulate = (): { killcount: number; rewards: TaskReward; ticks: number } => {
+  public simulate = ({ duration, kills }: { duration?: number, kills?: number}): { killcount: number; rewards: TaskReward; ticks: number } => {
     const characterEffectiveLevels = this.calculateEffectiveLevelsCharacter();
     const monsterEffectiveLevels = this.calculateEffectiveLevelsMonster();
 
@@ -342,7 +337,7 @@ export class CombatSimulator {
     const characterEatThreshold = characterHitpoints - 20 - this.skills.hitpoints.boost; // TODO: determine number from how much the food heals
 
     while (true) {
-      if (ticks > this.timeLimit) {
+      if (ticks > this.timeLimit || (duration !== undefined && ticks > duration)) {
         console.log("Time limit reached, returning early.");
         break;
       }
@@ -358,6 +353,10 @@ export class CombatSimulator {
         if (monsterHitpoints <= 0) {
           // ded monster
           killcount += 1;
+          if (kills !== undefined && killcount >= kills) {
+            console.log("Kill amount reached, returning.");
+            break;
+          }
           monsterHitpoints = this.monster.data.hitpoints;
         }
         characterAttackCountdown = this.attackSpeed;
