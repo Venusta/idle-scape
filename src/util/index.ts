@@ -5,3 +5,4 @@ export * from "./levelToExp";
 export * from "./expToLevel";
 export * from "./calculateWeightForLevel";
 export * from "./levelsGained";
+export * from "./formatStackNumbers";

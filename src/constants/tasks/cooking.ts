@@ -51,6 +51,14 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     console.log(requirements);
 
     console.log(`${characterName} sucks and misses reqs for ${taskName}`);
+
+    store.dispatch(addMsg(
+      {
+        action: "msg",
+        payload: `<orange#${characterName}> sucks and misses reqs for ${taskName}`,
+      },
+    ));
+
     // store.dispatch(addMsg({ characterId, msg: `${characterName} sucks and misses reqs for ${taskName}` }));
 
     return false;
@@ -120,14 +128,19 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     name: taskName,
     amount,
   };
-  store.dispatch(addMsg({
-    type,
-    info,
-    characterId,
-    characterName,
-    reward: rewardStore.toObject(),
-    gained: levelsGained(skills, rewardStore.getExpObject()),
-  }));
+  store.dispatch(addMsg(
+    {
+      action: "task-complete",
+      payload: {
+        type,
+        info,
+        characterId,
+        characterName,
+        reward: rewardStore.toObject(),
+        gained: levelsGained(skills, rewardStore.getExpObject()),
+      },
+    },
+  ));
 
   const taskObj = {
     characterId,

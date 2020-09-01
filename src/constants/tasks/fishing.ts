@@ -160,14 +160,19 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     amount,
   };
 
-  store.dispatch(addMsg({
-    type,
-    info,
-    characterId,
-    characterName,
-    reward: rewardStore.toObject(),
-    gained: levelsGained(skills, rewardStore.getExpObject()),
-  }));
+  store.dispatch(addMsg(
+    {
+      action: "task-complete",
+      payload: {
+        type,
+        info,
+        characterId,
+        characterName,
+        reward: rewardStore.toObject(),
+        gained: levelsGained(skills, rewardStore.getExpObject()),
+      },
+    },
+  ));
 
   const duration = (tick * 600) * 0.001;
   console.log(`Task should take ${(duration) / 1000} seconds`);

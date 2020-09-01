@@ -20,6 +20,7 @@ import { newTask, processQueue } from "../slices/task";
 import { Banks } from "./Bank/Banks";
 import { Equipment } from "./Equipment/Equipment";
 import { combatTask } from "../constants/tasks/combat";
+import { TaskSelector } from "./TaskSelector/TaskSelector";
 
 const SingleCharacterView = () => {
   const ids: NameState = useSelector((state: RootState) => state.characters.names, shallowEqual);
@@ -37,6 +38,7 @@ const SingleCharacterView = () => {
 
   return (
     <div className="reeee">
+      <TaskSelector />
       <TaskList />
       <Bank id={characterId} />
       <Equipment />
@@ -51,19 +53,34 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
-    const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 20 });
-    dispatch(processQueue({ characterId: "3", task: x }));
-
-    dispatch(newTask({
-      characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
-    }));
-
+    // const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 2000 });
+    // dispatch(processQueue({ characterId: "3", task: x }));
+    // const y = combatTask({ characterId: "3", taskName: "leaping trout", amount: 2000 });
+    // dispatch(processQueue({ characterId: "3", task: y }));
+    // const z = combatTask({ characterId: "3", taskName: "leaping trout", amount: 2000 });
+    // dispatch(processQueue({ characterId: "3", task: z }));
     dispatch(newTask({
       characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     }));
-    dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 10,
-    }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    // }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "leaping dfgdfg", taskType: "combat", amount: 2000,
+    // }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "leaping dfgdfg", taskType: "combat", amount: 2000,
+    // }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "leaping dfgdfg", taskType: "combat", amount: 2000,
+    // }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
+    // }));
+
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 10,
+    // }));
 
     console.log("Rendered");
     // eslint-disable-next-line react-hooks/exhaustive-deps

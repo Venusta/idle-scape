@@ -3,6 +3,7 @@
 import { useSelector, shallowEqual } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
+import { combatTask } from "../../constants/tasks/combat";
 import { RootState, useAppDispatch } from "../../redux-stuff";
 import { TaskState, processQueue, handleActiveTask } from "../../slices/task";
 import { cookingTask } from "../../constants/tasks/cooking";
@@ -31,6 +32,10 @@ export const TaskTimer = (): JSX.Element => {
           }
           case "fishing": {
             dispatch(processQueue({ characterId, task: fishingTask(task) }));
+            break;
+          }
+          case "combat": {
+            dispatch(processQueue({ characterId, task: combatTask(task) }));
             break;
           }
           default:

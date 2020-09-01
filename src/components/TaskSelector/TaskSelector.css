@@ -1,0 +1,74 @@
+.task-selector {
+  display: flex;
+  flex-direction: column;
+  /* background-color: blueviolet; */
+  margin: 10px;
+
+  max-width: 300px;
+}
+
+.task-selector-inner {
+  /* display: flex;
+  flex-direction: column; */
+  /* background-color: rgb(36, 37, 38); */
+  overflow: hidden;
+  overflow-y: scroll;
+  min-height: 200px;
+  max-height: 200px;
+  user-select: none;
+}
+
+.task-menu-name {
+  display: flex;
+  flex-direction: column;
+  /* background-color: rgba(114, 195, 219, 0.185); */
+  cursor: pointer;
+  font-size: 17px;
+  padding: 3px;
+}
+
+.task-menu-children {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  margin-left: 10px;
+}
+
+.task-menu-children.collapsed {
+  display: none;
+}
+
+.task-menu-item {
+  display: flex;
+  align-items: center;
+  margin: 1px;
+  cursor: pointer;
+}
+
+.itemImage2 {
+  margin-right: 5px;
+}
+
+.task-menu-item-name {
+  /* justify-self: center; */
+  /* align-self: center; */
+}
+
+.search-container {
+  display: flex;
+  background-color: rgb(105, 83, 75);
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.task-selector-amount {
+  background-color: blueviolet;
+}
+
+.title-container {
+  display: flex;
+}
+
+.checkbox-ahh {
+  justify-self: flex-end;
+}
