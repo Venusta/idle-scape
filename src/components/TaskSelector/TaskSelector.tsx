@@ -1,31 +1,48 @@
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/require-default-props */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable max-len */
 /* eslint-disable arrow-body-style */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-implied-eval */
-/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/require-default-props */
 import React, { useState } from "react";
 import "./TaskSelector.css";
 import { useDispatch } from "react-redux";
+import { v1 as uuid } from "uuid";
 import { getIcon } from "../../model/Icon";
 import { QueuedTask, newTask } from "../../slices/task";
+import { skillData } from "../../constants/taskData/index";
 
 interface TaskMenuItemProps {
   name: string;
   icon: number;
-  task?: QueuedTask
+  task?: QueuedTask;
+  level?: number;
 }
 
 interface TaskMenuProps {
-  title?: string;
-  children?: Array<React.ReactElement<TaskMenuProps>>;
+  title: string;
+  children?: React.ReactElement<TaskMenuProps>[] | React.ReactElement<TaskMenuProps>;
+  // children?: Array<React.ReactElement<TaskMenuProps>>;
 }
 
-const TaskMenuItem = ({ name, icon, task }: TaskMenuItemProps) => {
+const TaskMenuItemForm = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // @ts-ignore
+    console.log(e.target.amount.value);
+
+    console.log("yeet2");
+  };
+  return (
+    <form onSubmit={(e) => handleSubmit(e)}>
+      <input className="form" name="amount" type="text" />
+    </form>
+  );
+};
+
+const TaskMenuItem = ({
+  name, icon, task, level,
+}: TaskMenuItemProps) => {
   const dispatch = useDispatch();
   // todo don't actually dispatch the task, just select it.
   // todo amount box at top auto fills with max.
@@ -34,15 +51,20 @@ const TaskMenuItem = ({ name, icon, task }: TaskMenuItemProps) => {
   const ahhh = task || {
     characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
   };
+
   return (
-    <div className="task-menu-item" onClick={() => dispatch(newTask(ahhh))}>
-      <img
-        className="itemImage2"
-        width="18"
-        height="16"
-        src={`data:image/png;base64, ${getIcon(icon)}`}
-      />
-      <span className="task-menu-item-name">{name}</span>
+    <div className="task-menu-item">
+      <div className="align-center" onClick={() => dispatch(newTask(ahhh))}>
+        {level ? <span className="task-menu-item-level">{level}</span> : null}
+        <img
+          className="itemImage2"
+          width="18"
+          height="16"
+          src={`data:image/png;base64, ${getIcon(icon)}`}
+        />
+        <span className="task-menu-item-name">{name}</span>
+      </div>
+      <TaskMenuItemForm />
     </div>
   );
 };
@@ -66,42 +88,110 @@ const TaskMenu = ({ title, children }: TaskMenuProps) => {
   );
 };
 
+const FishingMenu = () => {
+  const characterId = "3"; // todo get from route page thing
+  const taskType = skillData.fishing.id;
+  const amount = 30; // form state thingy
+
+  const idk: {[tool:number]: JSX.Element[]} = {};
+  skillData.fishing.tasks.forEach((fishingTask) => {
+    const { tool, fishingSpot } = fishingTask;
+    console.log(fishingSpot);
+
+    Object.keys(fishingSpot).forEach((fish) => {
+      if (!idk[tool]) {
+        idk[tool] = [
+          <TaskMenuItem
+            key={uuid()}
+            icon={fishingSpot[fish].icon}
+            level={fishingSpot[fish].requirements.skills.get("fishing")}
+            name={fish}
+            task={{
+              characterId, taskName: fish, taskType, amount,
+            }}
+          />,
+        ];
+      } else {
+        idk[tool].push(<TaskMenuItem
+          key={uuid()}
+          icon={fishingSpot[fish].icon}
+          level={fishingSpot[fish].requirements.skills.get("fishing")}
+          name={fish}
+          task={{
+            characterId, taskName: fish, taskType, amount,
+          }}
+        />);
+      }
+    });
+  });
+
+  const idk2: JSX.Element[] = [];
+  Object.entries(idk).forEach(([tool, fishComponents]) => {
+    idk2.push(
+      <TaskMenu
+        key={uuid()}
+        title={tool}
+      >
+        {fishComponents}
+      </TaskMenu>,
+    );
+  });
+
+  return (
+    <TaskMenu title="Fishing">
+      {idk2}
+    </TaskMenu>
+  );
+};
+
 export const TaskSelector = (): JSX.Element => {
   // todo auto-populate from task data
 
   return (
     <div className="task-selector panel-window">
       <div className="title-container panel-title">
-        <div>Task Selector</div>
+        <div className="task-selector-title">Task Selector</div>
         <input type="checkbox" className="checkbox-ahh" />
       </div>
-      <div className="search-container">
-        <div className="task-selector-search-box">Search box</div>
-        <div className="task-selector-amount">300</div>
-      </div>
+      <form action="" className="task-selector-search-box">
+        <input type="text" className="form2" placeholder="Search..." />
+      </form>
       <div className="task-selector-inner">
-        <TaskMenu title="Fishing">
-          <TaskMenuItem
-            icon={2138}
-            name="leaping trout"
-            task={{
-              characterId: "3", taskName: "leaping trout", taskType: "fishing", amount: 20,
-            }}
-          />
-          <TaskMenuItem icon={2138} name="1" />
-          <TaskMenuItem icon={2138} name="2" />
-        </TaskMenu>
+        <FishingMenu />
         <TaskMenu title="Agility">
           <TaskMenuItem icon={2138} name="Gnome" />
           <TaskMenuItem icon={2138} name="1" />
           <TaskMenuItem icon={2138} name="2" />
         </TaskMenu>
         <TaskMenu title="Cooking">
-          <TaskMenuItem icon={2138} name="Chicken" />
-          <TaskMenuItem icon={2138} name="3" />
-          <TaskMenuItem icon={2138} name="4" />
-          <TaskMenuItem icon={2138} name="4" />
-          <TaskMenuItem icon={2138} name="4" />
+          <TaskMenuItem
+            icon={2138}
+            name="Chicken"
+            task={{
+              characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+            }}
+          />
+          <TaskMenuItem
+            icon={335}
+            name="Trout"
+            task={{
+              characterId: "3", taskName: "trout", taskType: "cooking", amount: 50,
+            }}
+          />
+          <TaskMenuItem
+            icon={331}
+            name="Salmon"
+            task={{
+              characterId: "3", taskName: "salmon", taskType: "cooking", amount: 20,
+            }}
+          />
+          <TaskMenuItem
+            icon={377}
+            name="Lobster"
+            task={{
+              characterId: "3", taskName: "lobster", taskType: "cooking", amount: 100,
+            }}
+          />
           <TaskMenuItem icon={2138} name="4" />
           <TaskMenu title="Cooking Submenu">
             <TaskMenuItem icon={2138} name="Chicken" />

@@ -34,7 +34,7 @@ export const Log = (): JSX.Element => {
   );
 
   const renderBank2 = (name: string, bank: ItemData[]) => { // todo add some error checks and shit
-    console.log(`${name} Log bank Rendered`);
+    // console.log(`${name} Log bank Rendered`);
 
     const bankGrid: JSX.Element[] = [];
 
@@ -46,9 +46,9 @@ export const Log = (): JSX.Element => {
   };
 
   const NewListShit = (): JSX.Element => {
-    console.error("sdguiadfuigadfg");
+    // console.error("sdguiadfuigadfg");
 
-    console.log(items);
+    // console.log(items);
     const sortedTaskData: Array<JSX.Element> = [];
     let ohMyGod: Array<JSX.Element> = [];
 

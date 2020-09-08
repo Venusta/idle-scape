@@ -28,13 +28,11 @@ export const Sidebar = (): JSX.Element => {
   };
 
   return (
-    <div className="sidebar-window">
+    <div className="sidebar-window panel-window">
       <Link to="/" className="sidebar-title">
         <div>Overview</div>
       </Link>
-      <div className="sidebar-inner panel-inner">
-        {MakeList()}
-      </div>
+      <div className="sidebar-inner panel-inner">{MakeList()}</div>
     </div>
   );
 };

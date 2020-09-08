@@ -67,7 +67,7 @@ export const TaskTimer = (): JSX.Element => {
     return () => {
       clearTimeout(timer);
     };
-  });
+  }, [time]);
 
   return (
     <div />

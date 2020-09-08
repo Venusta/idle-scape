@@ -37,12 +37,15 @@ const SingleCharacterView = () => {
   }
 
   return (
-    <div className="reeee">
+    <div className="character-view-container">
+      <div className="reeee">
+        <TaskList />
+        <Log />
+        <Bank id={characterId} />
+        <Equipment />
+        <Skills id={characterId} />
+      </div>
       <TaskSelector />
-      <TaskList />
-      <Bank id={characterId} />
-      <Equipment />
-      <Skills id={characterId} />
     </div>
   );
 };
@@ -59,9 +62,9 @@ export const App = (): JSX.Element => {
     // dispatch(processQueue({ characterId: "3", task: y }));
     // const z = combatTask({ characterId: "3", taskName: "leaping trout", amount: 2000 });
     // dispatch(processQueue({ characterId: "3", task: z }));
-    dispatch(newTask({
-      characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
-    }));
+    // dispatch(newTask({
+    //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
+    // }));
     // dispatch(newTask({
     //   characterId: "3", taskName: "chicken", taskType: "cooking", amount: 20,
     // }));
@@ -88,14 +91,14 @@ export const App = (): JSX.Element => {
 
   return (
     <div className="app">
-      <Sidebar />
       <TaskTimer />
+      <Sidebar />
       <div className="content">
         <Switch>
           <Route exact path="/">
-            <div className="something">
-              <Log />
+            <div className="reeee">
               <TaskList />
+              <Log />
               <Banks />
             </div>
           </Route>

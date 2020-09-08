@@ -101,7 +101,7 @@ export const cookingTask = ({ characterId, taskName, amount }: TaskInputOptions)
     .addReward(selectedTask.rewards, cooked)
     .addItem(selectedTask.fails.items, amount - cooked);
 
-  const totalDuration = amount * duration * 0.1; // TODO should be 1
+  const totalDuration = amount * duration * 0.001; // TODO should be 1
 
   // todo return this in the task object
   let taskFinishMsg = `[Test] <orange#${characterName}> finished cooking <green#${amount} ${taskName}s>`;

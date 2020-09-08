@@ -9,7 +9,7 @@ interface FishingSpot {
 
 export interface FishingTasks {
   names: string[]
-  tool: ItemMap;
+  tool: number;
   maxWeight: number;
   bait?: number;
   fishingSpot: FishingSpot
@@ -20,7 +20,7 @@ export interface FishingTasks {
 const tasks: FishingTasks[] = [
   {
     names: ["shrimp", "anchovies", "trout"],
-    tool: new Map([[nameToId("Small fishing net"), 1]]),
+    tool: nameToId("Small fishing net"),
     bait: nameToId("Feather"),
     maxWeight: 255,
     fishingSpot: {
@@ -47,8 +47,41 @@ const tasks: FishingTasks[] = [
     },
   },
   {
+    names: ["tuna", "swordfish"],
+    tool: nameToId("Harpoon"),
+    maxWeight: 255,
+    fishingSpot: {
+      tuna: new FishingTaskBuilder({ name: "tuna" })
+        .reqSkill(SkillNames.fishing, 35)
+        .rewardExp(SkillNames.fishing, 80)
+        .rewardItem("Raw tuna")
+        .weight(32, 192)
+        .finalise(),
+
+      swordfish: new FishingTaskBuilder({ name: "swordfish" })
+        .reqSkill(SkillNames.fishing, 50)
+        .rewardExp(SkillNames.fishing, 100)
+        .rewardItem("Raw swordfish")
+        .weight(16, 96)
+        .finalise(),
+    },
+  },
+  {
+    names: ["shark"],
+    tool: nameToId("Harpoon"),
+    maxWeight: 255,
+    fishingSpot: {
+      shark: new FishingTaskBuilder({ name: "shark" })
+        .reqSkill(SkillNames.fishing, 76)
+        .rewardExp(SkillNames.fishing, 110)
+        .rewardItem("Raw shark")
+        .weight(32, 192)
+        .finalise(),
+    },
+  },
+  {
     names: ["leaping trout", "leaping salmon", "leaping sturgeon"],
-    tool: new Map([[nameToId("Small fishing net"), 1]]),
+    tool: nameToId("Barbarian rod"),
     // bait: nameToId("Feather"),
     maxWeight: 255,
     fishingSpot: {
@@ -82,22 +115,6 @@ const tasks: FishingTasks[] = [
         .finalise(),
     },
   },
-  // {
-  //   names: ["salmon", "trout"],
-  //   tool: "Small fishing net",
-  //   fish: {
-  //     salmon: new TaskBuilder({ name: "salmon" })
-  //       .reqSkill(SkillNames.fishing, 1)
-  //       .rewardExp(SkillNames.fishing, 10)
-  //       .finalise(),
-
-  //     trout: new TaskBuilder({ name: "trout" })
-  //       .reqSkill(SkillNames.fishing, 15)
-  //       .rewardExp(SkillNames.fishing, 40)
-  //       .finalise(),
-  //   },
-  // },
-
 ];
 
 export const fishing = {

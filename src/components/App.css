@@ -6,17 +6,23 @@
   /* align-content: stretch; */
   /* align-items: stretch; */
 
-  height: 100vh;
+  height: 100%;
+  position: relative;
 }
 
 .content {
+  width: 100%;
+}
+
+.reeee {
+  width: 100%;
+  height: 100vh;
   display: flex;
-  flex-direction: row;
-  /* background-color: lightcoral; */
-  align-self: stretch;
-  overflow: hidden;
-  overflow-y: scroll;
-  width: 100vw;
+  flex-direction: column;
+  align-items: flex-start;
+  /* background-color: rgba(131, 78, 78, 0.432); */
+  overflow-y: auto;
+  /* width: 100vw; */
 }
 
 /* .something {
@@ -50,4 +56,8 @@
   margin: 5px 0 5px 0;
   box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.85);
   white-space: pre-wrap;
+}
+
+.character-view-container {
+  display: flex;
 }

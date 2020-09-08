@@ -7,17 +7,15 @@
 
 .bank-inner {
   display: flex;
-  flex: 1;
   box-sizing: border-box;
-  overflow: hidden;
   overflow: -moz-scrollbars-vertical;
   overflow-y: scroll;
 }
 
 .bank-wrapper {
-  align-self: flex-start;
+  /* align-self: flex-start; */
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(8, 36px);
   row-gap: 2px;
   column-gap: 15px;
   user-select: none;

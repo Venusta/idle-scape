@@ -36,7 +36,7 @@ export class FishingTaskBuilder extends TaskBuilder {
     const duration = ticks;
 
     const {
-      name, requirements, rewards, fails, weight1, weight99,
+      name, requirements, rewards, fails, weight1, weight99, icon,
     } = this;
 
     return {
@@ -47,6 +47,7 @@ export class FishingTaskBuilder extends TaskBuilder {
       fails,
       weight1,
       weight99,
+      icon,
     };
   };
 }

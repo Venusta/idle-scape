@@ -109,6 +109,7 @@ export interface TaskOptions {
   rewards: TaskRewardMap;
   duration: number;
   fails: TaskFailMap;
+  icon: number;
 }
 
 export interface CookingTask extends TaskOptions {

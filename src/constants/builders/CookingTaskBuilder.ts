@@ -42,7 +42,7 @@ export class CookingTaskBuilder extends TaskBuilder {
     const duration = ticks * 600;
 
     const {
-      name, requirements, rewards, fails, stopBurnLevel, stopBurnGauntlets,
+      name, requirements, rewards, fails, stopBurnLevel, stopBurnGauntlets, icon,
     } = this;
 
     return {
@@ -53,6 +53,7 @@ export class CookingTaskBuilder extends TaskBuilder {
       fails,
       stopBurnLevel,
       stopBurnGauntlets,
+      icon,
     };
   };
 }

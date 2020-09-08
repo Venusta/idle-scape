@@ -6,7 +6,9 @@ import {
 } from "../../types/types";
 import { SkillNames } from "../../model/Skills";
 import { fishing, FishingTasks } from "../taskData/fishing";
-import { expToLevel, randomRoll, calculateWeight, levelsGained } from "../../util";
+import {
+  expToLevel, randomRoll, calculateWeight, levelsGained,
+} from "../../util";
 import {
   hasItems, hasSkills, getItemFromBank,
 } from "../../util/Requirements";
@@ -57,7 +59,11 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
    * * check if the character has the right tool
    */
 
-  if (!hasItems(bank, tool)) { // todo maybe check "hasOneOf" for a range of tools
+  // todo remove this and make hasItems work with a single id
+  // temp fix
+  const toolMap = new Map([[tool, 1]]);
+
+  if (!hasItems(bank, toolMap)) { // todo maybe check "hasOneOf" for a range of tools
     console.log("Fishing tool doesn't exist");
     return false;
   }

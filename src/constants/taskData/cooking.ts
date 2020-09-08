@@ -15,6 +15,15 @@ const tasks = [
     .stopBurn(24)
     .finalise(),
 
+  new CookingTaskBuilder({ name: "trout" })
+    .reqSkill(SkillNames.cooking, 15)
+    .rewardExp(SkillNames.cooking, 70)
+    .reqItem("Raw trout")
+    .rewardItem("Trout")
+    .failItem("Burnt fish") // todo stupid same name bullshit
+    .stopBurn(49)
+    .finalise(),
+
   new CookingTaskBuilder({ name: "salmon" })
     .reqSkill(SkillNames.cooking, 25)
     .rewardExp(SkillNames.cooking, 90)

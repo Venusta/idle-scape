@@ -14,9 +14,11 @@ export class TaskBuilder {
   requirements: TaskRequirements;
   rewards: TaskRewardMap;
   fails: TaskFailMap;
+  icon: number;
 
   constructor(options: TaskBuilderOptions) {
     this.name = options.name;
+    this.icon = 0;
     this.requirements = {
       skills: new Map([]),
       items: new Map([]),
@@ -30,6 +32,13 @@ export class TaskBuilder {
       items: new Map([]),
     };
   }
+
+  setIcon = (icon: number | string): this => {
+    if (this.icon !== 0) return this;
+    const id = nameToId(icon);
+    this.icon = id;
+    return this;
+  };
 
   /**
    * Required skill level for a task
@@ -86,6 +95,7 @@ export class TaskBuilder {
 
   rewardItem = (item: number | string, amount = 1): this => {
     const id = nameToId(item);
+    this.setIcon(item); // todo probably remove idfk
     this.rewards.items.set(id, amount); // todo maybe add if multiple of same item
     return this;
   };
@@ -112,7 +122,7 @@ export class TaskBuilder {
     const duration = ticks * 600;
 
     const {
-      name, requirements, rewards, fails,
+      name, requirements, rewards, fails, icon,
     } = this;
 
     return {
@@ -121,6 +131,7 @@ export class TaskBuilder {
       rewards,
       duration,
       fails,
+      icon,
     };
   };
 }
