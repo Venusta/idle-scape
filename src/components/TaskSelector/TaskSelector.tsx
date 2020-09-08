@@ -96,29 +96,29 @@ const FishingMenu = () => {
   const idk: {[tool:number]: JSX.Element[]} = {};
   skillData.fishing.tasks.forEach((fishingTask) => {
     const { tool, fishingSpot } = fishingTask;
-    console.log(fishingSpot);
+    // console.log(fishingSpot);
 
-    Object.keys(fishingSpot).forEach((fish) => {
+    fishingSpot.forEach((fish, index) => {
       if (!idk[tool]) {
         idk[tool] = [
           <TaskMenuItem
             key={uuid()}
-            icon={fishingSpot[fish].icon}
-            level={fishingSpot[fish].requirements.skills.get("fishing")}
-            name={fish}
+            icon={fishingSpot[index].icon} // todo fix not hardcode
+            level={fishingSpot[index].requirements.skills.get("fishing")} // todo fix not hardcode
+            name={fish.name}
             task={{
-              characterId, taskName: fish, taskType, amount,
+              characterId, taskName: fish.name, taskType, amount,
             }}
           />,
         ];
       } else {
         idk[tool].push(<TaskMenuItem
           key={uuid()}
-          icon={fishingSpot[fish].icon}
-          level={fishingSpot[fish].requirements.skills.get("fishing")}
-          name={fish}
+          icon={fishingSpot[index].icon} // todo fix not hardcode
+          level={fishingSpot[index].requirements.skills.get("fishing")} // todo fix not hardcode
+          name={fish.name}
           task={{
-            characterId, taskName: fish, taskType, amount,
+            characterId, taskName: fish.name, taskType, amount,
           }}
         />);
       }

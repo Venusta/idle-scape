@@ -8,6 +8,7 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 
 import "./App.css";
+import { FishingSimulation } from "../playground/fishingCalculator";
 import { RootState, useAppDispatch } from "../redux-stuff";
 import { Bank } from "./Bank/Bank";
 import { Skills } from "./Skills/Skills";
@@ -54,6 +55,9 @@ export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    new FishingSimulation().run();
+    new FishingSimulation(true).run99();
+
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);
     // const x = combatTask({ characterId: "3", taskName: "leaping trout", amount: 2000 });

@@ -1,25 +1,17 @@
+/* eslint-disable prefer-const */
 /* eslint-disable max-len */
-/*
-  * Fishing xp per hour calculation at level 99
-  */
 
-const fishies = [
-  {
-    exp: 80,
-    weight: [8, 64],
-    name: "Sturgeon",
-  },
-  {
-    exp: 70,
-    weight: [16, 96],
-    name: "Salmon",
-  },
-  {
-    exp: 50,
-    weight: [32, 192],
-    name: "Trout",
-  },
-].sort((a, b) => b.exp - a.exp);
+import { fishing, FishingTasks } from "../constants/taskData/fishing";
+import { SkillNames } from "../model/Skills";
+
+interface FishingTaskData {
+  tasks: Array<FishingTasks>;
+  id: SkillNames;
+}
+
+const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.fishingSpot.find((fish) => fish.name === taskName));
+
+const selectFish = (selectedTask: FishingTasks, taskName: string) => selectedTask.fishingSpot.find((fish) => fish.name === taskName);
 
 interface FishData {
   name: string;
@@ -37,14 +29,79 @@ export class FishingSimulation {
     name: string;
   }[];
 
+  private brute: boolean;
+
   private catchesPerHour: number;
 
-  constructor() {
+  constructor(brute = false) {
     const ticksPerCatch = 5;
+    const fishName = "Leaping trout";
 
     this.catchesPerHour = 6000 / ticksPerCatch;
-    this.fishData = fishies;
+    this.fishData = [];
+    this.brute = brute;
+
+    const task = selectFishingTask(fishing, fishName);
+    if (!task) return;
+
+    task.fishingSpot.forEach((fish) => {
+      const { name, weight1, weight99 } = fish;
+      let weight = [weight1, weight99];
+      if (brute) weight = [0, 255];
+      this.fishData.push({
+        exp: fish.rewards.exp.get("fishing") || 0,
+        weight,
+        name,
+      });
+    });
+
+    this.fishData = this.fishData.sort((a, b) => b.exp - a.exp);
   }
+
+  run99 = (): void => {
+    const amount = [301, 338, 421];
+    const amountTargetExp = this.fishData.map((fish, index) => fish.exp * amount[index]);
+
+    const expTargets = [24080, 23660, 21050];
+    let tempData: FishData[] = [];
+    this.fishData.forEach((fish, index) => {
+      for (let i = 0; i < 200; i += 1) {
+        tempData = this.run2(99);
+        const test = tempData[index].expPerFish <= expTargets[index];
+        if (test) {
+          console.table(tempData);
+          console.log(tempData.reduce((accum, fish) => accum + fish.expPerFish, 0));
+          return;
+        }
+        let [w1, w99] = this.fishData[index].weight;
+        this.fishData[index].weight = [w1, w99 -= 1];
+      }
+    });
+    console.table(this.fishData);
+    console.log(tempData.reduce((accum, fish) => accum + fish.expPerFish, 0));
+  };
+
+  run2 = (level = 99): FishData[] => {
+    const maxWeight = 255;
+    const data: FishData[] = [];
+
+    this.fishData.forEach((fish, index) => {
+      const { exp, weight, name } = fish;
+      let chance = calculateWeight(level, weight) / maxWeight;
+
+      for (let i = 0; i < index; i += 1) {
+        const previousFishChance = this.fishData[i];
+
+        chance *= (1 - calculateWeight(level, previousFishChance.weight) / maxWeight);
+      }
+      const caught = Math.floor(chance * this.catchesPerHour);
+      const expPerFish = caught * exp;
+      data.push({
+        name, caught, expPerFish, calculatedChance: chance,
+      });
+    });
+    return data;
+  };
 
   run = (level = 99): void => {
     const maxWeight = 255;
@@ -63,7 +120,7 @@ export class FishingSimulation {
          * For every fish before the one we want, we need to check the chance
          * to not get that fish to calculate the true chance for the one we want
          */
-        const previousFishChance = fishies[i];
+        const previousFishChance = this.fishData[i];
 
         chance *= (1 - calculateWeight(level, previousFishChance.weight) / maxWeight);
       }

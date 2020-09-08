@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 
 import { store } from "../../redux-stuff";
@@ -22,7 +23,16 @@ interface FishingTaskData {
   id: SkillNames;
 }
 
-const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.names.find((name) => name === taskName));
+// const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.names.find((name) => name === taskName));
+const selectFishingTask = (taskData: FishingTaskData, taskName: string) => {
+  return taskData.tasks.find((task) => {
+    return task.fishingSpot.find((fish) => fish.name === taskName);
+  });
+};
+
+const selectFish = (selectedTask: FishingTasks, taskName: string) => {
+  return selectedTask.fishingSpot.find((fish) => fish.name === taskName);
+};
 
 export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions): TaskDerpThing | false => {
   const character: CharacterState = selectCharacter(store.getState(), characterId);
@@ -32,24 +42,26 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   /**
    * * select the fishing spot
    */
-  const selectedFishSpot = selectFishingTask(fishing, taskName);
+  const selectedFishTask = selectFishingTask(fishing, taskName);
 
   /**
    * * check the fishing spot is valid
    */
-  if (!selectedFishSpot) {
+  if (!selectedFishTask) {
     console.error(`Fishing task not found: ${taskName}`);
     return false;
   }
+  const selectedFish = selectFish(selectedFishTask, taskName);
+
   const {
-    tool, fishingSpot, maxWeight, names,
-  } = selectedFishSpot;
-  console.log(selectedFishSpot);
+    tool, fishingSpot, maxWeight,
+  } = selectedFishTask;
 
   /**
    * * check if the character has reqs for the chosen fish from the fishing spot
    */
-  if (!hasSkills(skills, fishingSpot[taskName].requirements.skills)) {
+  // @ts-ignore
+  if (!hasSkills(skills, selectedFish.requirements.skills)) {
     console.log(`${characterName}'s fishing level is too low for ${taskName}`);
     // store.dispatch(addMsg({ characterId, msg: `${characterName}'s fishing level is too low for ${taskName}` }));
     return false;
@@ -71,8 +83,8 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
    * * if fishing spot requires bait, check how much we have
    */
   let baitAmount = 0;
-  if (selectedFishSpot.bait) {
-    baitAmount = getItemFromBank(bank, selectedFishSpot.bait)?.amount ?? 0;
+  if (selectedFishTask.bait) {
+    baitAmount = getItemFromBank(bank, selectedFishTask.bait)?.amount ?? 0;
     if (baitAmount === 0) { // id to name for msg
       // store.dispatch(addMsg({ characterId, msg: `${characterName} doesn't have any ${selectedFishSpot.bait} for ${taskName}` }));
       return false;
@@ -89,11 +101,10 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   /**
    * * Converts the fishingSpot Object to an Array and then sorts them from high to low based on the fishing level
    */
-  const fishPool = names
-    .reduce((accum: FishingTask[], fish) => [...accum, fishingSpot[fish]], [])
+  const fishPool = [...fishingSpot]
     .sort(
-      (a, b) => getSkillReqLevel(a.requirements.skills, "fishing")
-        + getSkillReqLevel(b.requirements.skills, "fishing"),
+      (a, b) => getSkillReqLevel(b.requirements.skills, "fishing")
+        - getSkillReqLevel(a.requirements.skills, "fishing"),
     );
 
   /**
@@ -124,7 +135,7 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
    */
   console.time("Fishing Task Simulation");
   while (fishCaught < fishToCatch && tick < tickLimit) {
-    if (selectedFishSpot.bait && baitAmount === 0) {
+    if (selectedFishTask.bait && baitAmount === 0) {
       console.error("Ran out of bait");
       break;
     }
@@ -144,7 +155,7 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
           if (fish.name === taskName) {
             fishCaught += 1;
           }
-          if (selectedFishSpot.bait) {
+          if (selectedFishTask.bait) {
             baitAmount -= 1; // I think only 1 bait needed
           }
           // Break the for loop early when a fish is caught
@@ -158,7 +169,6 @@ export const fishingTask = ({ characterId, taskName, amount }: TaskInputOptions)
   console.timeEnd("Fishing Task Simulation");
 
   // todo remove bait
-  // const type = "cooking";
 
   const type = "fishing";
   const info = {

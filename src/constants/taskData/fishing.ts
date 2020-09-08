@@ -1,91 +1,82 @@
 import { SkillNames } from "../../model/Skills";
-import { FishingTask, ItemMap } from "../../types/types";
+import { FishingTask } from "../../types/types";
 import { FishingTaskBuilder } from "../builders/FishingTaskBuilder";
 import { nameToId } from "../../util/nameToId";
 
-interface FishingSpot {
-  [key: string]: FishingTask;
-}
-
 export interface FishingTasks {
-  names: string[]
   tool: number;
   maxWeight: number;
   bait?: number;
-  fishingSpot: FishingSpot
+  fishingSpot: FishingTask[]
 }
 
 // todo maybe get rid of chaining and use a method for each specific thing
 // todo builder for this, ensure highest level fish is first, idk
 const tasks: FishingTasks[] = [
   {
-    names: ["shrimp", "anchovies", "trout"],
     tool: nameToId("Small fishing net"),
     bait: nameToId("Feather"),
     maxWeight: 255,
-    fishingSpot: {
-      shrimp: new FishingTaskBuilder({ name: "shrimp" })
+    fishingSpot: [
+      new FishingTaskBuilder({ name: "Shrimp" })
         .reqSkill(SkillNames.fishing, 1)
         .rewardExp(SkillNames.fishing, 10)
         .rewardItem("Raw shrimps")
         .weight(32, 192)
         .finalise(),
 
-      anchovies: new FishingTaskBuilder({ name: "anchovies" })
+      new FishingTaskBuilder({ name: "Anchovies" })
         .reqSkill(SkillNames.fishing, 15)
         .rewardExp(SkillNames.fishing, 40)
         .rewardItem("Raw anchovies")
         .weight(16, 96)
         .finalise(),
 
-      trout: new FishingTaskBuilder({ name: "trout" })
+      new FishingTaskBuilder({ name: "Trout" })
         .reqSkill(SkillNames.fishing, 25)
         .rewardExp(SkillNames.fishing, 90)
         .rewardItem("Raw trout")
         .weight(8, 64)
         .finalise(),
-    },
+    ],
   },
   {
-    names: ["tuna", "swordfish"],
     tool: nameToId("Harpoon"),
     maxWeight: 255,
-    fishingSpot: {
-      tuna: new FishingTaskBuilder({ name: "tuna" })
+    fishingSpot: [
+      new FishingTaskBuilder({ name: "Tuna" })
         .reqSkill(SkillNames.fishing, 35)
         .rewardExp(SkillNames.fishing, 80)
         .rewardItem("Raw tuna")
         .weight(32, 192)
         .finalise(),
 
-      swordfish: new FishingTaskBuilder({ name: "swordfish" })
+      new FishingTaskBuilder({ name: "Swordfish" })
         .reqSkill(SkillNames.fishing, 50)
         .rewardExp(SkillNames.fishing, 100)
         .rewardItem("Raw swordfish")
         .weight(16, 96)
         .finalise(),
-    },
+    ],
   },
   {
-    names: ["shark"],
     tool: nameToId("Harpoon"),
     maxWeight: 255,
-    fishingSpot: {
-      shark: new FishingTaskBuilder({ name: "shark" })
+    fishingSpot: [
+      new FishingTaskBuilder({ name: "Shark" })
         .reqSkill(SkillNames.fishing, 76)
         .rewardExp(SkillNames.fishing, 110)
         .rewardItem("Raw shark")
         .weight(32, 192)
         .finalise(),
-    },
+    ],
   },
   {
-    names: ["leaping trout", "leaping salmon", "leaping sturgeon"],
     tool: nameToId("Barbarian rod"),
     // bait: nameToId("Feather"),
     maxWeight: 255,
-    fishingSpot: {
-      "leaping trout": new FishingTaskBuilder({ name: "leaping trout" })
+    fishingSpot: [
+      new FishingTaskBuilder({ name: "Leaping trout" })
         .reqSkill(SkillNames.fishing, 48)
         .reqSkill(SkillNames.agility, 15)
         .reqSkill(SkillNames.strength, 15)
@@ -96,7 +87,7 @@ const tasks: FishingTasks[] = [
         .weight(32, 192)
         .finalise(),
 
-      "leaping salmon": new FishingTaskBuilder({ name: "leaping salmon" })
+      new FishingTaskBuilder({ name: "Leaping salmon" })
         .reqSkill(SkillNames.fishing, 58)
         .rewardExp(SkillNames.fishing, 70)
         .rewardExp(SkillNames.agility, 6)
@@ -105,7 +96,7 @@ const tasks: FishingTasks[] = [
         .weight(16, 96)
         .finalise(),
 
-      "leaping sturgeon": new FishingTaskBuilder({ name: "leaping sturgeon" })
+      new FishingTaskBuilder({ name: "Leaping sturgeon" })
         .reqSkill(SkillNames.fishing, 70)
         .rewardExp(SkillNames.fishing, 80)
         .rewardExp(SkillNames.agility, 7)
@@ -113,7 +104,19 @@ const tasks: FishingTasks[] = [
         .rewardItem("Leaping sturgeon")
         .weight(8, 64)
         .finalise(),
-    },
+    ],
+  },
+  {
+    tool: nameToId("Lobster pot"),
+    maxWeight: 255,
+    fishingSpot: [
+      new FishingTaskBuilder({ name: "Lobster" })
+        .reqSkill(SkillNames.fishing, 40)
+        .rewardExp(SkillNames.fishing, 90)
+        .rewardItem("Raw lobster")
+        .weight(32, 192)
+        .finalise(),
+    ],
   },
 ];
 
