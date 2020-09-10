@@ -6,7 +6,9 @@ import {
   Switch, Route, Redirect, useParams,
 } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
-
+import {
+  LineChart, XAxis, Tooltip, CartesianGrid, Line, BarChart, YAxis, Legend, Bar,
+} from "recharts";
 import "./App.css";
 import { FishingSimulation } from "../playground/fishingCalculator";
 import { RootState, useAppDispatch } from "../redux-stuff";
@@ -55,7 +57,12 @@ export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    new FishingSimulation().run();
+    console.table(
+      new FishingSimulation().run2(1),
+    );
+    console.table(
+      new FishingSimulation().run2(),
+    );
     new FishingSimulation(true).run99();
 
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
@@ -92,6 +99,44 @@ export const App = (): JSX.Element => {
     console.log("Rendered");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const data = [
+    {
+      level: "1",
+      "Leaping sturgeon": 2960,
+      "Leaping salmon": 5040,
+      "Leaping trout": 6800,
+      // Total: 14800,
+    },
+    {
+      level: "99",
+      "Leaping sturgeon": 24080,
+      "Leaping salmon": 23660,
+      "Leaping trout": 21050,
+      // Total: 68790,
+    },
+  ];
+
+  const Chart = () => (
+    <LineChart
+      width={800}
+      height={550}
+      data={data}
+      margin={{
+        top: 5, right: 30, left: 20, bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="level" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line type="monotone" dataKey="Leaping sturgeon" stroke="#82ca9d" />
+      <Line type="monotone" dataKey="Leaping salmon" stroke="#8884d8" />
+      <Line type="monotone" dataKey="Leaping trout" stroke="#ff8fd3" />
+      <Line type="monotone" dataKey="Total" stroke="#f79700" />
+    </LineChart>
+  );
 
   return (
     <div className="app">

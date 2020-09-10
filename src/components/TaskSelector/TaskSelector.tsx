@@ -149,12 +149,12 @@ export const TaskSelector = (): JSX.Element => {
 
   return (
     <div className="task-selector panel-window">
-      <div className="title-container panel-title">
+      {/* <div className="title-container panel-title">
         <div className="task-selector-title">Task Selector</div>
         <input type="checkbox" className="checkbox-ahh" />
-      </div>
+      </div> */}
       <form action="" className="task-selector-search-box">
-        <input type="text" className="form2" placeholder="Search..." />
+        <input type="text" className="search-box-form" placeholder="Search..." />
       </form>
       <div className="task-selector-inner">
         <FishingMenu />

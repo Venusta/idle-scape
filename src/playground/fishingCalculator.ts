@@ -9,48 +9,52 @@ interface FishingTaskData {
   id: SkillNames;
 }
 
-const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.fishingSpot.find((fish) => fish.name === taskName));
+const selectFishingTask = (taskData: FishingTaskData, taskName: string) => taskData.tasks.find((task) => task.fishingSpot.find((fish) => fish.name.toLowerCase() === taskName.toLowerCase()));
 
 const selectFish = (selectedTask: FishingTasks, taskName: string) => selectedTask.fishingSpot.find((fish) => fish.name === taskName);
 
 interface FishData {
   name: string;
+  exp: number;
   caught: number;
-  expPerFish: number;
-  calculatedChance: number;
+  totalFishExp: number;
+  chance: number;
+  weight1: number
+  weight99: number
 }
 
-const calculateWeight = (level: number, [low, high]: number[]) => low + ((level - 1) / 98) * (high - low);
+const calculateWeight = (level: number, low: number, high: number) => low + ((level - 1) / 98) * (high - low);
 
 export class FishingSimulation {
   private fishData: {
     exp: number;
-    weight: number[];
+    weight1: number
+    weight99: number
     name: string;
   }[];
-
-  private brute: boolean;
 
   private catchesPerHour: number;
 
   constructor(brute = false) {
     const ticksPerCatch = 5;
-    const fishName = "Leaping trout";
+    const fishName = "leaping salmon";
 
     this.catchesPerHour = 6000 / ticksPerCatch;
     this.fishData = [];
-    this.brute = brute;
 
     const task = selectFishingTask(fishing, fishName);
     if (!task) return;
 
     task.fishingSpot.forEach((fish) => {
-      const { name, weight1, weight99 } = fish;
-      let weight = [weight1, weight99];
-      if (brute) weight = [0, 255];
+      let { name, weight1, weight99 } = fish;
+      if (brute) {
+        weight1 = 0;
+        weight99 = 255;
+      }
       this.fishData.push({
         exp: fish.rewards.exp.get("fishing") || 0,
-        weight,
+        weight1,
+        weight99,
         name,
       });
     });
@@ -58,27 +62,34 @@ export class FishingSimulation {
     this.fishData = this.fishData.sort((a, b) => b.exp - a.exp);
   }
 
-  run99 = (): void => {
-    const amount = [301, 338, 421];
+  run99 = (level = 99): void => {
+    const amount = [150, 338, 421];
     const amountTargetExp = this.fishData.map((fish, index) => fish.exp * amount[index]);
 
+    // const expTargets = [24080, 23660, 21050];
     const expTargets = [24080, 23660, 21050];
+    const chanceTargets = [15, 25];
+
     let tempData: FishData[] = [];
+
     this.fishData.forEach((fish, index) => {
-      for (let i = 0; i < 200; i += 1) {
-        tempData = this.run2(99);
-        const test = tempData[index].expPerFish <= expTargets[index];
-        if (test) {
-          console.table(tempData);
-          console.log(tempData.reduce((accum, fish) => accum + fish.expPerFish, 0));
+      for (let i = 0; i < 255; i += 1) {
+        tempData = this.run2(level);
+
+        // if exp target
+        // if (tempData[index].totalFishExp <= amountTargetExp[index]) {
+        //   return;
+        // }
+        // if chance target
+        if (tempData[index].chance <= chanceTargets[index] / 100) {
+          console.log("Chance target met");
           return;
         }
-        let [w1, w99] = this.fishData[index].weight;
-        this.fishData[index].weight = [w1, w99 -= 1];
+        this.fishData[index].weight99 -= 1;
       }
     });
-    console.table(this.fishData);
-    console.log(tempData.reduce((accum, fish) => accum + fish.expPerFish, 0));
+    console.table(tempData);
+    console.log(tempData.reduce((accum, fish) => accum + fish.totalFishExp, 0));
   };
 
   run2 = (level = 99): FishData[] => {
@@ -86,55 +97,57 @@ export class FishingSimulation {
     const data: FishData[] = [];
 
     this.fishData.forEach((fish, index) => {
-      const { exp, weight, name } = fish;
-      let chance = calculateWeight(level, weight) / maxWeight;
+      const {
+        exp, weight1, weight99, name,
+      } = fish;
+      let chance = calculateWeight(level, weight1, weight99) / maxWeight;
 
       for (let i = 0; i < index; i += 1) {
         const previousFishChance = this.fishData[i];
 
-        chance *= (1 - calculateWeight(level, previousFishChance.weight) / maxWeight);
+        chance *= (1 - calculateWeight(level, previousFishChance.weight1, previousFishChance.weight99) / maxWeight);
       }
       const caught = Math.floor(chance * this.catchesPerHour);
-      const expPerFish = caught * exp;
+      const totalFishExp = caught * exp;
       data.push({
-        name, caught, expPerFish, calculatedChance: chance,
+        name, exp, totalFishExp, caught, weight1, weight99, chance,
       });
     });
     return data;
   };
 
-  run = (level = 99): void => {
-    const maxWeight = 255;
-    let totalXp = 0;
-    const data: FishData[] = [];
+  // run = (level = 99): void => {
+  //   const maxWeight = 255;
+  //   let totalXp = 0;
+  //   const data: FishData[] = [];
 
-    this.fishData.forEach((fish, index) => {
-      const { exp, weight, name } = fish;
-      let chance = calculateWeight(level, weight) / maxWeight;
-      /**
-       * Calculated chance to catch this specific fish
-       */
+  //   this.fishData.forEach((fish, index) => {
+  //     const { exp, weight, name } = fish;
+  //     let chance = calculateWeight(level, weight) / maxWeight;
+  //     /**
+  //      * Calculated chance to catch this specific fish
+  //      */
 
-      for (let i = 0; i < index; i += 1) {
-        /**
-         * For every fish before the one we want, we need to check the chance
-         * to not get that fish to calculate the true chance for the one we want
-         */
-        const previousFishChance = this.fishData[i];
+  //     for (let i = 0; i < index; i += 1) {
+  //       /**
+  //        * For every fish before the one we want, we need to check the chance
+  //        * to not get that fish to calculate the true chance for the one we want
+  //        */
+  //       const previousFishChance = this.fishData[i];
 
-        chance *= (1 - calculateWeight(level, previousFishChance.weight) / maxWeight);
-      }
-      const caught = Math.floor(chance * this.catchesPerHour);
-      const expPerFish = caught * exp;
-      totalXp += caught * exp;
-      data.push({
-        name, caught, expPerFish, calculatedChance: chance,
-      });
-    });
-    console.table(data);
+  //       chance *= (1 - calculateWeight(level, previousFishChance.weight) / maxWeight);
+  //     }
+  //     const caught = Math.floor(chance * this.catchesPerHour);
+  //     const totalFishExp = caught * exp;
+  //     totalXp += caught * exp;
+  //     data.push({
+  //       name, caught, totalFishExp, chance, weight,
+  //     });
+  //   });
+  //   console.table(data);
 
-    console.log(`Fishing xp per hour(converted to fish): ${totalXp}`);
-  };
+  //   console.log(`Fishing xp per hour(converted to fish): ${totalXp}`);
+  // };
 }
 
 // let averageXpPerCatch = 0;

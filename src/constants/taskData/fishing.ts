@@ -67,7 +67,7 @@ const tasks: FishingTasks[] = [
         .reqSkill(SkillNames.fishing, 76)
         .rewardExp(SkillNames.fishing, 110)
         .rewardItem("Raw shark")
-        .weight(32, 192)
+        .weight(12, 52)
         .finalise(),
     ],
   },
