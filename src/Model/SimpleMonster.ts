@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  MonsterOptions, ItemData, ExpReward, SkillName, StyleExperience,
+  MonsterOptions, ItemData, ExpReward, StyleExperience,
 } from "../types/types";
 import { Monster } from "./Monster";
 import { Loot } from "./Loot";
