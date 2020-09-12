@@ -66,7 +66,8 @@ export const App = (): JSX.Element => {
     // );
     // new FishingSimulation(true).run99();
 
-    testMonster.test();
+    // testMonster.kill();
+    console.table(testMonster.resultToNames(50));
 
     // const x = fishingTask({ characterID: "3", taskName: "leaping trout", amount: 20 });
     // console.log(x);

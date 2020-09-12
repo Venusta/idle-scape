@@ -2,16 +2,13 @@ import { itemSearchData } from "../model/Items";
 /* eslint-disable no-shadow */
 /* eslint-disable arrow-body-style */
 import { DropTable } from "./dropTable";
+import { DropSimulator } from "./DropSimulator";
+import { ItemData } from "../types/types";
 
 interface MonsterOptions {
   // id: number;
   name: string;
   dropTable: DropTable;
-}
-
-interface ItemData {
-  drop: number;
-  amount: number;
 }
 
 export class Monster {
@@ -21,35 +18,16 @@ export class Monster {
     this.dropTable = options.dropTable;
   }
 
-  test = (amount = 1): void => {
-    const loot = [];
-    console.log(`test: ${amount}`);
-
-    for (let index = 0; index < 100; index += 1) {
-      loot.push(this.dropTable.simulate());
-    }
-    console.table(loot);
-    console.log(loot.flat());
-
-    const result: ItemData[] = [];
-    loot.flat().forEach((currentDrop) => {
-      const { drop, amount } = currentDrop;
-
-      const index = result.findIndex((item) => item.drop === drop);
-
-      if (index === -1) {
-        result.push({ ...currentDrop });
-      } else {
-        result[index].amount += amount;
-      }
-    });
-    console.log(result);
-
-    const resultToNames = result.map((item) => {
-      const { drop, amount } = item;
-      const name = itemSearchData.getName(drop);
-      return { name, amount };
-    }, {});
-    console.table(resultToNames);
+  kill = (amount = 1): ItemData[] => {
+    const sim = new DropSimulator(this.dropTable);
+    const loot = sim.getDrops(amount);
+    return loot;
   };
+
+  // todo remove later, only for debug
+  resultToNames = (amount = 1) => this.kill(amount).map((drop) => {
+    const { item, amount } = drop;
+    const name = itemSearchData.getName(item);
+    return { name, amount };
+  }, {});
 }
