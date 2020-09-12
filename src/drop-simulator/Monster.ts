@@ -1,3 +1,4 @@
+import { itemSearchData } from "../model/Items";
 /* eslint-disable no-shadow */
 /* eslint-disable arrow-body-style */
 import { DropTable } from "./dropTable";
@@ -24,7 +25,7 @@ export class Monster {
     const loot = [];
     console.log(`test: ${amount}`);
 
-    for (let index = 0; index < 8; index += 1) {
+    for (let index = 0; index < 100; index += 1) {
       loot.push(this.dropTable.simulate());
     }
     console.table(loot);
@@ -43,5 +44,12 @@ export class Monster {
       }
     });
     console.log(result);
+
+    const resultToNames = result.map((item) => {
+      const { drop, amount } = item;
+      const name = itemSearchData.getName(drop);
+      return { name, amount };
+    }, {});
+    console.table(resultToNames);
   };
 }

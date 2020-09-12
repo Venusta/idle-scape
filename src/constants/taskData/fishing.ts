@@ -1,7 +1,7 @@
+import { itemSearchData } from "../../model/Items";
 import { SkillNames } from "../../model/Skills";
 import { FishingTask } from "../../types/types";
 import { FishingTaskBuilder } from "../builders/FishingTaskBuilder";
-import { nameToId } from "../../util/nameToId";
 
 export interface FishingTasks {
   tool: number;
@@ -14,8 +14,8 @@ export interface FishingTasks {
 // todo builder for this, ensure highest level fish is first, idk
 const tasks: FishingTasks[] = [
   {
-    tool: nameToId("Small fishing net"),
-    bait: nameToId("Feather"),
+    tool: itemSearchData.getId("Small fishing net"),
+    bait: itemSearchData.getId("Feather"),
     maxWeight: 255,
     fishingSpot: [
       new FishingTaskBuilder({ name: "Shrimp" })
@@ -41,7 +41,7 @@ const tasks: FishingTasks[] = [
     ],
   },
   {
-    tool: nameToId("Harpoon"),
+    tool: itemSearchData.getId("Harpoon"),
     maxWeight: 255,
     fishingSpot: [
       new FishingTaskBuilder({ name: "Tuna" })
@@ -60,7 +60,7 @@ const tasks: FishingTasks[] = [
     ],
   },
   {
-    tool: nameToId("Harpoon"),
+    tool: itemSearchData.getId("Harpoon"),
     maxWeight: 255,
     fishingSpot: [
       new FishingTaskBuilder({ name: "Shark" })
@@ -72,8 +72,8 @@ const tasks: FishingTasks[] = [
     ],
   },
   {
-    tool: nameToId("Barbarian rod"),
-    // bait: nameToId("Feather"),
+    tool: itemSearchData.getId("Barbarian rod"),
+    // bait: itemSearchData.getId("Feather"),
     maxWeight: 255,
     fishingSpot: [
       new FishingTaskBuilder({ name: "Leaping trout" })
@@ -107,7 +107,7 @@ const tasks: FishingTasks[] = [
     ],
   },
   {
-    tool: nameToId("Lobster pot"),
+    tool: itemSearchData.getId("Lobster pot"),
     maxWeight: 255,
     fishingSpot: [
       new FishingTaskBuilder({ name: "Lobster" })

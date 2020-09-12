@@ -1,9 +1,9 @@
+import { itemSearchData } from "../../model/Items";
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 import {
   SkillName, EquipmentSlotName, TaskRequirements, TaskOptions, TaskFailMap, TaskRewardMap,
 } from "../../types/types";
-import { nameToId } from "../../util/nameToId";
 
 interface TaskBuilderOptions {
   name: string;
@@ -35,7 +35,7 @@ export class TaskBuilder {
 
   setIcon = (icon: number | string): this => {
     if (this.icon !== 0) return this;
-    const id = nameToId(icon);
+    const id = itemSearchData.get(icon);
     this.icon = id;
     return this;
   };
@@ -59,7 +59,7 @@ export class TaskBuilder {
    */
 
   reqEquip = (slot: EquipmentSlotName, item: number | string, amount = 1): this => {
-    const id = nameToId(item);
+    const id = itemSearchData.get(item);
     this.requirements.equipment.push({ slot, item: id, amount });
     return this;
   };
@@ -71,7 +71,7 @@ export class TaskBuilder {
    */
 
   reqItem = (item: number | string, amount = 1): this => {
-    const id = nameToId(item);
+    const id = itemSearchData.get(item);
     this.requirements.items.set(id, amount);
     return this;
   };
@@ -94,7 +94,7 @@ export class TaskBuilder {
    */
 
   rewardItem = (item: number | string, amount = 1): this => {
-    const id = nameToId(item);
+    const id = itemSearchData.get(item);
     this.setIcon(item); // todo probably remove idfk
     this.rewards.items.set(id, amount); // todo maybe add if multiple of same item
     return this;
@@ -107,7 +107,7 @@ export class TaskBuilder {
    */
 
   failItem = (item: number | string, amount = 1): this => {
-    const id = nameToId(item);
+    const id = itemSearchData.get(item);
     // this.fails.items.push({ item: id, amount });
     this.fails.items.set(id, amount);
     return this;

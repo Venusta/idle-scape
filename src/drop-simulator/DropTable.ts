@@ -1,3 +1,4 @@
+import { itemSearchData } from "../model/Items";
 import { getRandomIntInclusive, getRandomInt, rollForOneIn } from "../util";
 
 type Drop = number | DropTable;
@@ -21,27 +22,15 @@ interface ItemData {
   amount: number;
 }
 
-interface DropTableOptions {
-  weightLimit?: number;
-}
+const resolveId = (drop: Drop | string) => (typeof drop === "string" ? itemSearchData.getId(drop) : drop);
 
 export class DropTable {
-  private alwaysItems: DropData[];
-  private secondaryItems: SecondaryDropData[];
-  private tertiaryItems: ChanceDropData[];
-  private oneInXItems: ChanceDropData[];
+  private alwaysItems: DropData[] = [];
+  private secondaryItems: SecondaryDropData[] = [];
+  private tertiaryItems: ChanceDropData[] = [];
+  private oneInXItems: ChanceDropData[] = [];
 
-  private totalWeight: number;
-  private weightLimit?: number;
-
-  constructor(options: DropTableOptions = {}) {
-    this.alwaysItems = [];
-    this.secondaryItems = [];
-    this.tertiaryItems = [];
-    this.oneInXItems = [];
-    this.totalWeight = 0;
-    this.weightLimit = options.weightLimit;
-  }
+  private totalWeight = 0;
 
   /**
    * Items with 100% drop rate (bones, ashes)
@@ -49,8 +38,8 @@ export class DropTable {
    * @param amount number or range eg 5 or [5,10]
    */
 
-  always = (drop: Drop, amount: Amount = 1): this => {
-    this.alwaysItems.push({ drop, amount });
+  always = (drop: Drop | string, amount: Amount = 1): this => {
+    this.alwaysItems.push({ drop: resolveId(drop), amount });
     return this;
   };
 
@@ -61,8 +50,16 @@ export class DropTable {
    * @param amount number or range eg 5 or [5,10]
    */
 
-  add = (drop: Drop, weight = 1, amount: Amount = 1): this => {
-    this.secondaryItems.push({ drop, amount, weight });
+  add = (drop: Drop | string, weight = 1, amount: Amount = 1): this => {
+    this.secondaryItems.push({ drop: resolveId(drop), amount, weight });
+    this.totalWeight += weight;
+    return this;
+  };
+
+  /**
+   * @param weight how many times the drop appears in the drop table
+   */
+  nothing = (weight: number): this => {
     this.totalWeight += weight;
     return this;
   };
@@ -74,8 +71,8 @@ export class DropTable {
    * @param amount number or range eg 5 or [5,10]
    */
 
-  tertiary = (drop: number, chance: number, amount: Amount = 1): this => {
-    this.tertiaryItems.push({ drop, amount, chance });
+  tertiary = (drop: number | string, chance: number, amount: Amount = 1): this => {
+    this.tertiaryItems.push({ drop: resolveId(drop), amount, chance });
     return this;
   };
 
@@ -86,25 +83,41 @@ export class DropTable {
    * @param amount number or range eg 5 or [5,10]
    */
 
-  oneInX = (drop: number, chance: number, amount: Amount = 1): this => {
-    this.oneInXItems.push({ drop, amount, chance });
+  oneInX = (drop: number | string, chance: number, amount: Amount = 1): this => {
+    this.oneInXItems.push({ drop: resolveId(drop), amount, chance });
     return this;
   };
 
   /**
    * Run the sim
    */
-
   simulate = (): ItemData[] => {
-    console.log(`weight: ${this.totalWeight}`);
-
     const loot: ItemData[] = [];
 
     this.alwaysItems.forEach((dropData) => {
       loot.push(...this.getLoot(dropData));
     });
 
-    const roll = getRandomInt(1, this.weightLimit || this.totalWeight);
+    this.tertiaryItems.forEach((dropData) => {
+      if (rollForOneIn(dropData.chance)) {
+        loot.push(...this.getLoot(dropData));
+      }
+    });
+
+    for (let index = 0; index < this.oneInXItems.length; index += 1) {
+      /**
+       * sorted so it rolls the rarest item first
+       */
+      const sorted = this.oneInXItems.sort((a, b) => b.chance - a.chance);
+      const dropData = sorted[index];
+
+      if (rollForOneIn(dropData.chance)) {
+        loot.push(...this.getLoot(dropData));
+        return loot; // return because it should be the only loot
+      }
+    }
+
+    const roll = getRandomInt(1, this.totalWeight);
     let lootIndex = 0;
     let weightTally = 0;
 
@@ -116,21 +129,6 @@ export class DropTable {
       if (roll <= weightTally) {
         lootIndex = index;
         break;
-      }
-    }
-
-    this.tertiaryItems.forEach((dropData) => {
-      if (rollForOneIn(dropData.chance)) {
-        loot.push(...this.getLoot(dropData));
-      }
-    });
-
-    for (let index = 0; index < this.oneInXItems.length; index += 1) {
-      const sorted = this.oneInXItems.sort((a, b) => b.chance - a.chance);
-      const dropData = sorted[index];
-      if (rollForOneIn(dropData.chance)) {
-        loot.push(...this.getLoot(dropData));
-        return loot; // return this drop if we roll it and no randomItem
       }
     }
 

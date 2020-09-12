@@ -11,6 +11,7 @@ import { v1 as uuid } from "uuid";
 import { getIcon } from "../../model/Icon";
 import { QueuedTask, newTask } from "../../slices/task";
 import { skillData } from "../../constants/taskData/index";
+import { itemSearchData } from "../../model/Items";
 
 interface TaskMenuItemProps {
   name: string;
@@ -130,7 +131,7 @@ const FishingMenu = () => {
     idk2.push(
       <TaskMenu
         key={uuid()}
-        title={tool}
+        title={itemSearchData.getName(parseInt(tool, 10))}
       >
         {fishComponents}
       </TaskMenu>,

@@ -1,5 +1,5 @@
+import { itemSearchData } from "../../model/Items";
 import { ItemData, ExpReward, SkillName } from "../../types/types";
-import { nameToId } from "../../util/nameToId";
 
 interface RewardOptions {
   exp: ExpReward[];
@@ -34,7 +34,7 @@ export class RewardBuilder {
 
   rewardItem = (itemData: ItemData, multiplier: number): this => {
     const { item, amount } = itemData;
-    const id = nameToId(item);
+    const id = itemSearchData.get(item);
     this.items.push({ item: id, amount: amount * multiplier });
     return this;
   };
